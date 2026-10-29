@@ -263,7 +263,7 @@
   @media (max-width: 760px) {
     .container { width: calc(100% - 2.5rem); }
     .site-header { flex-wrap: wrap; gap: .5rem 1rem; padding-block: .8rem .4rem; }
-    .site-header nav { order: 3; flex-basis: 100%; margin-left: 0; justify-content: space-between; gap: .5rem; font-size: .78rem; }
+    .site-header nav { order: 3; flex-basis: 100%; flex-wrap: wrap; margin-left: 0; justify-content: space-between; gap: .5rem; font-size: .78rem; }
     .theme-control { margin-left: auto; }
     .hero { grid-template-columns: 1fr; padding-block: 2.5rem 2rem; gap: 2rem; }
     .hero h1 { max-width: 620px; font-size: clamp(3.25rem, 9vw, 4.75rem); }
