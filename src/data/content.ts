@@ -41,7 +41,10 @@ const projectSchema = z.object({
   order: z.number().int().positive(),
   images: z.array(z.object({
     src: z.string().startsWith('/'),
-    srcSmall: z.string().startsWith('/'),
+    sources: z.array(z.object({
+      src: z.string().startsWith('/'),
+      width: z.number().int().positive(),
+    })).min(1),
     alt: z.string().min(1),
     caption: z.string().min(1),
     width: z.number().int().positive(),

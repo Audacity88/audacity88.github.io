@@ -52,14 +52,14 @@ Edit [src/data/projects.json](src/data/projects.json). Each object becomes a pro
 | `status` | Use `pending-verification`, `verified`, or `demo-down`. |
 | `demo` | Use the tested HTTPS demo URL, or `null` to hide the demo link. |
 | `featured`, `order` | Set visual emphasis and card order. |
-| `images` | An array of genuine approved captures, or `[]` for a text-only card. Each capture has `src`, `srcSmall`, `width`, `height`, `alt`, and `caption`. |
+| `images` | An array of genuine approved captures, or `[]` for a text-only card. Each capture has `src`, responsive `sources` with a path and width, full-size `width` and `height`, `alt`, and `caption`. |
 | `notes` | Record internal verification evidence and remaining work. This field is never rendered. |
 
 Keep new projects `pending-verification`. Their cards show "Verifying", and any demo link carries a "pending" label. The supplied Oct 29 project checks are recorded in the data. Eyrie has build and test evidence; swift-ship has build evidence only; codex-video-vision and ChatGenius have test evidence. codex-skills remains pending with known native test failures, and Tono4's simulator build remains unverified. ChatGenius is code only, with `demo: null`.
 
 A `verified` status applies only to the checks recorded in `verification` and `verificationNote`. It does not establish that every workflow works. A successful portfolio build does not verify a project. For live demo updates, test the public URL and the relevant user flow first. Keep a sign-in-only link labeled `Live sign-in page`.
 
-Eyrie is the featured, full-width card. Its preview links to all four first-run captures on the detail page. The approved source PNGs were resized without cropping and converted to WebP at 720px and 1440px. Captions describe their first-run state. swift-ship's detail-page capture shows sign-in only.
+Eyrie is the featured, full-width card. Its preview links to all four first-run captures on the detail page. The approved source PNGs were resized without cropping and converted to WebP at 360px, 720px, 960px, and 1440px. Captions describe their first-run state. swift-ship's detail-page capture shows sign-in only.
 
 Keep private and Superbuilders projects out of the project cards. Never fabricate screenshots. For approved media, follow the paths and alt-text instructions in the data guide.
 

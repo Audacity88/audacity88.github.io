@@ -23,35 +23,103 @@
     "images": [
       {
         "src": "/images/projects/eyrie-mission-control-1440.webp",
-        "srcSmall": "/images/projects/eyrie-mission-control-720.webp",
         "width": 1440,
         "height": 900,
         "alt": "Eyrie mission control with zero active projects, no running agents, an empty timeline, and a commander setup panel.",
-        "caption": "Mission control, first run. No projects or agents running."
+        "caption": "Mission control, first run. No projects or agents running.",
+        "sources": [
+          {
+            "src": "/images/projects/eyrie-mission-control-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/eyrie-mission-control-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/eyrie-mission-control-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/eyrie-mission-control-1440.webp",
+            "width": 1440
+          }
+        ]
       },
       {
         "src": "/images/projects/eyrie-home-1440.webp",
-        "srcSmall": "/images/projects/eyrie-home-720.webp",
         "width": 1440,
         "height": 900,
         "alt": "Eyrie setup page with commander, frameworks, and projects steps, plus an empty API key field.",
-        "caption": "Home, first run. Commander setup awaits an API key."
+        "caption": "Home, first run. Commander setup awaits an API key.",
+        "sources": [
+          {
+            "src": "/images/projects/eyrie-home-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/eyrie-home-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/eyrie-home-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/eyrie-home-1440.webp",
+            "width": 1440
+          }
+        ]
       },
       {
         "src": "/images/projects/eyrie-frameworks-1440.webp",
-        "srcSmall": "/images/projects/eyrie-frameworks-720.webp",
         "width": 1440,
         "height": 900,
         "alt": "Eyrie framework catalog showing ZeroClaw, OpenClaw, Hermes Agent, PicoClaw, and Codex App Server install cards.",
-        "caption": "Framework catalog, first run. Frameworks are not installed."
+        "caption": "Framework catalog, first run. Frameworks are not installed.",
+        "sources": [
+          {
+            "src": "/images/projects/eyrie-frameworks-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/eyrie-frameworks-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/eyrie-frameworks-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/eyrie-frameworks-1440.webp",
+            "width": 1440
+          }
+        ]
       },
       {
         "src": "/images/projects/eyrie-personas-1440.webp",
-        "srcSmall": "/images/projects/eyrie-personas-720.webp",
         "width": 1440,
         "height": 900,
         "alt": "Eyrie persona catalog with cards including Life Coach, Executive Strategist, and Marketing Lead, with none installed.",
-        "caption": "Persona catalog, first run. No personas installed."
+        "caption": "Persona catalog, first run. No personas installed.",
+        "sources": [
+          {
+            "src": "/images/projects/eyrie-personas-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/eyrie-personas-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/eyrie-personas-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/eyrie-personas-1440.webp",
+            "width": 1440
+          }
+        ]
       }
     ],
     "verification": "Build, go test, go vet, and 7 web tests pass.",
@@ -147,11 +215,28 @@
     "images": [
       {
         "src": "/images/projects/swift-ship-live-signin-1440.webp",
-        "srcSmall": "/images/projects/swift-ship-live-signin-720.webp",
         "width": 1440,
         "height": 900,
         "alt": "Swift Ship sign-in form with email and password fields, inside the application navigation shell.",
-        "caption": "Public sign-in page. Authenticated workflows are not verified."
+        "caption": "Public sign-in page. Authenticated workflows are not verified.",
+        "sources": [
+          {
+            "src": "/images/projects/swift-ship-live-signin-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/swift-ship-live-signin-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/swift-ship-live-signin-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/swift-ship-live-signin-1440.webp",
+            "width": 1440
+          }
+        ]
       }
     ],
     "verification": "Production build passes. Authenticated workflows are not verified.",

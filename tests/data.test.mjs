@@ -123,10 +123,15 @@ test('projects have complete cards and detail pages with valid states and URLs',
     {
       assert.ok(Array.isArray(project.images));
       for (const image of project.images) {
-        for (const field of ['src', 'srcSmall']) {
-          assert.match(image[field], /^\/(?!\/)/);
-          assert.ok(!image[field].split('/').includes('..'), 'Image paths must stay within public/');
-          assert.ok(statSync(new URL(`../public${image[field]}`, import.meta.url)).isFile(), 'Image must exist');
+        assert.ok(Array.isArray(image.sources) && image.sources.length);
+        unique(image.sources, 'width');
+        for (const source of image.sources) {
+          assert.ok(Number.isInteger(source.width) && source.width > 0 && source.width <= image.width);
+        }
+        for (const src of [image.src, ...image.sources.map((source) => source.src)]) {
+          assert.match(src, /^\/(?!\/)/);
+          assert.ok(!src.split('/').includes('..'), 'Image paths must stay within public/');
+          assert.ok(statSync(new URL(`../public${src}`, import.meta.url)).isFile(), 'Image must exist');
         }
         text(image.alt, 'image alt');
         text(image.caption, 'image caption');

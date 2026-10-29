@@ -62,6 +62,8 @@ export function checkSite(directory = 'dist') {
   for (const [file, attributes] of pages) {
     for (const tag of attributes) {
       for (const field of ['href', 'src']) if (field in tag) check(tag[field], file);
+      // Capture paths contain no spaces or commas. Check every responsive candidate.
+      if (tag.srcset) for (const candidate of tag.srcset.split(',')) check(candidate.trim().split(/\s+/)[0], file);
       if (tag.property === 'og:image' || tag.name === 'twitter:image') check(tag.content, file);
     }
   }

@@ -4,14 +4,19 @@ interface Props { project: Project; preview?: boolean }
 const { project, preview = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const images = preview ? project.images.slice(0, 1) : project.images;
+// Match the container, card padding, and stacked flagship breakpoints in global.css.
+// Lazy images use their measured width where sizes="auto" is supported.
+const sizes = preview
+  ? 'auto, (max-width: 360px) calc(100vw - 4.3rem - 2px), (max-width: 760px) calc(100vw - 5.5rem - 2px), (max-width: 960px) calc(100vw - 8rem - 2px), (max-width: 1050px) calc(55vw - 5.775rem - 1.1px), (max-width: 1296px) calc(55vw - 6.875rem - 1.1px), 602px'
+  : 'auto, (max-width: 360px) calc(100vw - 2rem), (max-width: 760px) calc(100vw - 2.5rem), (max-width: 864px) calc(100vw - 4rem), 800px';
 ---
 
 <div class="project-media">
   {images.map((image) => (
     <figure>
       <a href={`${base}${image.src}`} aria-label={`View full-size capture: ${image.caption}`}>
-        <img src={`${base}${image.src}`} srcset={`${base}${image.srcSmall} 720w, ${base}${image.src} 1440w`}
-          sizes={preview ? '(max-width: 760px) calc(100vw - 6rem), 540px' : '(max-width: 860px) calc(100vw - 3rem), 800px'}
+        <img src={`${base}${image.src}`} srcset={image.sources.map((source) => `${base}${source.src} ${source.width}w`).join(', ')}
+          sizes={sizes}
           alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" />
       </a>
       <figcaption>{image.caption}</figcaption>

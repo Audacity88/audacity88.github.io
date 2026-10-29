@@ -271,3 +271,21 @@ Validation on Mac-mini.local, working directory /Users/natalie/Development/portf
 - Installed only axe-core into /private/tmp/portfolio-a11y with a temporary npm cache. Audit scripts and baseline/final reports remain only in /private/tmp/portfolio-qa/pass15/, equivalent to /tmp/portfolio-qa/pass15/ on this host. Closed the isolated browsers, stopped exactly preview PID 38702, and confirmed port 4343 was released. Browser launch and preview shutdown required sandbox escalation.
 
 This local automated audit and supplemental review do not establish full WCAG conformance. VoiceOver, actual voice-control software, physical devices, and other browser engines remain untested. Project runtime behavior, remote CI, and hosting were outside this pass. Deep item 6 is next. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 16: Responsive image performance, 2026-10-30
+
+Deep item 6 remains in progress. Lighthouse is not installed or cached; the offline version check returned ENOTCACHED. Requested Dan's download-runner choice as required by the session instructions. No Lighthouse download or audit has run, so no score or completion is claimed.
+
+Added 360px and 960px WebP versions of the five approved captures, converted directly from their original PNGs without cropping or content edits. Retained the existing 720px and 1440px versions, full-size links, dimensions, alt text, and honest captions. Replaced the two-size data field with an explicit responsive sources array. Added automatic lazy-image sizing with accurate breakpoint fallbacks, including the stacked tablet flagship. Updated the data guides and existing tests; the build now checks every srcset candidate and rejects a missing variant.
+
+Re-read facts.md, the untested triage, and verified-projects.md. Reconciled experience.json and all rendered experience copy. No experience corrections were needed. Approval flags, neutral partner wording, team and solo roles, explicit demo/pilot and not-production wording, project evidence limits, and hidden-record exclusions remain intact.
+
+Validation on Mac-mini.local, working directory /Users/natalie/Development/portfolio:
+
+- Root-path and final default `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Each build passed 179 local-reference checks across eight HTML pages, including hidden-output exclusions. `npm test` passed all ten tests. `git diff --check` passed.
+- Isolated Chrome checked home, Eyrie, and swift-ship at eight widths from 360px to 1440px and both 1x and 2x display densities. All 48 automatic-sizing combinations and 48 fallback combinations passed. Fallback hints matched rendered image content widths within 3px. Verified all 20 WebP files' dimensions and unchanged aspect ratios.
+- Compared selected file bytes with the baseline. At 360px and 1x density, the flagship image decreased from 7,974 to 2,630 bytes, a 67% reduction. At 1280px and 1x density, Eyrie's four gallery images decreased from 146,340 to 82,014 bytes, a 44% reduction. These are image-file comparisons, not Lighthouse or field measurements.
+- Checked the three affected pages at 360/768/1280px in both themes, 18 combinations. Zero axe violations, zero measured layout shift, no horizontal overflow, broken images, or runtime exceptions. Existing axe contrast-review limits still apply. Captured all combinations and visually inspected representative flagship and gallery captures. Experience copy, neutral client fallback, six public cards, hidden-content exclusions, and the approved linked total passed.
+- Reports, scripts, and captures remain only in /private/tmp/portfolio-qa/pass16/, equivalent to /tmp/portfolio-qa/pass16/. No repository dependencies changed. Closed the isolated browsers, stopped exactly preview PID 47019, and confirmed port 4344 was released. Browser launch and preview shutdown required sandbox escalation.
+
+Next: after Dan selects the download runner, install Lighthouse outside the repo, run mobile audits on home and Eyrie's detail page, fix scores below 95, and record actual results before marking deep item 6 complete. Project runtime behavior, physical devices, other browser engines, remote CI, and hosting remain outside this pass. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.

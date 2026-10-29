@@ -23,7 +23,10 @@ test('built links resolve for root and subpath sites, including 404, assets, and
       write('404.html', `<a href="${href}">Broken</a>`);
       assert.throws(() => checkSite(root), /Broken built-site references/);
     }
-    write('404.html', `<a href="${base}#main">Home</a>`);
+    write('404.html', `<img src="${base}favicon.svg" srcset="${base}favicon.svg 360w, ${base}missing.webp 720w">`);
+    assert.throws(() => checkSite(root), /Broken built-site references:[\s\S]*missing\.webp/);
+    write('404.html', `<img src="${base}favicon.svg" srcset="${base}favicon.svg 360w, ${base}favicon.svg 720w">`);
+    assert.equal(checkSite(root).pages, 3);
     write('site.webmanifest', JSON.stringify({ id: base, scope: base, start_url: '/wrong-base/', icons: [{ src: `${base}missing.svg` }] }));
     assert.throws(() => checkSite(root), /start_url must equal built base[\s\S]*missing\.svg/);
   }
