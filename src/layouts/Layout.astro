@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/print.css';
 interface Props {
   title?: string;
   description?: string;
@@ -42,6 +43,7 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
     {!noindex && <link rel="canonical" href={canonical.toString()} />}
     <link rel="sitemap" type="application/xml" href={`${base}sitemap.xml`} />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="manifest" href={`${base}site.webmanifest`} />
     <title>{title}</title>
     <script is:inline>
       try {

@@ -25,7 +25,11 @@ npm run build
 npm run preview
 ```
 
-`test` uses Node's built-in test runner with no additional dependencies. It checks JSON fields, project states, URLs, approval flags, and prohibited links. `build` checks Astro and TypeScript, validates the content data, and generates static files in `dist/`.
+`test` uses Node's built-in test runner with no additional dependencies. It checks JSON fields, project states, URLs, approval flags, prohibited links, and the link checker's root and subpath handling. `build` checks Astro and TypeScript, validates the content data, generates static files in `dist/`, and checks local links.
+
+Run `npm run check:links` to recheck existing build output. The checker reads the built canonical URL and checks local page links, fragments, assets, sitemap entries, and manifest URLs, including links on the 404 page. It does not request external services or verify project demos. CI runs it as part of `npm run build`.
+
+The print stylesheet formats the home page as a two-page summary on A4 and Letter paper in Chrome at 100% scale, with browser headers and footers disabled. It retains project verification badges, experience, education, and contact details. Project detail pages also have compact print layouts. The site's manifest uses the configured base path and existing SVG favicon; it adds no service worker or offline behavior.
 
 ## Edit content
 

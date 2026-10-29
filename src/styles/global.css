@@ -256,7 +256,7 @@
     .hero-note { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; padding: 1rem 1.25rem .25rem; border: 1px solid var(--line); border-radius: 6px; margin: 0; background: var(--surface); }
     .hero-note .signal-art, .hero-note > p:not(.eyebrow) { display: none; }
     .hero-note .eyebrow { grid-column: 1 / -1; font-size: .6rem; }
-    .focus-item { flex-wrap: wrap; gap: 0 .8rem; }
+    .focus-item { flex-direction: column; align-items: flex-start; gap: 0; }
     .hero-scroll { margin-top: -1rem; }
     .section { padding-block: 3.75rem; }
     .section-heading { display: block; margin-bottom: 2rem; }

@@ -101,3 +101,22 @@ Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/po
 - Stopped the preview listener PID 21994 and isolated Chrome PID 24580. The npm launcher PID 21959 had already exited. Confirmed ports 4326 and 9346 were released.
 
 Individual project builds, demo flows, genuine media, physical devices, other browser engines, remote CI, clean installation, and Node 24 execution remain unverified. This portfolio build changes no project verification state. All work remains local; nothing was committed, pushed, or deployed.
+
+## Pass 7: Hiring copy, print summary, and link checks, 2026-10-29
+
+Completed refinement items **e, f, and g**:
+
+- **e:** Made the hero explicit about AI agents and developer tools, brought ZeroClaw code ownership into the introduction, and put Dan's review and testing process first in About. Replaced vague open-source headings with the work itself. Fixed the alignment of the two current-work links on phones.
+- **f:** Added a print stylesheet with a two-page home summary and compact project detail layouts. Kept every project title and status badge, experience, education, and contact details. Removed decorative graphics and controls from print. Print review caught and fixed joined heading words and Letter pagination overflow.
+- **g:** Added a dependency-free `npm run check:links` command and included it at the end of `npm run build`, so existing CI and deployment build steps also run it. It checks built local href/src references, fragments, social images, sitemap entries, and manifest URLs against the built canonical origin and base. Added root/subpath fixtures that reject missing pages, assets, fragments, and incorrect manifest paths. Added a generated manifest that uses the configured base and existing SVG favicon. Documented the commands and print settings.
+
+Re-read `facts.md` and the untested triage. Reconciled `experience.json` and all rendered experience copy. Employer/client approval flags, neutral partner fallback, team/solo attribution, and explicit demo/pilot and not-production wording match the brief. No experience data changes were needed. The approved linked `750+ merged pull requests` label appears once on the home page. Built-copy checks found no client placeholder/name, prohibited links, disallowed student count, or exact internal PR total. Project statuses and demo links remain unchanged.
+
+Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/portfolio`:
+
+- `npm test` passed all five tests. `PUBLIC_SITE_URL=https://portfolio.example PUBLIC_BASE_PATH=/ ASTRO_TELEMETRY_DISABLED=1 npm run build` passed. Final `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Both base configurations passed 179 local-reference checks across ten HTML pages. `git diff --check` passed. No dependencies changed.
+- Used `npm run preview -- --host 127.0.0.1 --port 4337` and isolated headless Chrome over CDP. Checked home and all eight project pages at 360/768/1280px in light and dark, 54 combinations. No horizontal overflow, broken images, or console/runtime errors. Card/return navigation, theme persistence across pages and reload, manifest URLs, and missing-project HTTP 404 with noindex and base-correct return links passed. Inspected updated hero captures and the mobile alignment fix.
+- Printed from the dark theme at 100% scale with browser headers/footers disabled. Home output is two pages on both A4 and Letter; the swift-ship detail is one Letter page. Rendered QA PDFs with macOS PDFKit because Poppler was unavailable, and visually inspected the pages for spacing and clipping. Temporary scripts, captures, PDFs, and results are under `/private/tmp/portfolio-pass7-qa/`; none were added to the repo.
+- Stopped exactly preview PID `34453` and isolated Chrome PID `34553`. Confirmed ports 4337 and 9347 were released.
+
+Project builds and demo flows, physical devices and printers, other browser engines, remote CI, clean installation, and Node 24 execution remain unverified. The link checker checks static local output, not external service availability. Nothing was committed, pushed, or deployed, and no GitHub or Pages settings changed.

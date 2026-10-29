@@ -16,9 +16,9 @@ const base = import.meta.env.BASE_URL;
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-intro">
         <p class="eyebrow"><span class="accent-mark" aria-hidden="true"></span>AI engineer / Dan Gilles</p>
-        <h1 id="hero-title">I build tools for people working with <span>AI.</span></h1>
+        <h1 id="hero-title">I build AI agents and <span>developer tools.</span></h1>
         <p class="hero-pitch">AI agents, developer tools, and forward-deployed engineering.</p>
-        <p class="hero-description">I work directly with the people who use the software. I turn ambiguous briefs into working pilots and build infrastructure for AI agents.</p>
+        <p class="hero-description">I work directly with the people who use the software, turning ambiguous briefs into working pilots. I'm also a code owner and core contributor to ZeroClaw, an open-source Rust agent runtime.</p>
         <div class="hero-actions">
           <a class="button primary" href="mailto:dangilles@gmail.com">Get in touch <span aria-hidden="true">↗</span></a>
           <a class="button secondary" href="https://github.com/Audacity88">GitHub <span aria-hidden="true">↗</span></a>
@@ -43,7 +43,7 @@ const base = import.meta.env.BASE_URL;
 
     <section id="projects" class="section" aria-labelledby="projects-title">
       <div class="section-heading">
-        <div><p class="eyebrow">01 / Selected work</p><h2 id="projects-title">Things I've built<br />and contributed to.</h2></div>
+        <div><p class="eyebrow">01 / Selected work</p><h2 id="projects-title">Things I've built <br />and contributed to.</h2></div>
         <p class="section-intro">Agent tooling, full-stack applications, and iOS experiments. Demo and build verification is in progress.</p>
       </div>
       <div class="project-grid">
@@ -53,12 +53,12 @@ const base = import.meta.env.BASE_URL;
 
     <section id="open-source" class="section" aria-labelledby="opensource-title">
       <div class="section-heading">
-        <div><p class="eyebrow">02 / Open source</p><h2 id="opensource-title">Inside the runtime.</h2></div>
-        <p class="section-intro">I'm a code owner and core contributor to ZeroClaw, an open-source Rust agent runtime. These upstream pull requests are merged.</p>
+        <div><p class="eyebrow">02 / Open source</p><h2 id="opensource-title">Making agents <br />more reliable.</h2></div>
+        <p class="section-intro">At ZeroClaw, I own code across runtime, tools, gateway, configuration, memory, and cost. These upstream pull requests are merged.</p>
       </div>
       <div class="contribution-layout">
         <aside class="contribution-note">
-          <h3>Reliability at each step.</h3>
+          <h3>Steering, recovery, and cost.</h3>
           <p>My work includes delivering steering messages during a running turn, recovering sessions, and making agent costs visible.</p>
           <div class="cache-result">
             <p class="eyebrow">Prompt-cache hit rate</p>
@@ -82,7 +82,7 @@ const base = import.meta.env.BASE_URL;
     </section>
 
     <section id="experience" class="section" aria-labelledby="experience-title">
-      <div class="section-heading"><div><p class="eyebrow">03 / Experience</p><h2 id="experience-title">Engineering, research,<br />and teaching.</h2></div></div>
+      <div class="section-heading"><div><p class="eyebrow">03 / Experience</p><h2 id="experience-title">Engineering, research, <br />and teaching.</h2></div></div>
       <ol class="timeline">
         {experience.roles.map((job) => (
           <li>
@@ -102,10 +102,10 @@ const base = import.meta.env.BASE_URL;
     </section>
 
     <section id="about" class="section about-section" aria-labelledby="about-title">
-      <div><p class="eyebrow">04 / About</p><h2 id="about-title">An unusual route<br />into engineering.</h2></div>
+      <div><p class="eyebrow">04 / About</p><h2 id="about-title">How I work.</h2></div>
       <div class="about-copy">
+        <p>Coding agents write much of my code. I specify the problem, review every change, test it live, and decide what ships.</p>
         <p>I spent about a decade living and teaching in Beijing before studying computational social science at the University of Chicago. English is my native language, and I'm professionally fluent in Mandarin Chinese.</p>
-        <p>Now I build full-stack software and agent infrastructure. Coding agents write much of my code. I specify the problem, review every change, test it live, and decide what ships.</p>
         <dl class="education-list">
           <div><dt>University of Chicago</dt><dd>M.A., Computational Social Science, NLP/ML · 2024</dd></div>
           <div><dt>St. John's College</dt><dd>M.A., Eastern Classics · 2022<br />B.A., Liberal Arts, Great Books · 2013</dd></div>
@@ -115,7 +115,7 @@ const base = import.meta.env.BASE_URL;
 
     <section id="contact" class="section contact-section" aria-labelledby="contact-title">
       <p class="eyebrow">05 / Contact</p>
-      <h2 id="contact-title">Have a problem<br />worth working on?</h2>
+      <h2 id="contact-title">Have a problem <br />worth working on?</h2>
       <p>Let's talk about AI agents, developer tools, or building software with your team.</p>
       <a class="contact-email" href="mailto:dangilles@gmail.com">dangilles@gmail.com <span aria-hidden="true">↗</span></a>
       <ul class="social-links" aria-label="Find Dan online">
