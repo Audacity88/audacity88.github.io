@@ -4,7 +4,7 @@ import { projects } from '../data/content';
 // Include generated project pages. Exclude the noindex 404 page.
 export const GET: APIRoute = ({ site }) => {
   const base = import.meta.env.BASE_URL;
-  const entries = [base, `${base}resume/`, ...projects.map((project) => `${base}projects/${project.id}/`)]
+  const entries = [base, `${base}resume/`, `${base}art/`, ...projects.map((project) => `${base}projects/${project.id}/`)]
     .map((path) => new URL(path, site).href)
     .map((url) => `<url><loc>${url.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;')}</loc></url>`)
     .join('');

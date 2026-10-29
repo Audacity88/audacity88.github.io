@@ -266,7 +266,7 @@ test('built pages retain the locked project list, evidence, attribution, and app
   assert.deepEqual([...home.matchAll(/data-project="([^"]+)"/g)].map((match) => match[1]), expectedIds);
   assert.deepEqual(readdirSync(new URL('projects/', root)).sort(), [...expectedIds].sort());
   assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]),
-    ['', 'resume/', ...expectedIds.map((id) => `projects/${id}/`)].map((path) => new URL(path, base).href));
+    ['', 'resume/', 'art/', ...expectedIds.map((id) => `projects/${id}/`)].map((path) => new URL(path, base).href));
   const escape = (text) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
   for (const project of projects) {
     const html = readFileSync(new URL(`projects/${project.id}/index.html`, root), 'utf8');
@@ -311,4 +311,21 @@ test('built pages retain the locked project list, evidence, attribution, and app
     }
   }
   inspect(root);
+});
+
+test('art page lists only sourced works with links back and stays out of the main nav', () => {
+  const art = JSON.parse(readFileSync(new URL('../src/data/art.json', import.meta.url), 'utf8'));
+  assert.ok(art.length > 0);
+  for (const work of art) {
+    assert.ok(['fractals', 'photography'].includes(work.section));
+    assert.match(work.url, /^https:\/\/www\.(deviantart\.com\/iamthejabberwock|flickr\.com\/photos\/dangilles)\//);
+    assert.ok(work.title.length > 0);
+    assert.ok(work.sources.length > 0);
+  }
+  const photos = art.filter((w) => w.section === 'photography').length;
+  assert.ok(photos >= 12 && photos <= 20, `photography count ${photos}`);
+  const layout = readFileSync(new URL('../src/layouts/Layout.astro', import.meta.url), 'utf8');
+  const nav = layout.slice(layout.indexOf('<nav'), layout.indexOf('</nav>'));
+  assert.doesNotMatch(nav, /art\//);
+  assert.match(layout.slice(layout.indexOf('<footer')), /art\//);
 });
