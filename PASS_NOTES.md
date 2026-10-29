@@ -160,3 +160,19 @@ Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/po
 - `git diff --check` passed. No dependencies, project evidence, media, or visual layouts changed.
 
 Browser screenshots and external project checks were not repeated for these policy, test, and documentation changes. Pass 8's project evidence remains a supplied report dated Oct 29, 2026, not a result of this portfolio build. Authenticated workflows, native test failures, simulator and device behavior, remote CI, and production hosting retain their recorded validation limits. All changes remain local; nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 10: Current content and browser QA, 2026-10-30
+
+Confirmed that "verified-projects applied" is already recorded and refinement items a through h were completed in earlier passes. Rechecked **a, d, and g** against the current checkout. No source, content, data, dependency, or layout changes were needed; this pass adds the current validation record only.
+
+Re-read facts.md, the untested triage, and v2/verified-projects.md. Reconciled experience.json and all rendered experience copy. Employer/client approval flags, the neutral partner fallback, team/solo attribution, and explicit demo/pilot and not-production wording still match the facts. Preserved the exact six-project list and order, approved genuine captures, scoped verification evidence, pending statuses, null demo links, credited-port attribution, and sign-in-only label. The approved merged-PR label appears once on home and links to the supplied upstream search. Exclusion checks pass.
+
+Validation on Mac-mini.local, working directory /Users/natalie/Development/portfolio:
+
+- `npm test` passed all seven tests. `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Its link checker passed 155 local references across eight HTML pages.
+- Ran `npm run preview -- --host 127.0.0.1 --port 4339`, listener PID 73049. Playwright used installed Chrome in an isolated profile against localhost. The sandboxed browser launch aborted; the authorized retry outside the sandbox succeeded. No packages or browsers were downloaded.
+- All 42 home/detail-page combinations at 360/768/1280px in light and dark passed with no horizontal overflow, broken images, console errors, or runtime exceptions. Card/detail return navigation, saved theme across pages and reload, flagship width, sign-in-only label, hidden ChatGenius demo, approved count/link, neutral client fallback, and missing-project HTTP 404 with noindex passed.
+- Captures and JSON results are only in /private/tmp/portfolio-qa/pass10/, equivalent to /tmp/portfolio-qa/pass10/ on this host. Visually inspected project-card captures at every requested width and theme, plus the mobile dark Eyrie gallery. No spacing, clipping, or alignment fixes were needed.
+- Closed the isolated browser and stopped exactly preview PID 73049. No unrelated process was stopped.
+
+Project verification remains the supplied report dated Oct 29, 2026. Authenticated service workflows, native-test failures, simulator/device behavior, physical phones, other browser engines, remote CI, and production hosting retain their earlier validation limits. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
