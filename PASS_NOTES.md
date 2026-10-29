@@ -324,3 +324,11 @@ Deep item 6 is still the first unfinished item. Re-read facts.md, triage.md, ver
 Lighthouse remains absent from the dedicated temporary install and checked npx installations. Asked who should run the exact download command recorded in Pass 17, as required by the supplied global AGENTS.md instructions, and left the choice pending. No download, server, browser, or Lighthouse audit ran. No scores or item completion are claimed.
 
 Validation on Mac-mini.local in /Users/natalie/Development/portfolio: `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. The build checked 179 local references across eight HTML pages and passed the hidden-output guard. `npm test` passed all ten tests. Source, media, dependencies, and project-verification evidence remain unchanged. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 20: Performance prerequisite and validation, 2026-10-30
+
+Deep item 6 remains the first unfinished item. Lighthouse is absent from the temporary install. Requested a download-runner choice with the exact command, host, and directory, as required by the supplied global AGENTS.md instruction to wait for that choice. No answer arrived during validation and the subsequent wait. The choice remains pending. No download, preview server, browser, or Lighthouse audit ran; no scores or completion are claimed.
+
+Re-read facts.md, the untested triage, verified-projects.md, and prior pass notes. Reconciled experience.json and rendered experience copy; approval flags, neutral partner wording, team/solo roles, and demo/pilot and not-production wording need no corrections. Existing hidden placeholders and their consumer/output safeguards remain intact. No source, media, dependency, or project-evidence changes were needed.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio: `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints, including the hidden-output guard and 179 local references across eight HTML pages. `npm test` passed all ten tests. Only this pass record changed. Nothing was committed, pushed, deployed, or changed on GitHub or Pages. Continue item 6 after the pending runner choice; the exact install command is recorded in Pass 17.
