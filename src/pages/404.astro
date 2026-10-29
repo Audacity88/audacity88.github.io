@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Page not found | Dan Gilles" description="This page could not be found. Return to Dan Gilles's portfolio." noindex>
+  <main id="main" class="container not-found" tabindex="-1">
+    <section class="section" aria-labelledby="not-found-title">
+      <p class="eyebrow">404</p>
+      <h1 id="not-found-title">Page not found.</h1>
+      <p class="hero-description">The page may have moved, or the link may be incorrect.</p>
+      <div class="hero-actions"><a class="button primary" href={import.meta.env.BASE_URL}>Back to the portfolio <span aria-hidden="true">↗</span></a></div>
+    </section>
+  </main>
+</Layout>

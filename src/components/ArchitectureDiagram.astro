@@ -1,0 +1,95 @@
+---
+import type { Project } from '../data/content';
+
+interface Props {
+  id: string;
+  diagram: NonNullable<Project['caseStudy']['diagram']>;
+}
+
+const { id, diagram } = Astro.props;
+const prefix = `${id}-architecture`;
+---
+
+<figure class="architecture-diagram">
+  <svg
+    viewBox="0 0 320 636"
+    width="320"
+    height="636"
+    role="img"
+    aria-labelledby={`${prefix}-title`}
+    aria-describedby={`${prefix}-description`}
+    focusable="false"
+  >
+    <title id={`${prefix}-title`}>{diagram.title}</title>
+    <desc id={`${prefix}-description`}>{diagram.summary}</desc>
+    <defs>
+      <marker id={`${prefix}-arrow`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+        <path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="currentColor" stroke-width="1.5" />
+      </marker>
+    </defs>
+    <g aria-hidden="true">
+      {diagram.steps.map((step, index) => (
+        <g transform={`translate(0 ${16 + index * 168})`}>
+          <rect class="diagram-node" x="8" y="0" width="304" height="100" rx="8" />
+          <text class="diagram-title" x="160" y="29">{step.title}</text>
+          {step.detail.map((line, lineIndex) => (
+            <text class="diagram-detail" x="160" y={54 + lineIndex * 21}>{line}</text>
+          ))}
+        </g>
+      ))}
+      {diagram.connections.map((lines, index) => (
+        <g transform={`translate(0 ${116 + index * 168})`}>
+          <path
+            class="diagram-connection"
+            d="M 34 8 V 59"
+            marker-start={`url(#${prefix}-arrow)`}
+            marker-end={`url(#${prefix}-arrow)`}
+          />
+          {lines.map((line, lineIndex) => (
+            <text class="diagram-label" x="60" y={28 + lineIndex * 21}>{line}</text>
+          ))}
+        </g>
+      ))}
+    </g>
+  </svg>
+  <figcaption>
+    <p class="diagram-heading">{diagram.title}</p>
+    {diagram.description.map((paragraph) => <p>{paragraph}</p>)}
+    <p class="diagram-caveat">{diagram.caveat}</p>
+  </figcaption>
+</figure>
+
+<style>
+  .architecture-diagram {
+    display: grid;
+    grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+    align-items: center;
+    gap: 2rem;
+    margin: 1.5rem 0 0;
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+  svg { width: 100%; height: auto; color: var(--accent-text); }
+  .diagram-node { fill: var(--tint); stroke: var(--accent-text); stroke-width: 1; }
+  text { text-anchor: middle; font-family: var(--sans); }
+  .diagram-title { fill: var(--text); font-size: 17px; font-weight: 600; }
+  .diagram-detail { fill: var(--muted); font-size: 14px; }
+  .diagram-label { fill: var(--muted); font-size: 14px; text-anchor: start; }
+  .diagram-connection { fill: none; stroke: currentColor; stroke-width: 1.5; }
+  figcaption { display: grid; gap: 1rem; font-size: .875rem; }
+  .architecture-diagram .diagram-heading { color: var(--text); font-weight: 600; }
+  .diagram-caveat { border-top: 1px solid var(--line); padding-top: 1rem; }
+  @media (max-width: 650px) {
+    .architecture-diagram { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: .75rem; }
+    svg { max-width: 320px; justify-self: center; }
+  }
+  @media print {
+    .architecture-diagram { break-inside: avoid; padding: 8pt; gap: 14pt; grid-template-columns: 185pt minmax(0, 1fr); }
+    figcaption { font-size: 8pt; gap: 6pt; }
+    .diagram-node { fill: none; stroke: #555; }
+    .diagram-title, .diagram-detail, .diagram-label { fill: #111; }
+    svg { color: #111; }
+  }
+</style>

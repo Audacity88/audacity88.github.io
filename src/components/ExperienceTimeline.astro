@@ -1,0 +1,20 @@
+---
+import { experience } from '../data/content';
+---
+
+<ol class="timeline">
+  {experience.roles.map((job) => (
+    <li>
+      <p class="timeline-period">{job.period}</p>
+      <div class="timeline-content">
+        <h3>{job.role}</h3><p class="organization">{job.organization}</p>
+        <p>{job.summary}</p>
+        {job.highlights.length > 0 && <ul>{job.highlights.map((highlight) => <li>{highlight}</li>)}</ul>}
+        {job.clients.map((client) => {
+          const name = client.needsDanOk ? client.publicFallback : client.name;
+          return name && !name.includes('[CLIENT:') ? <p class="client-description">Partner: {name}</p> : null;
+        })}
+      </div>
+    </li>
+  ))}
+</ol>

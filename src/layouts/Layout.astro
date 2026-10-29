@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import '../styles/print.css';
+import ThemeToggle from '../components/ThemeToggle.astro';
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+const {
+  title = 'Dan Gilles | AI engineer',
+  description = 'Dan Gilles builds AI agents, developer tools, and full-stack software directly with the people who use it. Selected projects and open-source contributions.',
+  noindex = false,
+} = Astro.props;
+const base = import.meta.env.BASE_URL;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(`${base}og-card.png`, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Dan Gilles" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical.toString()} />
+    <meta property="og:image" content={socialImage.toString()} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Dan Gilles. AI engineer. AI agents, developer tools, and forward-deployed engineering." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage.toString()} />
+    <meta name="twitter:image:alt" content="Dan Gilles. AI engineer. AI agents, developer tools, and forward-deployed engineering." />
+    {!noindex && <link rel="canonical" href={canonical.toString()} />}
+    <link rel="sitemap" type="application/xml" href={`${base}sitemap.xml`} />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="manifest" href={`${base}site.webmanifest`} />
+    <title>{title}</title>
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('portfolio-theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch { /* System preferences work when storage is unavailable. */ }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header container">
+      <a class="wordmark" href={base} aria-label="Dan Gilles, home">Dan Gilles<span aria-hidden="true">.</span></a>
+      <nav aria-label="Main navigation">
+        <a href={`${base}#projects`} aria-current={Astro.url.pathname.startsWith(`${base}projects/`) ? 'location' : undefined}>Projects</a>
+        <a href={`${base}#open-source`}>Open source</a>
+        <a href={`${base}#experience`}>Experience</a>
+        <a href={`${base}resume/`} aria-current={Astro.url.pathname === `${base}resume/` ? 'page' : undefined}>Resume</a>
+        <a href={`${base}#contact`}>Contact</a>
+      </nav>
+      <ThemeToggle />
+    </header>
+    <slot />
+    <footer class="site-footer container">
+      <a class="footer-name" href={base}>Dan Gilles<span aria-hidden="true">.</span></a>
+      <span>Built with Astro. No tracking.</span>
+      <a href="#main">Back to top <span aria-hidden="true">↑</span></a>
+    </footer>
+  </body>
+</html>

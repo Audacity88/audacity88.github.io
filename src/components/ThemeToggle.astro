@@ -1,0 +1,38 @@
+<div class="theme-control">
+  <button type="button" class="theme-toggle" id="theme-toggle" hidden>
+    <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.4" /><path d="M10 3a7 7 0 0 1 0 14Z" fill="currentColor" /></svg>
+    <span id="theme-label">Auto</span>
+  </button>
+</div>
+
+<script>
+  type Theme = 'system' | 'light' | 'dark';
+
+  const button = document.querySelector<HTMLButtonElement>('#theme-toggle');
+  const label = document.querySelector<HTMLElement>('#theme-label');
+  // The head script restores explicit choices before the page is painted.
+  const initialTheme = document.documentElement.dataset.theme;
+  let theme: Theme = initialTheme === 'light' || initialTheme === 'dark' ? initialTheme : 'system';
+  const nextTheme = { system: 'light', light: 'dark', dark: 'system' } as const;
+  const themeNames = { system: 'Auto', light: 'Light', dark: 'Dark' } as const;
+
+  function updateTheme() {
+    if (theme === 'system') delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = theme;
+    if (label) label.textContent = themeNames[theme];
+    button?.setAttribute('aria-label', `${themeNames[theme]} color theme${theme === 'system' ? ', follows system' : ''}. Switch to ${nextTheme[theme]} theme`);
+  }
+
+  updateTheme();
+  if (button) {
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      theme = nextTheme[theme];
+      try {
+        if (theme === 'system') localStorage.removeItem('portfolio-theme');
+        else localStorage.setItem('portfolio-theme', theme);
+      } catch { /* The current page still honors the selected theme. */ }
+      updateTheme();
+    });
+  }
+</script>

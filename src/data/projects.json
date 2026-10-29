@@ -1,0 +1,565 @@
+[
+  {
+    "id": "eyrie",
+    "title": "Eyrie",
+    "oneLiner": "A local control room for AI agents.",
+    "description": "Coordinate agents across ZeroClaw, OpenClaw, Hermes, PicoClaw, and Codex. A Go backend connects to a React dashboard over SSE and WebSockets, with SQLite for storage. Runs locally, with no public demo.",
+    "tech": [
+      "Go",
+      "Cobra",
+      "SSE",
+      "WebSockets",
+      "SQLite",
+      "React 19",
+      "TypeScript",
+      "Vite",
+      "Tailwind"
+    ],
+    "github": "https://github.com/EyrieCommander/eyrie",
+    "demo": null,
+    "status": "verified",
+    "statusLabel": "Build & tests checked",
+    "featured": true,
+    "images": [
+      {
+        "src": "/images/projects/eyrie-mission-control-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Eyrie mission control with zero active projects, no running agents, an empty timeline, and a commander setup panel.",
+        "caption": "Mission control, first run. No projects or agents running.",
+        "sources": [
+          {
+            "src": "/images/projects/eyrie-mission-control-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/eyrie-mission-control-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/eyrie-mission-control-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/eyrie-mission-control-1440.webp",
+            "width": 1440
+          }
+        ]
+      },
+      {
+        "src": "/images/projects/eyrie-home-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Eyrie setup page with commander, frameworks, and projects steps, plus an empty API key field.",
+        "caption": "Home, first run. Commander setup awaits an API key.",
+        "sources": [
+          {
+            "src": "/images/projects/eyrie-home-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/eyrie-home-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/eyrie-home-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/eyrie-home-1440.webp",
+            "width": 1440
+          }
+        ]
+      },
+      {
+        "src": "/images/projects/eyrie-frameworks-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Eyrie framework catalog showing ZeroClaw, OpenClaw, Hermes Agent, PicoClaw, and Codex App Server install cards.",
+        "caption": "Framework catalog, first run. Frameworks are not installed.",
+        "sources": [
+          {
+            "src": "/images/projects/eyrie-frameworks-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/eyrie-frameworks-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/eyrie-frameworks-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/eyrie-frameworks-1440.webp",
+            "width": 1440
+          }
+        ]
+      },
+      {
+        "src": "/images/projects/eyrie-personas-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Eyrie persona catalog with cards including Life Coach, Executive Strategist, and Marketing Lead, with none installed.",
+        "caption": "Persona catalog, first run. No personas installed.",
+        "sources": [
+          {
+            "src": "/images/projects/eyrie-personas-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/eyrie-personas-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/eyrie-personas-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/eyrie-personas-1440.webp",
+            "width": 1440
+          }
+        ]
+      }
+    ],
+    "verification": "Build, go test, go vet, and 7 web tests pass.",
+    "verificationNote": "Eyrie checked the build, go test, go vet, and 7 web tests on October 29, 2026. The screenshots show the empty first-run state, not active agent workflows. Local only; no public demo.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md, supplied by Eyrie. Genuine first-run captures resized and converted to WebP without content changes.",
+    "order": 1,
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "Agents in ZeroClaw, OpenClaw, and other frameworks expose different interfaces. Eyrie's goal is to manage their projects, sessions, and lifecycle from a shared local control room, with a hierarchy of commanders, captains, and specialist talons.",
+      "built": "I built the Go command-line application and React dashboard for agent discovery, lifecycle controls, project hierarchies, and streaming chat. Framework adapters translate a shared agent interface into each framework's gateway calls.",
+      "architecture": "The CLI and dashboard share the adapter and discovery core. The Go executable embeds the built React application. SSE carries live updates; adapters use framework-specific HTTP or WebSocket connections. Configuration and project stores use local files, with SQLite used for ZeroClaw session access.",
+      "limitations": "The approved captures show an empty first run. Live agent lifecycle, LLM chat, terminal sessions, and provisioning were not verified. Eyrie is an early local-only alpha with no authentication; it is not a hosted multi-user service.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 1; approved checks and first-run captures.",
+        "/Users/dan/portfolio-triage/repos/eyrie/README.md, introduction, architecture, framework capabilities, and alpha limitations.",
+        "/Users/dan/portfolio-triage/repos/eyrie/PORTFOLIO_REPORT.md, tech stack, build and test results, local run, and remaining limitations. Later approved captures supersede the report's screenshot blocker.",
+        "Architecture diagram, read-only source inspection: /Users/dan/portfolio-triage/repos/eyrie/internal/server/server.go, events.go, and api.go; internal/cli/dashboard.go and lifecycle.go; web/src/lib/api.ts and components/Terminal.tsx. Embedded frontend, HTTP handlers, SSE, terminal WebSocket, and CLI entry points.",
+        "Architecture diagram, read-only source inspection: /Users/dan/portfolio-triage/repos/eyrie/internal/discovery/discovery.go; internal/adapter/agent.go and zeroclaw.go, sessionsFromDB; internal/project/project.go and internal/instance/store.go. Common adapter interface, discovery, local JSON stores, and read-only SQLite history access."
+      ],
+      "diagram": {
+        "title": "Simplified local architecture",
+        "summary": "The React dashboard exchanges HTTP requests, server-sent events, and terminal WebSocket traffic with a local Go server. The server uses discovery and framework adapters to reach agent runtimes. Project and instance data use local JSON files. The ZeroClaw adapter can read session history from SQLite.",
+        "steps": [
+          {
+            "title": "React dashboard",
+            "detail": [
+              "Browser interface",
+              "Served by the Go executable"
+            ]
+          },
+          {
+            "title": "Local Go server",
+            "detail": [
+              "HTTP API and event streams",
+              "Project and instance JSON stores"
+            ]
+          },
+          {
+            "title": "Discovery & adapters",
+            "detail": [
+              "Shared Agent interface",
+              "Framework-specific operations"
+            ]
+          },
+          {
+            "title": "Agent runtimes",
+            "detail": [
+              "ZeroClaw · OpenClaw · Hermes",
+              "PicoClaw · Codex"
+            ]
+          }
+        ],
+        "connections": [
+          [
+            "HTTP requests · SSE responses",
+            "WebSocket for terminal sessions"
+          ],
+          [
+            "Discover agents",
+            "Read state and dispatch actions"
+          ],
+          [
+            "Framework-specific calls",
+            "Responses and activity"
+          ]
+        ],
+        "description": [
+          "The Go executable embeds the built React dashboard. The browser calls its HTTP API, receives server-sent events, and connects to terminal sessions over WebSocket. The paired arrows show requests and responses.",
+          "Discovery finds configured agents and probes their health. Adapters expose a shared Agent interface for framework-specific operations. The command-line interface also uses discovery and lifecycle controls.",
+          "Projects and instances use local JSON files. The ZeroClaw adapter can also read session history directly from a local SQLite database, including when the gateway is unavailable."
+        ],
+        "caveat": "This diagram shows selected paths in the source. Live agent workflows remain unverified. Eyrie is a local-only alpha without authentication."
+      }
+    }
+  },
+  {
+    "id": "swift-ship",
+    "title": "swift-ship",
+    "oneLiner": "An AI customer support desk.",
+    "description": "A customer support prototype built with Next.js 15, Supabase, and OpenAI, with pgvector for document search. The public link shows sign-in; authenticated support workflows need separate verification.",
+    "tech": [
+      "Next.js 15",
+      "Supabase",
+      "OpenAI",
+      "pgvector"
+    ],
+    "github": "https://github.com/Audacity88/swift-ship",
+    "demo": "https://swift-ship-pi.vercel.app",
+    "demoLabel": "Live sign-in page",
+    "status": "verified",
+    "statusLabel": "Build checked",
+    "featured": false,
+    "images": [
+      {
+        "src": "/images/projects/swift-ship-live-signin-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Swift Ship sign-in form with email and password fields, inside the application navigation shell.",
+        "caption": "Public sign-in page. Authenticated workflows are not verified.",
+        "sources": [
+          {
+            "src": "/images/projects/swift-ship-live-signin-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/swift-ship-live-signin-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/swift-ship-live-signin-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/swift-ship-live-signin-1440.webp",
+            "width": 1440
+          }
+        ]
+      }
+    ],
+    "verification": "Production build passes. Authenticated workflows are not verified.",
+    "verificationNote": "Eyrie verified the production build on October 29, 2026 using placeholder service configuration. The live capture shows sign-in only. Tests are not green; authenticated support and AI workflows remain unverified.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md and swift-ship-README.portfolio.md. No claim of passing tests, full type/lint checks, a complete database bootstrap, or working authenticated demo.",
+    "order": 2,
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "swift-ship explores an AI-assisted customer support desk that combines ticket handling, knowledge search, and customer conversations. Its source also includes freight estimates and shipment tracking.",
+      "built": "I built a support prototype with ticket queues, replies and internal notes, knowledge editing, and customer portal pages. The AI chat routes requests to support, documentation, quote, or shipment agents. These capabilities are present in source; their authenticated behavior remains unverified.",
+      "architecture": "Next.js pages and API handlers use service modules backed by Supabase Auth, PostgreSQL, and Realtime. The AI route forwards responses from Supabase Edge Functions as server-sent events. Documentation search uses OpenAI embeddings and a pgvector database query.",
+      "limitations": "The public link shows sign-in only. The production build used placeholder service configuration and skips TypeScript and lint checks; those checks and the tests fail separately. The checked-in migrations are not a verified fresh-database setup. Login, ticket operations, and AI responses still need functional verification.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 2; approved build result and sign-in-only capture.",
+        "/Users/dan/portfolio-triage/repos/swift-ship/README.portfolio.md, what the project implements, architecture, and demo access and current limits.",
+        "/Users/dan/portfolio-triage/repos/swift-ship/PORTFOLIO_REPORT.md, installation, build, runtime, and tests; typecheck and lint details.",
+        "Architecture diagram, read-only source inspection: /Users/dan/portfolio-triage/repos/swift-ship/src/app/api/ai-support/route.ts; supabase/functions/docs-agent/index.ts and docs-agent.ts; supabase/functions/support-agent/index.ts; supabase/functions/shared/base-agent.ts, generateEmbedding and searchSimilarContent. Agent routing, forwarded SSE, OpenAI calls, and match_embeddings retrieval."
+      ],
+      "diagram": {
+        "title": "Simplified AI request path",
+        "summary": "The React support interface sends chat messages to the Next.js AI support API. The API forwards requests to one of four Supabase Edge Functions and relays server-sent events to the browser. The functions call OpenAI. The documentation agent also retrieves matching content from PostgreSQL with pgvector.",
+        "steps": [
+          {
+            "title": "React support interface",
+            "detail": [
+              "Next.js application",
+              "Chat messages and conversation"
+            ]
+          },
+          {
+            "title": "Next.js API route",
+            "detail": [
+              "/api/ai-support",
+              "Forwards requests and responses"
+            ]
+          },
+          {
+            "title": "Supabase Edge Functions",
+            "detail": [
+              "Support · docs",
+              "Quotes · shipments"
+            ]
+          },
+          {
+            "title": "AI & document retrieval",
+            "detail": [
+              "OpenAI chat and embeddings",
+              "PostgreSQL · pgvector"
+            ]
+          }
+        ],
+        "connections": [
+          [
+            "Chat request",
+            "SSE response to the browser"
+          ],
+          [
+            "HTTP to the selected function",
+            "SSE response through Next.js"
+          ],
+          [
+            "Model and retrieval calls",
+            "Generated text and matched docs"
+          ]
+        ],
+        "description": [
+          "The browser sends chat messages to the Next.js AI support route. That route forwards the request to a support, documentation, quote, or shipment Edge Function and relays its server-sent events. Paired arrows show requests and responses.",
+          "The documentation agent creates an OpenAI embedding of the query, retrieves matching content through the PostgreSQL match_embeddings function, and uses that content in an OpenAI chat completion.",
+          "This view follows the main AI route. Ticket services, Supabase Auth, and Realtime are separate application paths. A second agent implementation also exists inside the Next.js codebase."
+        ],
+        "caveat": "This is source-level structure. The public demo shows sign-in only. Authenticated support, AI responses, and a fresh database setup remain unverified."
+      }
+    }
+  },
+  {
+    "id": "witness-lexington",
+    "title": "Witness Lexington",
+    "oneLiner": "A 3D history game set at Lexington, April 1775.",
+    "description": "A static three.js game about the night ride and dawn muster at Lexington in April 1775. It runs in the browser with no runtime dependencies, account, or API.",
+    "tech": [
+      "three.js",
+      "JavaScript",
+      "WebGL",
+      "Web Audio"
+    ],
+    "github": "https://github.com/Audacity88/witness-lexington",
+    "demo": null,
+    "status": "verified",
+    "statusLabel": "Build & tests checked",
+    "featured": false,
+    "images": [
+      {
+        "src": "/images/projects/witness-lexington-title-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Witness Lexington title card over a low-poly 3D view of Lexington at dawn, with Begin the opening and Mute music buttons.",
+        "caption": "Title screen, captured from a local run.",
+        "sources": [
+          {
+            "src": "/images/projects/witness-lexington-title-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/witness-lexington-title-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/witness-lexington-title-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/witness-lexington-title-1440.webp",
+            "width": 1440
+          }
+        ]
+      }
+    ],
+    "verification": "Build passes, 341 test checks pass, and 24 local pages load.",
+    "verificationNote": "Eyrie checked this on October 29, 2026: the build succeeded, npm test passed all 341 non-browser checks, and all 24 local paths returned HTTP 200. A full browser playthrough was not verified.",
+    "notes": "Evidence: portfolio-triage results/witness-lexington PORTFOLIO_REPORT.md and title-screen capture. No live demo is claimed.",
+    "order": 3,
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "History lessons often hand over a conclusion. This game asks the player to piece together what happened at Lexington Green from conflicting evidence.",
+      "built": "I built a browser game with a night-ride opening, a dawn muster, an evidence notebook with source labels, and a short evidence-based essay. It has no combat or timer.",
+      "architecture": "Static HTML, CSS, and JavaScript with a checked-in three.js bundle for low-poly WebGL scenes. Web Audio synthesizes the soundtrack, and localStorage keeps checkpoints and drafts. Node built-ins produce self-contained HTML builds.",
+      "limitations": "The 341 checks run without a browser, using renderer and audio stand-ins. WebGL rendering, real input, and audio quality across browsers still need a full playthrough check. No hosted demo is linked.",
+      "sourceNotes": [
+        "portfolio-triage/results/witness-lexington/work/PORTFOLIO_REPORT.md: stack, build, npm test (341 checks), 24 HTTP 200 paths, remaining blockers.",
+        "portfolio-triage/results/witness-lexington/shots/index.png: title screen."
+      ]
+    }
+  },
+  {
+    "id": "model-picker",
+    "title": "Model Picker",
+    "oneLiner": "Recommends AI models for a task.",
+    "description": "A standalone Go and React app that suggests which models fit a task and a priority. It works with any OpenAI-compatible provider, with OpenRouter as the default, and runs locally.",
+    "tech": [
+      "Go",
+      "React",
+      "TypeScript",
+      "OpenAI-compatible API"
+    ],
+    "github": null,
+    "demo": null,
+    "status": "verified",
+    "statusLabel": "Build & tests checked",
+    "featured": false,
+    "images": [
+      {
+        "src": "/images/projects/model-picker-home-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Model Picker start screen with the sentence I want to build a feature from my spec, using anything, and my priority is balanced, and a Pick a model button.",
+        "caption": "Start screen, captured from a local run.",
+        "sources": [
+          {
+            "src": "/images/projects/model-picker-home-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/model-picker-home-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/model-picker-home-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/model-picker-home-1440.webp",
+            "width": 1440
+          }
+        ]
+      }
+    ],
+    "verification": "Build and tests pass. Code is local only.",
+    "verificationNote": "Eyrie checked this on October 29, 2026: the Go build and tests passed, the web build and tests passed, and the local server answered on its page and catalog routes. The code has no public repository.",
+    "notes": "Evidence: portfolio-triage lanes/picker REPORT.md, README.md, and start-screen capture. No repo link, by design.",
+    "order": 4,
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "Picking a model means weighing price, quality, context, and where it can run. This app turns a one-line task and a priority into a ranked shortlist.",
+      "built": "I built a local app where you describe a task in plain language, choose a priority such as price or balance, and get ranked model suggestions with the evidence behind them. It can also list models available locally.",
+      "architecture": "A Go server hosts the API and the React UI on 127.0.0.1. It reads a model catalog snapshot and calls the configured model through an OpenAI-compatible chat completions endpoint for classification and ranking. Local inventory is optional and read-only.",
+      "limitations": "Recommendations need a provider key and model, and catalog prices and availability are a snapshot that can go stale. The code is local only, so there is no repository or hosted demo to link.",
+      "sourceNotes": [
+        "portfolio-triage/lanes/picker/work/REPORT.md: Go build and tests, web build and tests, startup and HTTP checks.",
+        "portfolio-triage/lanes/picker/work/README.md: configuration and API.",
+        "portfolio-triage/lanes/picker/shots/picker.png: start screen."
+      ]
+    }
+  },
+  {
+    "id": "codex-video-vision",
+    "title": "codex-video-vision",
+    "oneLiner": "Video tools for Codex. A credited port of an MIT-licensed project.",
+    "description": "A Codex video tool server using MCP, TypeScript, and ffmpeg.",
+    "tech": [
+      "TypeScript",
+      "MCP",
+      "ffmpeg"
+    ],
+    "github": "https://github.com/EyrieCommander/codex-video-vision",
+    "demo": null,
+    "status": "verified",
+    "statusLabel": "Tests checked",
+    "featured": false,
+    "images": [],
+    "verification": "108 tests pass.",
+    "verificationNote": "Eyrie reported 108 passing tests on October 29, 2026. This is a credited port of an MIT-licensed project. No live demo or end-to-end transcription check is claimed.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md. Preserve the credited-port attribution.",
+    "order": 5,
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "A coding agent needs timestamped frames and audio information to inspect a local video. This project prepares metadata, images, scene analysis, and optional transcripts for the agent to interpret.",
+      "built": "I adapted the MIT-licensed claude-video-vision project for Codex, preserving its upstream credit and license. The port includes a local MCP server and workflows for video inspection and storyboard comparison.",
+      "architecture": "A TypeScript server exposes MCP tools for metadata, analysis, frame extraction, and closer inspection of selected timestamps. ffmpeg and ffprobe process local media. A session cache supports later frame retrieval. Transcription can use Gemini, OpenAI Whisper, or a local Whisper backend.",
+      "limitations": "Transcription tests use mocked backends; real API transcription and local Whisper inference were not verified. Codex Desktop plugin discovery and long-video performance also remain unchecked. The report validates the local source build, not a published npm installation or a hosted demo.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 3; credited MIT port and 108 passing tests.",
+        "/Users/dan/portfolio-triage/repos/codex-tools/codex-video-vision/README.md, what it does, local development, and recommended agent workflow.",
+        "/Users/dan/portfolio-triage/repos/codex-tools/codex-video-vision/PORTFOLIO_REPORT.md, build, tests, and runtime; small fixes; images and remaining limits."
+      ]
+    }
+  },
+  {
+    "id": "codex-skills",
+    "title": "codex-skills",
+    "oneLiner": "Reusable workflows for Codex.",
+    "description": "A collection of Codex skills written in Python and Markdown, listed on skills.sh.",
+    "tech": [
+      "Python",
+      "Markdown",
+      "Codex"
+    ],
+    "github": "https://github.com/EyrieCommander/codex-skills",
+    "demo": null,
+    "status": "pending-verification",
+    "featured": false,
+    "images": [],
+    "verification": "Skill install and scripted workflows checked; some native tests still fail.",
+    "verificationNote": "Eyrie checked skill installation and scripted workflows on October 29, 2026. Some native tests still fail. This is not a green test suite.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md. Keep pending-verification until the remaining test failures are resolved and checked.",
+    "order": 6,
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "Repeated agent work needs reusable procedures. This bundle collects workflows for source intake, writing, media review, maintenance, and recovery of local task history or workspace paths.",
+      "built": "I assembled a portable skill collection with Markdown instructions, supporting scripts, and an installer. The recovery tools report proposed changes, create backups, and support restoring archived data. The collection retains upstream source and license notes for included skills.",
+      "architecture": "Each skill lives in its own folder with instructions and optional resources. Shell installation copies bundled skill folders into a skills directory. Python recovery scripts use the standard library and SQLite. Optional PDF and video workflows depend on external tools; there is no compiled application build.",
+      "limitations": "Some native history-repair tests fail against the evaluated Codex alpha's database schema. The reported checks used synthetic profiles, not live user history. Agent-session discovery, connector-backed workflows, and the remote installation route remain unverified, so this project stays pending verification.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 4; installation and scripted workflows checked with native test failures remaining.",
+        "/Users/dan/portfolio-triage/repos/codex-tools/codex-skills/README.md, included skills, recovery toolkit, repository installer, and project notes.",
+        "/Users/dan/portfolio-triage/repos/codex-tools/codex-skills/PORTFOLIO_REPORT.md, dependencies, structure, installation, and tests; images and remaining blockers."
+      ]
+    }
+  },
+  {
+    "id": "chatgenius",
+    "title": "ChatGenius",
+    "oneLiner": "Slack-like chat with AI replies.",
+    "description": "A chat application built with React, Supabase, FastAPI, and pgvector. Code only; no public demo is linked.",
+    "tech": [
+      "React",
+      "Supabase",
+      "FastAPI",
+      "pgvector"
+    ],
+    "github": "https://github.com/Audacity88/gauntlet-ai",
+    "demo": null,
+    "status": "verified",
+    "statusLabel": "Frontend tests checked",
+    "featured": false,
+    "images": [],
+    "verification": "Frontend: 55 of 55 tests pass.",
+    "verificationNote": "Eyrie reported all 55 frontend tests passing on October 29, 2026. Backend services and a live chat flow are not verified here. Code only; no demo link.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md supersedes the earlier demo-down seed. Do not restore old demo links.",
+    "order": 7,
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "ChatGenius explores Slack-like communication with channels, direct messages, attachments, and AI replies based on message history. It combines the chat interface and AI response paths in one codebase.",
+      "built": "I built a React chat frontend and a Python API for AI replies and related chat operations. The source includes channel and direct-message organization, presence, threads, and file sharing. This portfolio presents the code only, without a live demo.",
+      "architecture": "The application lives in frontend/ and backend/; the root React starter is separate. The frontend uses Supabase for authentication, data, and live updates. FastAPI chat routes retrieve Supabase message history and call OpenAI directly. A separate SQLAlchemy package implements vector retrieval with PostgreSQL and pgvector.",
+      "limitations": "The passing frontend tests do not establish full type correctness or a working chat service. Standalone type checking fails, backend tests fail before assertions, and database migrations need reconciliation. Authenticated messaging, uploads, and AI replies remain unverified.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 5; frontend-only test result and code-only presentation.",
+        "/Users/dan/portfolio-triage/repos/gauntlet-ai/README.md, tech stack and chat feature list.",
+        "/Users/dan/portfolio-triage/repos/gauntlet-ai/PORTFOLIO_REPORT.md, project layout and stack, validation, and database replay limitations. The report distinguishes current AI routes from the separate vector retrieval package."
+      ]
+    }
+  },
+  {
+    "id": "tono4",
+    "title": "Tono4",
+    "oneLiner": "Learn Chinese vocabulary through the camera.",
+    "description": "An iOS app for learning Chinese vocabulary from camera input, built with SwiftUI, ARKit, and Core ML YOLO.",
+    "tech": [
+      "SwiftUI",
+      "ARKit",
+      "Core ML",
+      "YOLO"
+    ],
+    "github": "https://github.com/Audacity88/Tono4",
+    "demo": null,
+    "status": "pending-verification",
+    "featured": false,
+    "images": [],
+    "verification": "Simulator build not verified.",
+    "verificationNote": "As of Eyrie's October 29, 2026 check, the simulator build was not verified. No device behavior, screenshots, or demo is claimed.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md. TODO: verify the simulator build and obtain approved genuine device captures.",
+    "order": 8,
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "Tono4 explores learning Chinese vocabulary from objects around the learner. The intended flow connects camera recognition to saved words, pronunciation practice, and quizzes.",
+      "built": "I built an iOS vocabulary-learning prototype with camera exploration and practice modes. The README credits CoreML-in-ARKit as its foundation. These are source-level capabilities; a running app has not been verified.",
+      "architecture": "SwiftUI provides the interface, with ARKit, SceneKit, Vision, and bundled Core ML YOLO models for camera recognition. Core Data stores word collections. Audio and speech integrations support the intended pronunciation workflow. Model conversion utilities are separate Python scripts.",
+      "limitations": "The simulator build failed during Core ML compilation in the evaluation environment, and simulator services were unavailable. No tests ran. Installation, recognition, pronunciation assessment, and review scheduling remain unverified. AR behavior needs a physical device check; no screenshots or demo are presented.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 6; simulator build unverified and no approved media.",
+        "/Users/dan/portfolio-triage/repos/Tono4/README.md, overview, explore and practice modes, and acknowledgments. Platform and pronunciation-provider details defer to the evaluation report.",
+        "/Users/dan/portfolio-triage/repos/Tono4/PORTFOLIO_REPORT.md, tech stack, build, run, and test results; models and conversion; remaining blockers."
+      ]
+    }
+  }
+]

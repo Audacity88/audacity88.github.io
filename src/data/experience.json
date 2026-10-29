@@ -1,0 +1,70 @@
+{
+  "reviewStatus": "approved",
+  "notes": "Approved by Dan on 2026-10-29 (2:09 PM ET) for publication: Superbuilders employer name, the Bill of Rights Institute partner name, and the 39-student pilot figure. No other client names, people, student data, code, or screenshots from contract work.",
+  "roles": [
+    {
+      "id": "superbuilders",
+      "role": "AI Engineer, Contract",
+      "organization": "Superbuilders",
+      "needsDanOk": false,
+      "period": "Apr 2025 to Oct 2026",
+      "summary": "Built full-stack pilots and agentic workflows directly with curriculum and product teams. Turned needs into requirements and explained cost, reliability, and readiness tradeoffs. These projects were demoed or piloted, not shipped to production.",
+      "highlights": [
+        "Civics Debate Academy: co-wrote the PRD and built the full-stack app with AI judging and real-time multiplayer, in partnership with the Bill of Rights Institute. Demoed to Bill of Rights Institute leadership, then piloted in classrooms with 39 students.",
+        "Flying Colors: a team-built civics app. Produced the cinematic lesson videos with AI video generation and brought the Bill of Rights Institute in for a demo. Piloted with middle-school students.",
+        "Civics Time Machine, later Witness: solo builder and video producer for a video-first history app. Built an AI video pipeline that retries defective clips before human review. Demoed to stakeholders."
+      ],
+      "clients": [
+        {
+          "name": "Bill of Rights Institute",
+          "needsDanOk": false,
+          "publicFallback": "a national civics-education nonprofit"
+        }
+      ],
+      "notes": "Approved by Dan for publication on 2026-10-29. Contract projects were demoed or piloted, not shipped to production. No links, screenshots, videos, internal details, people, or project cards."
+    },
+    {
+      "id": "zeroclaw",
+      "role": "Code Owner and Core Contributor",
+      "organization": "ZeroClaw",
+      "period": "Mar 2026 to present",
+      "summary": "Contribute to an open-source Rust agent runtime, with code ownership across runtime, tools, gateway, configuration, memory, and cost code.",
+      "highlights": [
+        "Fixed mid-turn steering delivery and a race that silently dropped late steering messages.",
+        "Traced prompt-cache misses to three causes, with one fix per cause. A controlled A/B on the same 30 prompts raised cache hit rate from 81.8% to 93.1% and cut effective input cost about 51%."
+      ],
+      "clients": [],
+      "notes": "See facts.md and opensource.json for verified merged PRs and the controlled prompt-cache comparison."
+    },
+    {
+      "id": "gauntlet",
+      "role": "Software Engineering Fellow",
+      "organization": "Gauntlet AI, Cohort 1",
+      "period": "Dec 2024 to Mar 2025",
+      "summary": "Completed a 12-week, 1,000-hour AI-first program, building a new application from scratch every week.",
+      "highlights": [],
+      "clients": [],
+      "notes": ""
+    },
+    {
+      "id": "knowledge-lab",
+      "role": "Graduate Student Researcher",
+      "organization": "University of Chicago Knowledge Lab",
+      "period": "Nov 2023 to May 2024",
+      "summary": "Created technical visualizations of neural networks and training dynamics for a forthcoming deep learning textbook.",
+      "highlights": [],
+      "clients": [],
+      "notes": ""
+    },
+    {
+      "id": "education-beijing",
+      "role": "English and STEM Educator",
+      "organization": "Beijing",
+      "period": "2012 to 2021",
+      "summary": "Taught English and STEM, and worked as a Chinese-English translator and editor.",
+      "highlights": [],
+      "clients": [],
+      "notes": ""
+    }
+  ]
+}
