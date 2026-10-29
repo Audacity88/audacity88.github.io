@@ -81,8 +81,9 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
       function updateTheme() {
         if (theme === 'system') delete document.documentElement.dataset.theme;
         else document.documentElement.dataset.theme = theme;
-        if (label) label.textContent = theme === 'system' ? 'Auto' : theme === 'light' ? 'Light' : 'Dark';
-        button?.setAttribute('aria-label', `Color theme: ${theme}. Switch to ${nextTheme[theme]} theme`);
+        const themeName = theme === 'system' ? 'Auto' : theme === 'light' ? 'Light' : 'Dark';
+        if (label) label.textContent = themeName;
+        button?.setAttribute('aria-label', `${themeName} color theme${theme === 'system' ? ', follows system' : ''}. Switch to ${nextTheme[theme]} theme`);
       }
       updateTheme();
       if (button) {

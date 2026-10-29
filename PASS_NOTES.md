@@ -253,3 +253,21 @@ Validation on Mac-mini.local, working directory /Users/natalie/Development/portf
 - Captures, audit scripts, and JSON results remain only in /private/tmp/portfolio-qa/pass14/, equivalent to /tmp/portfolio-qa/pass14/ on this host. No packages or browsers were downloaded. Closed the isolated browsers, stopped exactly preview PID 19238, and confirmed its listener was gone. Browser launch and preview shutdown required sandbox escalation.
 
 This was a local Chrome visual review. Axe and Lighthouse remain for their respective passes, starting with deep item 5. It does not verify physical phones, other browser engines, project runtime behavior, authenticated workflows, remote CI, or production hosting. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 15: Accessibility round 2, 2026-10-30
+
+deep item 5 done
+
+Fixed the shared theme button's accessible name. Its visible Auto label previously conflicted with the word system in its accessible name, which failed axe's label-content-name-mismatch rule on every page. Both labels now use the same theme name, with an explanation that Auto follows the system preference. The accessible name still announces the next theme. No visual styles, site dependencies, or content facts changed.
+
+Re-read facts.md, the untested triage, and verified-projects.md. Reconciled experience.json and all rendered experience copy. No experience corrections were needed. Approval flags, neutral client wording, team and solo attribution, explicit demo/pilot and not-production wording, the approved linked merged-PR total, project verification limits, and hidden-record exclusions remain intact.
+
+Validation on Mac-mini.local, working directory /Users/natalie/Development/portfolio:
+
+- Ran axe-core 4.14.0 through the existing Playwright installation and isolated headless Chrome 158.0.8117.2 against the built site. Tested home, six project pages, and the custom 404 at 360/768/1280px in both system-selected themes, 48 combinations. All default-enabled rules ran with no disabled rules or excluded elements. The baseline reproduced the button failure in all 48 scans; the final scans reported zero violations.
+- Axe retained color-contrast review items for gradients, SVG text, decorative arrows, and the short X link label. Reviewed all 450 element instances separately using computed text colors, actual SVG rectangle fills, and conservative color bounds across gradient stops and underlying backgrounds. All exceeded 4.5:1, with minima of 5.11:1 in light and 6.49:1 in dark. These are supplemental checks; the raw axe reports retain their incomplete results.
+- In all 48 combinations, checked keyboard skip-link focus, Enter/Space theme cycling, visible focus outlines, accessible names containing Auto/Light/Dark, and persistence after reload. An additional 144 control-level axe scans passed across the three theme states. Diagram accessible names and descriptions resolved. Browser checks also confirmed experience summaries/highlights, neutral client fallbacks, six public cards, hidden-content exclusions, the approved linked total, and no runtime exceptions.
+- Final `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. All 155 local references across eight HTML pages and the generated-output exclusion guard passed. `npm test` passed all ten tests. `git diff --check` passed.
+- Installed only axe-core into /private/tmp/portfolio-a11y with a temporary npm cache. Audit scripts and baseline/final reports remain only in /private/tmp/portfolio-qa/pass15/, equivalent to /tmp/portfolio-qa/pass15/ on this host. Closed the isolated browsers, stopped exactly preview PID 38702, and confirmed port 4343 was released. Browser launch and preview shutdown required sandbox escalation.
+
+This local automated audit and supplemental review do not establish full WCAG conformance. VoiceOver, actual voice-control software, physical devices, and other browser engines remain untested. Project runtime behavior, remote CI, and hosting were outside this pass. Deep item 6 is next. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
