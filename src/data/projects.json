@@ -445,7 +445,33 @@
     "status": "verified",
     "statusLabel": "Tests checked",
     "featured": false,
-    "images": [],
+    "images": [
+      {
+        "src": "/images/projects/codex-video-vision-tests-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Terminal output of the MCP server test run: 15 test files and 108 tests passed.",
+        "caption": "Test run, captured from a local run: 15 files, 108 tests passed.",
+        "sources": [
+          {
+            "src": "/images/projects/codex-video-vision-tests-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/codex-video-vision-tests-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/codex-video-vision-tests-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/codex-video-vision-tests-1440.webp",
+            "width": 1440
+          }
+        ]
+      }
+    ],
     "verification": "108 tests pass.",
     "verificationNote": "Eyrie reported 108 passing tests on October 29, 2026. This is a credited port of an MIT-licensed project. No live demo or end-to-end transcription check is claimed.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md. Preserve the credited-port attribution.",
@@ -477,7 +503,33 @@
     "demo": null,
     "status": "pending-verification",
     "featured": false,
-    "images": [],
+    "images": [
+      {
+        "src": "/images/projects/codex-skills-install-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Terminal output of the skills installer listing eleven installed skills, then Done. Installed 11, replaced 0, skipped 0.",
+        "caption": "Installer output, captured from a local run into a temporary skills folder.",
+        "sources": [
+          {
+            "src": "/images/projects/codex-skills-install-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/codex-skills-install-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/codex-skills-install-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/codex-skills-install-1440.webp",
+            "width": 1440
+          }
+        ]
+      }
+    ],
     "verification": "Skill install and scripted workflows checked; some native tests still fail.",
     "verificationNote": "Eyrie checked skill installation and scripted workflows on October 29, 2026. Some native tests still fail. This is not a green test suite.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md. Keep pending-verification until the remaining test failures are resolved and checked.",
@@ -511,7 +563,33 @@
     "status": "verified",
     "statusLabel": "Frontend tests checked",
     "featured": false,
-    "images": [],
+    "images": [
+      {
+        "src": "/images/projects/chatgenius-channel-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "ChatGenius general channel with four demo messages, a channel list, presence dots, and an all-users list.",
+        "caption": "Frontend running locally with demo seed data and a mocked backend. Live chat is not verified.",
+        "sources": [
+          {
+            "src": "/images/projects/chatgenius-channel-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/chatgenius-channel-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/chatgenius-channel-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/chatgenius-channel-1440.webp",
+            "width": 1440
+          }
+        ]
+      }
+    ],
     "verification": "Frontend: 55 of 55 tests pass.",
     "verificationNote": "Eyrie reported all 55 frontend tests passing on October 29, 2026. Backend services and a live chat flow are not verified here. Code only; no demo link.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md supersedes the earlier demo-down seed. Do not restore old demo links.",
