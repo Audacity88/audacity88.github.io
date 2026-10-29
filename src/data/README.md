@@ -27,11 +27,11 @@ To swap a project, replace its entire object and preserve unique IDs and the int
 
 ## Update experience
 
-Edit `experience.json`. `roles` controls the timeline order. `summary` and `highlights` are public copy. `notes` is internal.
+Re-read `facts.md` every pass, then reconcile `experience.json` and all experience copy. `roles` controls the timeline order. `summary` and `highlights` are public copy. `notes` is internal.
 
-Keep each unapproved client name as `[CLIENT: needs Dan OK]`, with `needsDanOk: true`. Leave `publicDescription` as `null` to hide it. If an approved neutral description is available, put that phrase in `publicDescription`. The component uses that description when `needsDanOk` is true and hides the placeholder. Change the flag and name only after explicit approval.
+Keep the top-level `reviewStatus` as `needs-dan-ok`. Keep each unapproved client name inside a `[CLIENT: ..., needs Dan OK]` placeholder, with `needsDanOk: true`. Put the neutral description approved in `facts.md` in `publicFallback`. The component renders that fallback while approval is pending. Never render a placeholder. Change approval flags and client names only after explicit approval.
 
-Do not put client names in summaries or highlights. Keep private project names and links out of the public timeline. The top-level TODO records the pending achievements source.
+Keep Superbuilders' role-level `needsDanOk: true`. Its employer name is shown as instructed in `facts.md`, but still awaits Dan's approval. TODO: obtain approval before publication. Do not put client names in summaries or highlights. Include only contract project names and headline results allowed by `facts.md`, and state that they were demoed or piloted, not shipped to production. Keep contract project cards, links, screenshots, and videos out of the site.
 
 ## Update open-source work
 

@@ -28,18 +28,18 @@ const canonical = new URL(base, Astro.site);
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header container">
-      <a class="wordmark" href={base} aria-label="Dan Gilles, home">DG<span aria-hidden="true">.</span></a>
+      <a class="wordmark" href={base} aria-label="Dan Gilles, home">Dan Gilles<span aria-hidden="true">.</span></a>
       <nav aria-label="Main navigation">
         <a href="#projects">Projects</a>
         <a href="#open-source">Open source</a>
         <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
       </nav>
-      <button type="button" class="theme-toggle" id="theme-toggle" hidden>Theme: <span id="theme-label">Auto</span></button>
+      <button type="button" class="theme-toggle" id="theme-toggle" hidden><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.4" /><path d="M10 3a7 7 0 0 1 0 14Z" fill="currentColor" /></svg><span id="theme-label">Auto</span></button>
     </header>
     <slot />
     <footer class="site-footer container">
-      <span>Dan Gilles</span>
+      <a class="footer-name" href={base}>Dan Gilles<span aria-hidden="true">.</span></a>
       <span>Built with Astro. No tracking.</span>
       <a href="#main">Back to top <span aria-hidden="true">↑</span></a>
     </footer>

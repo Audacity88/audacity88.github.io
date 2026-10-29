@@ -9,3 +9,4 @@
 - Never display a total merged pull request count. The optional count in `src/data/opensource.json` must retain `display: false` and must never enter page markup.
 - Keep the site static, accessible, responsive, and lightweight. Respect system color preferences and persist explicit theme choices.
 - Run `npm run build` and resolve all build errors before completing a pass. Append its changes and validation limits to `PASS_NOTES.md`.
+- Every pass, re-read `facts.md` and reconcile `src/data/experience.json` and all rendered experience copy, including approval flags and explicit demo/pilot, not-production wording.

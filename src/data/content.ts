@@ -28,18 +28,20 @@ if (new Set(projects.map((project) => project.id)).size !== projects.length) {
 }
 
 export const experience = z.object({
+  reviewStatus: z.literal('needs-dan-ok'),
   notes: z.string(),
   roles: z.array(z.object({
     id: z.string(),
     role: z.string(),
     organization: z.string(),
+    needsDanOk: z.boolean().optional(),
     period: z.string(),
     summary: z.string(),
     highlights: z.array(z.string()),
     clients: z.array(z.object({
       name: z.string(),
       needsDanOk: z.boolean(),
-      publicDescription: z.string().nullable(),
+      publicFallback: z.string().min(1),
     })),
     notes: z.string(),
   })),

@@ -1,24 +1,27 @@
 {
-  "notes": "TODO: incorporate approved facts from /workspace/career/superbuilders-achievements when available. Client and partner details need Dan's approval before publication.",
+  "reviewStatus": "needs-dan-ok",
+  "notes": "TODO: Dan must approve employer and client details before publication. Facts reconciled against portfolio-brief/facts.md on 2026-10-29. Partner names remain approval placeholders; only publicFallback is rendered.",
   "roles": [
     {
       "id": "superbuilders",
       "role": "AI Engineer, Contract",
       "organization": "Superbuilders",
+      "needsDanOk": true,
       "period": "Apr 2025 to Oct 2026",
-      "summary": "Built full-stack pilots and agentic workflows directly with curriculum and product teams. Turned ambiguous requirements into working software and explained cost, reliability, and readiness tradeoffs.",
+      "summary": "Built full-stack pilots and agentic workflows directly with curriculum and product teams. Turned needs into requirements and explained cost, reliability, and readiness tradeoffs. These projects were demoed or piloted, not shipped to production.",
       "highlights": [
-        "Owned the full-stack build of a civics debate demo, including AI judging and real-time multiplayer. Presented a working demo to partner leadership.",
-        "Built a multi-stage AI video pipeline with quality gates that regenerated defective output."
+        "Civics Debate Academy: co-wrote the PRD and built the full-stack app with AI judging and real-time multiplayer. Demoed to partner leadership. The app had a teacher-led classroom pilot.",
+        "Flying Colors: a team-built civics app. Produced the cinematic lesson videos with AI video generation and brought the partner in for a demo. Piloted with middle-school students.",
+        "Civics Time Machine, later Witness: solo builder and video producer for a video-first history app. Built an AI video pipeline that retries defective clips before human review. Demoed to stakeholders."
       ],
       "clients": [
         {
-          "name": "[CLIENT: needs Dan OK]",
+          "name": "[CLIENT: Bill of Rights Institute, needs Dan OK]",
           "needsDanOk": true,
-          "publicDescription": null
+          "publicFallback": "a national civics-education nonprofit"
         }
       ],
-      "notes": "Demo only. Do not claim production adoption. No private project names, links, screenshots, or project cards."
+      "notes": "Employer name is shown per facts.md but still needs Dan's approval. Contract projects were not shipped to production. Experience copy only; no links, screenshots, videos, internal details, or project cards."
     },
     {
       "id": "zeroclaw",
@@ -28,7 +31,7 @@
       "summary": "Contribute to an open-source Rust agent runtime, with code ownership across runtime, tools, gateway, configuration, memory, and cost code.",
       "highlights": [
         "Fixed mid-turn steering delivery and a race that silently dropped late steering messages.",
-        "Traced prompt-cache misses to three causes and shipped one fix for each."
+        "Traced prompt-cache misses to three causes, with one fix per cause. A controlled A/B on the same 30 prompts raised cache hit rate from 81.8% to 93.1% and cut effective input cost about 51%."
       ],
       "clients": [],
       "notes": "See facts.md and opensource.json for verified merged PRs and the controlled prompt-cache comparison."
