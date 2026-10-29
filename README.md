@@ -15,7 +15,7 @@ npm ci
 npm run dev
 ```
 
-The default local URL is `http://localhost:4321/portfolio/`.
+The default local URL is `http://localhost:4321/`.
 
 ## Build locally
 
@@ -93,11 +93,13 @@ Do not add phone numbers, addresses, family details, private repository links, o
 
 ## Configure site URLs
 
-In [astro.config.mjs](astro.config.mjs), `PUBLIC_SITE_URL` sets the site origin, defaulting to `https://audacity88.github.io`. `PUBLIC_BASE_PATH` sets the path, defaulting to `/portfolio/`. To build for the account site's root instead, run:
+In [astro.config.mjs](astro.config.mjs), `PUBLIC_SITE_URL` sets the site origin, defaulting to `https://audacity88.github.io`. `PUBLIC_BASE_PATH` sets the path, defaulting to `/`, the root of https://audacity88.github.io/. To build for a subpath instead, run:
 
 ```sh
-PUBLIC_BASE_PATH=/ npm run build
+PUBLIC_BASE_PATH=/portfolio/ npm run build
 ```
+
+The site used to live at `/portfolio/`. The 404 page sends old `/portfolio/...` links to the same page at the root.
 
 For another repository subpath, set `PUBLIC_BASE_PATH` to its path with leading and trailing slashes. For a custom domain, set `PUBLIC_SITE_URL` to its HTTPS origin and `PUBLIC_BASE_PATH=/`. These variables configure the build; they do not publish anything or configure a domain.
 
@@ -123,7 +125,7 @@ After Dan separately approves publication and the content review is complete:
 4. With approval to deploy that version, open **Actions > Deploy portfolio to GitHub Pages > Run workflow** and select the approved branch.
 5. Check the published home page, theme, project links, social metadata, sitemap, and missing-page response at the final URL.
 
-The build job uses `actions/configure-pages` to read the configured origin and base path, then passes them as `PUBLIC_SITE_URL` and `PUBLIC_BASE_PATH` to `npm run build`. An empty Pages base path becomes `/`, overriding the local `/portfolio/` default. `actions/upload-pages-artifact` uploads `dist/`; a dependent job uses `actions/deploy-pages` with the `github-pages` environment. Only that deploy job gets Pages write and OIDC permissions.
+The build job uses `actions/configure-pages` to read the configured origin and base path, then passes them as `PUBLIC_SITE_URL` and `PUBLIC_BASE_PATH` to `npm run build`. An empty Pages base path becomes `/`. `actions/upload-pages-artifact` uploads `dist/`; a dependent job uses `actions/deploy-pages` with the `github-pages` environment. Only that deploy job gets Pages write and OIDC permissions.
 
 The workflow expects Pages to be enabled beforehand and fails if that prerequisite is missing. Creating these files does not enable Pages or run a deployment. Remote CI and deployment still need validation after the relevant approvals.
 

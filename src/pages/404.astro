@@ -11,4 +11,12 @@ import Layout from '../layouts/Layout.astro';
       <div class="hero-actions"><a class="button primary" href={import.meta.env.BASE_URL}>Back to the portfolio <span aria-hidden="true">↗</span></a></div>
     </section>
   </main>
+  {import.meta.env.BASE_URL === '/' && (
+    <script is:inline>
+      // The portfolio moved from /portfolio/ to the root. Send old links to the same page.
+      if (location.pathname.startsWith('/portfolio/') || location.pathname === '/portfolio') {
+        location.replace((location.pathname.replace(/^\/portfolio\/?/, '/')) + location.search + location.hash);
+      }
+    </script>
+  )}
 </Layout>
