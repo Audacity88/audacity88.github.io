@@ -221,7 +221,7 @@
   .contact-section h2 { font-size: clamp(2.75rem, 5.5vw, 5.25rem); max-width: 850px; }
   .contact-section > p:not(.eyebrow) { color: var(--muted); margin-top: 1.5rem; }
   .contact-email { display: inline-flex; flex-wrap: wrap; align-items: center; min-height: 44px; gap: 1rem; margin-top: 1.5rem; font-size: clamp(1.1rem, 3vw, 2rem); letter-spacing: -.035em; overflow-wrap: anywhere; text-decoration-color: var(--line); }
-  .contact-email:hover { text-decoration-color: var(--accent); }
+  .contact-email:is(:hover, :focus-visible) { text-decoration-color: var(--accent); }
   .social-links { display: flex; flex-wrap: wrap; gap: 1.75rem; list-style: none; padding: 0; margin-top: 2rem; font-size: .85rem; }
   .social-links a { display: inline-flex; align-items: center; min-height: 44px; gap: .35rem; text-decoration: none; }
   .social-links a:is(:hover, :focus-visible) { text-decoration: underline; }
