@@ -1,0 +1,11 @@
+# Portfolio instructions
+
+- Use `/Users/natalie/Development/portfolio-brief/facts.md` as the only source of biographical and experience facts. Preserve the project seeds explicitly supplied in the task. Treat triage as untested context.
+- Keep work local. Do not commit, push, mutate GitHub state, deploy, or enable GitHub Pages without explicit approval for that action.
+- Do not publish phone numbers, addresses, family details, private repository links, or Superbuilders project cards, links, or screenshots.
+- Keep client and partner names as approval placeholders in `src/data/experience.json`. Render only neutral approved descriptions when `needsDanOk` is true. Never render the placeholder itself.
+- Keep projects in `src/data/projects.json`. Default to `pending-verification`; ChatGenius starts as `demo-down`. Hide demo links when `demo` is null. Do not treat a successful portfolio build as project verification.
+- Never fabricate screenshots or demo images. Use clearly labeled CSS or SVG placeholders until genuine media is approved.
+- Never display a total merged pull request count. The optional count in `src/data/opensource.json` must retain `display: false` and must never enter page markup.
+- Keep the site static, accessible, responsive, and lightweight. Respect system color preferences and persist explicit theme choices.
+- Run `npm run build` and resolve all build errors before completing a pass. Append its changes and validation limits to `PASS_NOTES.md`.

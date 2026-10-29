@@ -1,0 +1,67 @@
+{
+  "notes": "TODO: incorporate approved facts from /workspace/career/superbuilders-achievements when available. Client and partner details need Dan's approval before publication.",
+  "roles": [
+    {
+      "id": "superbuilders",
+      "role": "AI Engineer, Contract",
+      "organization": "Superbuilders",
+      "period": "Apr 2025 to Oct 2026",
+      "summary": "Built full-stack pilots and agentic workflows directly with curriculum and product teams. Turned ambiguous requirements into working software and explained cost, reliability, and readiness tradeoffs.",
+      "highlights": [
+        "Owned the full-stack build of a civics debate demo, including AI judging and real-time multiplayer. Presented a working demo to partner leadership.",
+        "Built a multi-stage AI video pipeline with quality gates that regenerated defective output."
+      ],
+      "clients": [
+        {
+          "name": "[CLIENT: needs Dan OK]",
+          "needsDanOk": true,
+          "publicDescription": null
+        }
+      ],
+      "notes": "Demo only. Do not claim production adoption. No private project names, links, screenshots, or project cards."
+    },
+    {
+      "id": "zeroclaw",
+      "role": "Code Owner and Core Contributor",
+      "organization": "ZeroClaw",
+      "period": "Mar 2026 to present",
+      "summary": "Contribute to an open-source Rust agent runtime, with code ownership across runtime, tools, gateway, configuration, memory, and cost code.",
+      "highlights": [
+        "Fixed mid-turn steering delivery and a race that silently dropped late steering messages.",
+        "Traced prompt-cache misses to three causes and shipped one fix for each."
+      ],
+      "clients": [],
+      "notes": "See facts.md and opensource.json for verified merged PRs and the controlled prompt-cache comparison."
+    },
+    {
+      "id": "gauntlet",
+      "role": "Software Engineering Fellow",
+      "organization": "Gauntlet AI, Cohort 1",
+      "period": "Dec 2024 to Mar 2025",
+      "summary": "Completed a 12-week, 1,000-hour AI-first program, building a new application from scratch every week.",
+      "highlights": [],
+      "clients": [],
+      "notes": ""
+    },
+    {
+      "id": "knowledge-lab",
+      "role": "Graduate Student Researcher",
+      "organization": "University of Chicago Knowledge Lab",
+      "period": "Nov 2023 to May 2024",
+      "summary": "Created technical visualizations of neural networks and training dynamics for a forthcoming deep learning textbook.",
+      "highlights": [],
+      "clients": [],
+      "notes": ""
+    },
+    {
+      "id": "education-beijing",
+      "role": "English and STEM Educator",
+      "organization": "Beijing",
+      "period": "2012 to 2021",
+      "summary": "Taught English and STEM, and worked as a Chinese-English translator and editor.",
+      "highlights": [],
+      "clients": [],
+      "notes": ""
+    }
+  ]
+}

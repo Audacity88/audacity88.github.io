@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+const base = import.meta.env.BASE_URL;
+const canonical = new URL(base, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Dan Gilles builds AI agents, developer tools, and full-stack software directly with the people who use it. Selected projects and open-source contributions." />
+    <meta property="og:title" content="Dan Gilles | AI engineer" />
+    <meta property="og:description" content="AI agents, developer tools, and forward-deployed engineering. Selected work by Dan Gilles." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical.toString()} />
+    <link rel="canonical" href={canonical.toString()} />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <title>Dan Gilles | AI engineer</title>
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('portfolio-theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch { /* System preferences work when storage is unavailable. */ }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header container">
+      <a class="wordmark" href={base} aria-label="Dan Gilles, home">DG<span aria-hidden="true">.</span></a>
+      <nav aria-label="Main navigation">
+        <a href="#projects">Projects</a>
+        <a href="#open-source">Open source</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle" hidden>Theme: <span id="theme-label">Auto</span></button>
+    </header>
+    <slot />
+    <footer class="site-footer container">
+      <span>Dan Gilles</span>
+      <span>Built with Astro. No tracking.</span>
+      <a href="#main">Back to top <span aria-hidden="true">↑</span></a>
+    </footer>
+    <script>
+      const button = document.querySelector<HTMLButtonElement>('#theme-toggle');
+      const label = document.querySelector<HTMLElement>('#theme-label');
+      type Theme = 'system' | 'light' | 'dark';
+      let theme: Theme = document.documentElement.dataset.theme === 'dark' ? 'dark' : document.documentElement.dataset.theme === 'light' ? 'light' : 'system';
+      const nextTheme = { system: 'light', light: 'dark', dark: 'system' } as const;
+      function updateTheme() {
+        if (theme === 'system') delete document.documentElement.dataset.theme;
+        else document.documentElement.dataset.theme = theme;
+        if (label) label.textContent = theme === 'system' ? 'Auto' : theme === 'light' ? 'Light' : 'Dark';
+        button?.setAttribute('aria-label', `Color theme: ${theme}. Switch to ${nextTheme[theme]} theme`);
+      }
+      updateTheme();
+      if (button) {
+        button.hidden = false;
+        button.addEventListener('click', () => {
+          theme = nextTheme[theme];
+          try {
+            if (theme === 'system') localStorage.removeItem('portfolio-theme');
+            else localStorage.setItem('portfolio-theme', theme);
+          } catch { /* The current page still honors the selected theme. */ }
+          updateTheme();
+        });
+      }
+    </script>
+  </body>
+</html>
