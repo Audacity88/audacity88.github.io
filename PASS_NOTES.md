@@ -332,3 +332,24 @@ Deep item 6 remains the first unfinished item. Lighthouse is absent from the tem
 Re-read facts.md, the untested triage, verified-projects.md, and prior pass notes. Reconciled experience.json and rendered experience copy; approval flags, neutral partner wording, team/solo roles, and demo/pilot and not-production wording need no corrections. Existing hidden placeholders and their consumer/output safeguards remain intact. No source, media, dependency, or project-evidence changes were needed.
 
 Validation on Mac-mini.local in /Users/natalie/Development/portfolio: `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints, including the hidden-output guard and 179 local references across eight HTML pages. `npm test` passed all ten tests. Only this pass record changed. Nothing was committed, pushed, deployed, or changed on GitHub or Pages. Continue item 6 after the pending runner choice; the exact install command is recorded in Pass 17.
+
+## Pass 21: Mobile Lighthouse performance, 2026-10-30
+
+deep item 6 done
+
+Dan explicitly selected the assistant to run remaining performance downloads. Recorded that decision and the install-failure continuation rule in AGENTS.md. Ran the approved `npm install --prefix /private/tmp/portfolio-lighthouse --cache /private/tmp/portfolio-lighthouse-cache --no-audit --no-fund lighthouse` on Mac-mini.local from /private/tmp. It succeeded with 119 packages added in 25 seconds. No repository dependencies changed.
+
+Ran Lighthouse 13.6.0 with installed headless Chrome 158.0.8117.2 against the built home and Eyrie pages. Used the default mobile preset, a 412 by 823 viewport at 1.75 device scale, simulated mobile network throttling and 4x CPU slowdown. Both pages scored 100 for performance, accessibility, best practices, and SEO. Neither report has run warnings or failed scored audits. Home measured FCP/LCP 0.7 seconds and speed index 1.0 seconds; Eyrie measured FCP/LCP and speed index 0.6 seconds. Both measured total blocking time 0 ms and cumulative layout shift 0. These are local simulated lab measurements, not field or production-hosting results. Lighthouse's manual accessibility and structured-data checks remain manual; a 100 accessibility score does not establish full WCAG conformance.
+
+Existing responsive captures needed no further changes. Confirmed all five approved captures have 360/720/960/1440px WebP variants, 20 files total, with matching widths and original aspect ratios. The shared image component retains declared width/height, responsive srcset/sizes, lazy loading, genuine content, alt text, and first-run or sign-in captions. No source content, media, or project-verification evidence changed during this pass.
+
+Re-read facts.md, the untested triage, verified-projects.md, and pass notes. Reconciled experience.json and all rendered experience summaries and highlights with facts.md. No corrections were needed. Employer/client approval flags, neutral partner fallback, team/solo attribution, and explicit demo/pilot and not-production wording remain correct. Existing hidden-record guards cover public data, cards, static routes, sitemap, metadata, link checking, verification, and generated output.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. The generated-output exclusion guard and 179 local references across eight HTML pages passed. `npm test` passed all ten tests. `git diff --check` passed.
+- Started `npm run preview -- --host 127.0.0.1 --port 4345`, recorded listener PID 89532, and audited /portfolio/ and /portfolio/projects/eyrie/. The CLI used `--chrome-flags='--headless --no-first-run' --only-categories=performance,accessibility,best-practices,seo --output=json --output=html --no-enable-error-reporting --quiet` with the installed Chrome executable selected through CHROME_PATH.
+- The first sandboxed Chrome launch failed with `Runtime error encountered: waiting for dynamic debugging port in chrome-err.log`. Retried with sandbox escalation; both audits succeeded. Stopped exactly preview PID 89532 with sandbox escalation and confirmed port 4345 was released. Lighthouse closed its isolated browser instances.
+- Full HTML/JSON reports, extracted settings and metrics, and image-dimension evidence remain only in /private/tmp/portfolio-qa/pass21/, equivalent to /tmp/portfolio-qa/pass21/. The report names retain the baseline suffix because the initial successful scores already met the target and no site optimization was needed.
+
+Deep item 7 is next. Physical-device performance, production network/hosting, other browser engines, project runtime behavior, authenticated services, and remote CI remain untested in this pass. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
