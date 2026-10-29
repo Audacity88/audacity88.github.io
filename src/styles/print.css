@@ -12,6 +12,7 @@
   }
   html { font-size: 10pt; }
   body { font-size: 9pt; line-height: 1.35; }
+  p { orphans: 3; widows: 3; }
   a { text-decoration: none; }
   .container { width: 100%; max-width: none; }
   .skip-link, .site-header nav, .theme-control, .site-footer,

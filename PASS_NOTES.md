@@ -576,3 +576,16 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - `npm test` passed all 12 tests with no skips. `git diff --check` passed.
 
 No server, browser, download, or Lighthouse run was started. Browser appearance and keyboard interaction were not rechecked. This pass does not reverify project behavior, accessibility conformance, performance, print layout, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 38: Printed paragraph breaks, 2026-10-30
+
+All ten deep items are already recorded as done. Added print-only paragraph rules requesting at least three lines on either side of a page break. This reduces isolated lines in printed resumes and case studies where the browser supports these rules. Screen styles and factual content are unchanged.
+
+Re-read facts.md, the untested triage, verified-projects.md, and the deep-item completion records. Reconciled experience.json, the shared experience timeline, and the home and resume copy against facts.md. No corrections were needed. Employer/client approval flags, neutral client fallback, team and solo attribution, and explicit demo/pilot and not-production wording remain correct. The later eight-project content lock remains authoritative. Project data, verification claims, numbers, links, attribution, and media are unchanged.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Its link checks passed across 262 local references and 11 HTML pages.
+- `npm test` passed all 12 tests with no skips.
+
+No server, browser, download, or Lighthouse run was started. Print pagination was not checked in a browser, so the requested line counts are verified only in the stylesheet. This pass does not reverify project behavior, accessibility conformance, performance, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
