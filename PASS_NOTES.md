@@ -235,3 +235,21 @@ Validation on Mac-mini.local, working directory /Users/natalie/Development/portf
 - Closed the isolated browser, stopped exactly preview PID 14074, and confirmed port 4341 was released. Browser launch and preview shutdown required sandbox escalation.
 
 This pass verified the portfolio output and read merged PR descriptions; it did not rerun ZeroClaw or project tests. The full-site visual, axe, and Lighthouse rounds remain pending, starting with deep item 4. Existing authenticated-service, native-test, device, remote-CI, and hosting limits remain. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 14: Full-site visual QA, 2026-10-30
+
+deep item 4 done
+
+Tightened the hero's spacing and replaced its repeated subtitle with the approved brief-to-pilot theme. Gave Eyrie's flagship card a larger title and a restrained accent border. Stacked its content and genuine first-run capture through tablet widths so the image is easier to inspect. Fixed the mobile card's inherited center alignment, the detached period in the footer wordmark, and the doubled top border on the 404 page. No dependencies, media, or client JavaScript were added.
+
+Re-read facts.md, the untested triage, and verified-projects.md. Reconciled experience.json and all rendered experience copy. No experience corrections were needed. Approval flags, neutral client wording, team and solo attribution, demo/pilot and not-production wording, the approved linked merged-PR label, public project order, verification limits, and hidden-record exclusions remain intact.
+
+Validation on Mac-mini.local, working directory /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. All 155 local references across eight HTML pages passed, including the generated-output exclusion guard. `npm test` passed all ten tests. `git diff --check` passed.
+- Ran `npm run preview -- --host 127.0.0.1 --port 4342`, listener PID 19238. Playwright used installed Chrome with isolated profiles. Captured and visually reviewed home, all six detail pages, and the custom 404 at 360/768/1280px in light and dark, 48 combinations. Reviewed full-page captures as tiles and inspected normal viewport captures of the hero and flagship card. All captures were refreshed after the final layout change.
+- All 48 combinations passed browser checks for horizontal overflow, off-screen content, clipped text, broken images, overlapping controls, header alignment, and unexpected console/runtime errors. Ten additional home-page checks at 320/760/761/960/961px in both themes passed the responsive card transition and mobile alignment checks.
+- Theme choice persisted across reload and navigation; returning to system mode passed. Card/detail return navigation, six public cards, missing-page HTTP 404 and noindex, hidden-route 404 responses with no hidden content, experience text, neutral client fallback, and exactly one approved linked total passed.
+- Captures, audit scripts, and JSON results remain only in /private/tmp/portfolio-qa/pass14/, equivalent to /tmp/portfolio-qa/pass14/ on this host. No packages or browsers were downloaded. Closed the isolated browsers, stopped exactly preview PID 19238, and confirmed its listener was gone. Browser launch and preview shutdown required sandbox escalation.
+
+This was a local Chrome visual review. Axe and Lighthouse remain for their respective passes, starting with deep item 5. It does not verify physical phones, other browser engines, project runtime behavior, authenticated workflows, remote CI, or production hosting. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
