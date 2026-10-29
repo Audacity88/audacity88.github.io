@@ -121,7 +121,7 @@
   .button.primary { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
   .button.secondary { background: var(--surface); }
   .button:hover { text-decoration: none; box-shadow: var(--shadow); transform: translateY(-2px); }
-  .button.secondary:hover { border-color: var(--accent); }
+  .button.secondary:is(:hover, :focus-visible) { border-color: var(--accent); }
   .hero-note { margin-top: -1rem; }
   .signal-art { margin: -2.5rem -1rem 1.75rem; color: var(--accent); }
   .signal-art svg { width: 100%; height: auto; }

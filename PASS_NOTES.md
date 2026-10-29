@@ -511,3 +511,16 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - `npm test` passed all 12 tests with no skips. A temporary inline Node check confirmed the compiled theme hover/focus accent rule, retained global focus outline, and theme control across all 11 HTML pages. `git diff --check` passed.
 
 No server, browser, download, or Lighthouse run was started. Browser appearance and keyboard interaction were not rechecked. This pass does not reverify project behavior, accessibility conformance, performance, print layout, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 33: Keyboard focus on secondary buttons, 2026-10-30
+
+All ten deep items are already recorded as done. Added the secondary buttons' existing hover border accent to their keyboard-focus state. This applies to the home-page GitHub and Resume buttons and the resume print button. Retained the global focus outline. No content, data, verification claims, numbers, links, media, dependencies, or JavaScript changed.
+
+Re-read facts.md, the untested triage, verified-projects.md, and the deep-item completion records. Reconciled experience.json, the shared experience timeline, and home/resume summaries, workflow, education, skills, and languages against facts.md. No corrections were needed. Employer/client approval flags, neutral client fallback, team/solo attribution, and explicit demo/pilot and not-production wording remain correct. The later eight-project content lock remains authoritative.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Link checks passed across 262 local references and 11 HTML pages.
+- `npm test` passed all 12 tests with no skips. `git diff --check` passed.
+
+No server, browser, download, or Lighthouse run was started. Browser appearance and keyboard interaction were not rechecked. This pass does not reverify project behavior, accessibility conformance, performance, print layout, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
