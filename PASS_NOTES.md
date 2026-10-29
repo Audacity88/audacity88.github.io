@@ -49,3 +49,21 @@ Validation ran on `Mac-mini.local` in `/Users/natalie/Development/portfolio`. Us
 - Final `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. `git diff --check` passed.
 
 Temporary audit scripts, JSON results, and page captures are in `/private/tmp/dan-portfolio-audit/`. No dependencies or project screenshots were added. Axe was unavailable offline, and its registry request timed out, so no axe result is claimed. This audit does not establish full WCAG conformance; VoiceOver, physical phones, and other browser engines remain untested. Individual projects and demo flows remain unverified. Nothing was committed, pushed, or deployed.
+
+## Pass 4: Performance and SEO, 2026-10-29
+
+Inlined the stylesheet, retained the tiny theme scripts and JavaScript-free navigation, and minified the SVG favicon. Added configurable `PUBLIC_SITE_URL` alongside `PUBLIC_BASE_PATH`, complete Open Graph and Twitter metadata, a text-only 1200 × 630 PNG social card with an SVG source and `npm run generate:og` helper, static `robots.txt` and `sitemap.xml`, and a custom noindex 404 page. Fixed shared navigation to return to home-page sections from the 404. No new dependencies.
+
+Re-read `facts.md` and the untested triage, then reconciled `experience.json` and all rendered experience copy. No experience corrections were needed; approval flags, neutral partner wording, team/solo roles, and explicit demo/pilot rather than production wording remain intact. Applied the newly approved `750+ merged pull requests` label, linked to the upstream search. Updated the data schema, editing guide, and `AGENTS.md` to replace the obsolete hidden-count rule. The exact internal total stays out of markup. Project verification states and null demo links remain unchanged.
+
+Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/portfolio`:
+
+- `PUBLIC_SITE_URL=https://portfolio.example PUBLIC_BASE_PATH=/ ASTRO_TELEMETRY_DISABLED=1 npm run build` passed. Verified canonical, social image, favicon, sitemap, robots, and 404 navigation with this alternate origin and root base.
+- Final `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Restored the default origin and `/portfolio/` base. Static checks passed for metadata, sitemap exclusion of the 404, approval fallbacks, project states, and the approved count label. `git diff --check` passed.
+- The home HTML is 38,686 bytes, or 10,135 bytes with local gzip compression. It contains 941 bytes of inline JavaScript and 15,673 bytes of inline CSS, with no external scripts, stylesheets, fonts, or hydration runtime. The favicon is 264 bytes. The metadata-only PNG is 31,667 bytes; visually inspected it after correcting an initial renderer that omitted text.
+- Headless Chrome against `npm run preview` at 360px and 1280px found no horizontal overflow or runtime exceptions, working theme persistence, and zero measured CLS. Unthrottled local LCP samples were 100ms and 28ms respectively. These are local samples, not Lighthouse scores or field measurements. Normal home visits requested only the document and favicon.
+- Verified missing URLs return HTTP 404 with the custom page, `noindex`, no canonical, and correct home/section links. Stopped the preview server started for this pass, PID 99931, and closed the isolated audit browser; confirmed their ports were released.
+
+Lighthouse was not installed or cached. `npx --offline --cache /private/tmp/dan-portfolio-npm-cache lighthouse --version` returned `ENOTCACHED`; the online download choice was still pending. No Lighthouse scores or 95+ result are claimed. Audit results and captures are in `/private/tmp/portfolio-pass4-*`.
+
+Before any separately approved publication, a subpath host needs an origin-root `robots.txt` pointing to the subpath sitemap and must serve `404.html` with status 404. Individual project builds, demos, physical phones, and production hosting remain unverified. All changes are local; nothing was committed, pushed, or deployed.

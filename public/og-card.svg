@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#14171e"/>
+  <path d="M80 80h64" stroke="#a7b3ff" stroke-width="6"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="80" y="160" fill="#abb1c0" font-size="28" letter-spacing="4">AI ENGINEER</text>
+    <text x="74" y="310" fill="#eeeef1" font-size="112" font-weight="700">Dan Gilles<tspan fill="#a7b3ff">.</tspan></text>
+    <g fill="#eeeef1" font-size="36">
+      <text x="80" y="410">AI agents. Developer tools.</text>
+      <text x="80" y="466">Forward-deployed engineering.</text>
+    </g>
+  </g>
+</svg>

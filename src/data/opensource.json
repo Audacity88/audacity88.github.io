@@ -5,8 +5,9 @@
   "verifiedAsOf": "2026-10-29",
   "count": {
     "value": 753,
-    "display": false,
-    "notes": "Stored from facts.md. Not approved for display. Never render in page markup, metadata, or structured data."
+    "display": true,
+    "label": "750+ merged pull requests",
+    "notes": "Approved by facts.md on Oct 29, 2026. Render only the label, linked to mergedList. Keep the exact value internal."
   },
   "pullRequests": [
     { "number": 10801, "title": "Reload notification-lag sessions without cancelling running turns", "area": "Session recovery", "mergedAt": "2026-09-28", "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10801" },

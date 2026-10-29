@@ -24,7 +24,7 @@
     "status": "pending-verification",
     "featured": true,
     "order": 2,
-    "notes": "Individual merged PRs are verified in facts.md. The project card remains pending verification for this pass. Never display a total merged-PR count."
+    "notes": "Individual merged PRs and the approved 750+ merged pull requests label are verified in facts.md. The project card remains pending verification for this pass."
   },
   {
     "id": "codex-video-vision",

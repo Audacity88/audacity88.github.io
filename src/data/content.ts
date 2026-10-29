@@ -52,8 +52,8 @@ export const openSource = z.object({
   url: httpsUrl,
   mergedList: httpsUrl,
   verifiedAsOf: z.string(),
-  // Fail the build if this flag changes. Count data is never passed to a client script.
-  count: z.object({ value: z.number(), display: z.literal(false), notes: z.string() }),
+  // Only this approved label may be displayed. Keep the exact value internal.
+  count: z.object({ value: z.number(), display: z.literal(true), label: z.literal('750+ merged pull requests'), notes: z.string() }),
   pullRequests: z.array(z.object({
     number: z.number().int(),
     title: z.string(),

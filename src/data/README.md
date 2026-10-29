@@ -35,10 +35,10 @@ Keep Superbuilders' role-level `needsDanOk: true`. Its employer name is shown as
 
 ## Update open-source work
 
-Edit `opensource.json` to update the selected merged PR cards and verification date. Keep PR numbers, URLs, dates, and claims tied to approved evidence. The page links to the filtered merged-PR list without a total.
+Edit `opensource.json` to update the selected merged PR cards and verification date. Keep PR numbers, URLs, dates, and claims tied to approved evidence.
 
-The hidden `count` field is internal. Keep `display: false`. The build rejects another value, and no component renders the count or its notes.
+The `count` field has `display: true` and the approved label `750+ merged pull requests`, linked to the filtered upstream search. The build enforces that flag and label. Keep the exact `value` and notes internal. Do not render another total. This approval comes from the Oct 29 update in `facts.md`.
 
 ## Check changes
 
-Run `npm run build` after edits. `content.ts` validates required fields, HTTPS links, allowed statuses, unique project IDs, and the hidden count flag. Validation cannot establish whether a factual claim or demo is correct. Append the pass outcome and remaining verification work to `PASS_NOTES.md`.
+Run `npm run build` after edits. `content.ts` validates required fields, HTTPS links, allowed statuses, unique project IDs, and the approved count flag and label. Validation cannot establish whether a factual claim or demo is correct. Append the pass outcome and remaining verification work to `PASS_NOTES.md`.

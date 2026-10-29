@@ -4,8 +4,9 @@ import { defineConfig } from 'astro/config';
 const base = process.env.PUBLIC_BASE_PATH || '/portfolio/';
 
 export default defineConfig({
-  site: 'https://audacity88.github.io',
+  site: process.env.PUBLIC_SITE_URL || 'https://audacity88.github.io',
   base,
   output: 'static',
   trailingSlash: 'always',
+  build: { inlineStylesheets: 'always' },
 });
