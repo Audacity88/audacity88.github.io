@@ -11,6 +11,8 @@ const texts = (value, label) => {
   value.forEach((item) => text(item, label));
 };
 const unique = (items, field) => assert.equal(new Set(items.map((item) => item[field])).size, items.length, `${field} must be unique`);
+const excludedText = /ctm-system|witness-lexington|picker/i;
+const excludedProjectText = /superbuilders|ctm-system|witness-lexington|picker/i;
 const date = (value) => {
   assert.match(value, /^\d{4}-\d{2}-\d{2}$/);
   assert.equal(new Date(value).toISOString().slice(0, 10), value);
@@ -31,7 +33,7 @@ function checkLinks(value) {
       assert.equal(url.protocol, 'https:', `Use HTTPS: ${link[0]}`);
       assert.equal(url.username + url.password, '', 'Do not embed credentials in URLs');
       const decoded = decodeURIComponent(url.href).toLowerCase();
-      assert.doesNotMatch(decoded, /superbuilders|ctm-system|witness-lexington/, 'Private and contract project links are prohibited');
+      assert.doesNotMatch(decoded, excludedProjectText, 'Private and contract project links are prohibited');
     }
   } else if (value && typeof value === 'object') {
     Object.values(value).forEach(checkLinks);
@@ -42,6 +44,23 @@ test('all data files parse and contain no prohibited links', () => {
   for (const name of readdirSync(directory).filter((name) => name.endsWith('.json'))) {
     checkLinks(JSON.parse(readFileSync(new URL(name, directory), 'utf8')));
   }
+});
+
+test('source files and pass notes retain the content exclusions', () => {
+  const root = new URL('../', import.meta.url);
+  const ignored = new Set(['.git', '.astro', 'node_modules', 'dist']);
+  function inspect(directory) {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const file = new URL(entry.name, directory);
+      if (entry.isDirectory()) {
+        if (!ignored.has(entry.name)) inspect(new URL(`${entry.name}/`, directory));
+      } else if (entry.isFile() && /\.(?:md|mjs|ts|json|astro|css|yml|yaml|svg|txt)$/.test(entry.name)
+        && file.href !== import.meta.url && entry.name !== 'package-lock.json') {
+        assert.doesNotMatch(readFileSync(file, 'utf8'), excludedText, `Excluded content in ${file.pathname}`);
+      }
+    }
+  }
+  inspect(root);
 });
 
 test('projects have complete cards and detail pages with valid states and URLs', () => {
@@ -56,7 +75,7 @@ test('projects have complete cards and detail pages with valid states and URLs',
     for (const field of ['statusLabel', 'demoLabel']) if (project[field] !== undefined) text(project[field], field);
     if (project.demoLabel !== undefined) assert.notEqual(project.demo, null);
     assert.match(project.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
-    assert.doesNotMatch(project.id, /superbuilders|ctm-system|witness-lexington/i);
+    assert.doesNotMatch(JSON.stringify(project), excludedProjectText, 'Project IDs and all project text must respect exclusions');
     texts(project.tech, 'tech');
     assert.ok(project.tech.length);
     github(project.github);

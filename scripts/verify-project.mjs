@@ -13,7 +13,7 @@ export function verifyProject(projects, id, options, date = new Date().toISOStri
   if (typeof options.verification !== 'string' || !options.verification.trim()) throw new Error('--verification must describe checks you completed.');
   const demo = new URL(options.demo);
   if (demo.protocol !== 'https:' || demo.username || demo.password) throw new Error('Demo must be an HTTPS URL without credentials.');
-  if (/superbuilders|ctm-system|witness-lexington/i.test(decodeURIComponent(demo.href))) throw new Error('Contract and private project links are prohibited.');
+  if (/superbuilders/i.test(decodeURIComponent(demo.href))) throw new Error('Employer project links are prohibited.');
   for (const field of ['note', 'label', 'demo-label']) {
     if (options[field] !== undefined && !options[field].trim()) throw new Error(`--${field} must not be empty.`);
   }

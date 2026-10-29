@@ -10,3 +10,4 @@
 - Keep the site static, accessible, responsive, and lightweight. Respect system color preferences and persist explicit theme choices.
 - Run `npm run build` and resolve all build errors before completing a pass. Append its changes and validation limits to `PASS_NOTES.md`.
 - Every pass, re-read `facts.md` and reconcile `src/data/experience.json` and all rendered experience copy, including approval flags and explicit demo/pilot, not-production wording.
+- Apply the task's hard content exclusions to source files, notes, and helper fixtures. Keep their literal guard patterns only in `tests/data.test.mjs`, and validate project IDs and all project text.

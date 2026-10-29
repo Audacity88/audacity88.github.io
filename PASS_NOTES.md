@@ -143,3 +143,20 @@ Project build and test evidence comes from the supplied Eyrie report dated Oct 2
 
 
 Final Playwright run passed all 42 page/width/theme combinations with no horizontal overflow, broken images, console errors, or runtime exceptions. Card/detail navigation, theme persistence across pages and reload, the approved count/link, client fallback, and missing-project HTTP 404 passed. Final screenshots were inspected at all three widths in both themes. Stopped exactly preview listener PID `61073`, confirmed port 4338 was released, and closed Playwright's isolated browser. The npm launcher was PID `61043`; Astro detached the preview listener. QA files remain only in `/private/tmp/portfolio-qa/`.
+
+## Pass 9: Content exclusions and current-output QA, 2026-10-30
+
+Confirmed that Pass 8 already records "verified-projects applied". All refinement items a through h were previously completed. Rechecked **a and b** for this pass and fixed the remaining exclusion-policy gaps.
+
+Removed excluded references from the verification helper and its fixtures. Extended the permitted data-test guard to cover project IDs and every project text field. Added a repository text check for source files, guides, and pass notes, with literal guard patterns confined to the permitted test file. Existing CI runs these checks through `npm test`. Recorded the content-exclusion rule in `AGENTS.md`. Updated both editing guides to distinguish the helper's URL checks from the full content checks in `npm test`.
+
+Re-read `facts.md`, the untested triage, the verified project list, and the supplied support-desk README. Reconciled `experience.json` and every rendered experience claim. No biographical or experience corrections were needed. Employer and client approval flags, neutral partner wording, team and solo roles, and explicit demo or pilot rather than production wording remain correct. Preserved the six approved projects, supplied images, evidence limits, pending statuses, hidden null demo links, credited-port attribution, and sign-in-only label.
+
+Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/portfolio`:
+
+- `npm test` passed all seven tests, including the new repository content check.
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Its link checker passed 155 local references across eight HTML pages.
+- Checked the built HTML against the current data. All six detail pages contain their descriptions, verification summaries, limitations, and repository links. The home page contains every experience summary and highlight, the neutral client fallback, and exactly one approved linked merged-PR label. Client placeholders and the internal total are absent from rendered text.
+- `git diff --check` passed. No dependencies, project evidence, media, or visual layouts changed.
+
+Browser screenshots and external project checks were not repeated for these policy, test, and documentation changes. Pass 8's project evidence remains a supplied report dated Oct 29, 2026, not a result of this portfolio build. Authenticated workflows, native test failures, simulator and device behavior, remote CI, and production hosting retain their recorded validation limits. All changes remain local; nothing was committed, pushed, deployed, or changed on GitHub or Pages.

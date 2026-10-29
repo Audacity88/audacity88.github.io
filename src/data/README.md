@@ -41,7 +41,7 @@ After completing the project's actual checks, record the evidence with the local
 npm run project:verify -- tono4 --demo https://example.com/demo --verification "Describe the checks you completed" --note "Describe any remaining limits" --label "Build checked"
 ```
 
-Replace the example URL and evidence before running. `--verification` is required to prevent a status change without recorded evidence. The helper sets `status: verified`, the HTTPS demo URL, evidence summary, current date, public verification note, and an internal audit note. It rejects unknown IDs, unsafe URLs, and prohibited links before writing. Other projects stay unchanged. It does not run builds, access the demo, or prove that the evidence is accurate.
+Replace the example URL and evidence before running. `--verification` is required to prevent a status change without recorded evidence. The helper sets `status: verified`, the HTTPS demo URL, evidence summary, current date, public verification note, and an internal audit note. It rejects unknown IDs, unsafe URLs, and employer links before writing. Run `npm test` afterward to check all content exclusions. Other projects stay unchanged. The helper does not run builds, access the demo, or prove that the evidence is accurate.
 
 Use `--demo-label "Live sign-in page"` for a sign-in-only link. The existing label is preserved if the demo URL is unchanged. For a local-only project, edit the evidence and status manually and keep `demo: null`. Run `npm test` and `npm run build`, then inspect the affected card and detail page. Append the checks and limits to `PASS_NOTES.md`.
 

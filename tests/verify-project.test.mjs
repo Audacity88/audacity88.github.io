@@ -11,8 +11,7 @@ test('verification helper requires evidence and safe URLs before changing projec
   for (const options of [
     { ...valid, verification: '' }, { ...valid, verification: undefined },
     { ...valid, demo: 'http://example.com' }, { ...valid, demo: 'https://secret@example.com' },
-    { ...valid, demo: 'https://github.com/Audacity88/%63tm-system' },
-    { ...valid, demo: 'https://example.com/witness-lexington' },
+    { ...valid, demo: 'https://example.com/%73uperbuilders' },
     { ...valid, demo: 'https://superbuilders.example' }, { ...valid, label: ' ' },
   ]) assert.throws(() => verifyProject(projects, 'tono4', options));
   assert.throws(() => verifyProject(projects, 'missing', valid));
