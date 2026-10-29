@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+import art from '../data/art.json';
+
+type Work = { section: 'fractals' | 'photography'; title: string; year: number | null; source: string; url: string; caption: string | null; width: number; height: number; sources: { src: string; width: number }[] };
+const works = art as Work[];
+const assetBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+const sections = [
+  { id: 'fractals', title: 'Fractals', works: works.filter((w) => w.section === 'fractals') },
+  { id: 'photography', title: 'Photography', works: works.filter((w) => w.section === 'photography') },
+];
+const years = (list: Work[]) => {
+  const ys = list.map((w) => w.year).filter((y): y is number => y !== null);
+  return ys.length ? `${Math.min(...ys)}–${Math.max(...ys)}` : '';
+};
+const full = (w: Work) => w.sources[w.sources.length - 1];
+---
+
+<Layout title="Art | Dan Gilles" description="Fractal art and photography Dan Gilles made as a hobby, with links to the original posts on DeviantArt and Flickr.">
+  <main id="main" class="container art-page" tabindex="-1">
+    <section class="section art-intro" aria-labelledby="art-title">
+      <h1 id="art-title">Art</h1>
+      <p class="hero-description">A past hobby: fractal art ({years(sections[0].works)}) and some photography ({years(sections[1].works)}). Each piece links to its original post. More is on my <a href="https://dangilles.weebly.com/">old Weebly site</a>, <a href="https://www.deviantart.com/iamthejabberwock">DeviantArt</a>, and <a href="https://www.flickr.com/photos/dangilles/">Flickr</a>.</p>
+    </section>
+    {sections.map((section) => (
+      <section class="section art-section" id={section.id} aria-labelledby={`${section.id}-title`}>
+        <h2 id={`${section.id}-title`}>{section.title}</h2>
+        <ul class="art-grid" role="list">
+          {section.works.map((work, index) => (
+            <li>
+              <figure>
+                <a class="art-open" href={`${assetBase}${full(work).src}`} data-title={work.title} data-meta={[work.year, work.caption].filter(Boolean).join(' · ')} data-source={work.url} data-source-name={work.source} data-width={work.width} data-height={work.height} aria-label={`View ${work.title} larger`}>
+                  <img src={`${assetBase}${work.sources[0].src}`} srcset={work.sources.map((s) => `${assetBase}${s.src} ${s.width}w`).join(', ')}
+                    sizes="(max-width: 560px) calc(50vw - 1.5rem), (max-width: 960px) calc(33vw - 2rem), 300px"
+                    alt={work.title} width={work.width} height={work.height} loading={section.id === 'fractals' && index < 5 ? 'eager' : 'lazy'} fetchpriority={section.id === 'fractals' && index === 0 ? 'high' : undefined} decoding="async" />
+                </a>
+                <figcaption>
+                  <a href={work.url}>{work.title}</a>
+                  <span>{[work.year, work.source].filter(Boolean).join(' · ')}</span>
+                  {work.caption && <span>{work.caption}</span>}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </main>
+  <dialog class="art-lightbox" aria-label="Artwork viewer">
+    <form method="dialog"><button class="art-close" value="close" aria-label="Close">×</button></form>
+    <button class="art-nav art-prev" type="button" aria-label="Previous work">‹</button>
+    <figure>
+      <img alt="" />
+      <figcaption><strong></strong> <span class="art-meta"></span> <a class="art-source" href="#">View original</a></figcaption>
+    </figure>
+    <button class="art-nav art-next" type="button" aria-label="Next work">›</button>
+  </dialog>
+</Layout>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('.art-lightbox');
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.art-open'));
+  if (dialog && typeof dialog.showModal === 'function') {
+    const img = dialog.querySelector('img')!;
+    const title = dialog.querySelector('strong')!;
+    const meta = dialog.querySelector('.art-meta')!;
+    const source = dialog.querySelector<HTMLAnchorElement>('.art-source')!;
+    let current = 0;
+    const show = (index: number) => {
+      current = (index + links.length) % links.length;
+      const link = links[current];
+      img.src = link.href;
+      img.alt = link.dataset.title ?? '';
+      img.width = Number(link.dataset.width);
+      img.height = Number(link.dataset.height);
+      title.textContent = link.dataset.title ?? '';
+      meta.textContent = link.dataset.meta ?? '';
+      source.href = link.dataset.source ?? '#';
+      source.textContent = `View on ${link.dataset.sourceName}`;
+    };
+    links.forEach((link, index) => link.addEventListener('click', (event) => {
+      event.preventDefault();
+      show(index);
+      dialog.showModal();
+    }));
+    dialog.querySelector('.art-prev')!.addEventListener('click', () => show(current - 1));
+    dialog.querySelector('.art-next')!.addEventListener('click', () => show(current + 1));
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(current - 1);
+      if (event.key === 'ArrowRight') show(current + 1);
+    });
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+    dialog.addEventListener('close', () => links[current]?.focus());
+  }
+</script>
