@@ -17,6 +17,17 @@ const projectSchema = z.object({
     built: z.string().min(1),
     architecture: z.string().min(1),
     limitations: z.string().min(1),
+    diagram: z.object({
+      title: z.string().min(1),
+      summary: z.string().min(1),
+      steps: z.array(z.object({
+        title: z.string().min(1),
+        detail: z.array(z.string().min(1)).length(2),
+      })).length(4),
+      connections: z.array(z.array(z.string().min(1)).length(2)).length(3),
+      description: z.array(z.string().min(1)).min(1),
+      caveat: z.string().min(1),
+    }).optional(),
     // Keep local source references available to editors, out of public pages.
     sourceNotes: z.array(z.string().min(1)).min(1),
   }),

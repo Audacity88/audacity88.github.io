@@ -195,3 +195,21 @@ Validation on Mac-mini.local, working directory /Users/natalie/Development/portf
 - `git diff --check` passed. No dependencies, CSS, media, or client JavaScript were added.
 
 Project build and test results remain Eyrie's October 29 evidence; they were not repeated in this portfolio pass. Browser visual, axe, and Lighthouse rounds were not run. Authenticated services, native integrations, and physical-device behavior retain the stated limits. All changes remain local; nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 12: Architecture diagrams, 2026-10-30
+
+deep item 2 done
+
+Added simplified inline SVG diagrams to the Eyrie and swift-ship detail pages. Eyrie's diagram follows the embedded React dashboard, local Go server, discovery and adapter interface, and framework runtimes. Its description distinguishes local JSON stores from the ZeroClaw adapter's SQLite history access. swift-ship's diagram follows the main AI route through Next.js and Supabase Edge Functions to OpenAI and document retrieval. It identifies the separate application paths and retains the sign-in-only and unverified-workflow limits.
+
+Traced the diagrams through read-only source inspection in the two project checkouts. Recorded files and symbols in caseStudy.sourceNotes. Added shared rendering, optional build-time data validation, SVG titles and descriptions, visible text explanations, theme-aware colors, and phone and print layouts. No new dependencies, images, or client JavaScript. Existing project fields, verification evidence, statuses, and demo links are unchanged.
+
+Re-read facts.md, the untested triage, and verified-projects.md. Reconciled experience.json and all rendered experience copy. No corrections were needed. Approval flags, neutral client fallback, team and solo roles, demo/pilot and not-production wording, and the single approved linked merged-PR total remain correct.
+
+Validation on Mac-mini.local, working directory /Users/natalie/Development/portfolio:
+
+- `npm test` passed all seven tests, including content exclusions. Final `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints; 155 local references passed across eight HTML pages. `git diff --check` passed.
+- Playwright with installed Chrome checked both updated pages at 360/768/1280px in light and dark, twelve combinations. No horizontal overflow, clipped SVG text, console errors, or runtime exceptions. SVG accessible names and descriptions resolve. Reviewed mobile, tablet, desktop, and print captures; print diagram labels remain above 8pt. A Chrome element-capture artifact disappeared with a taller capture viewport; normal viewport captures showed no overlay.
+- QA captures and results remain only in /private/tmp/portfolio-qa/pass12/. The isolated browsers are closed. Stopped exactly preview PID 92691 and verified port 4340 was released. Browser launch and preview shutdown required sandbox escalation.
+
+The diagrams describe selected source paths, not verified runtime behavior. Project evidence remains Eyrie's October 29 report. Full-site visual, axe, Lighthouse, physical-device, and remote checks remain for their respective passes. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.

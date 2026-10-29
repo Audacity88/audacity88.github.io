@@ -67,8 +67,64 @@
       "sourceNotes": [
         "portfolio-brief/v2/verified-projects.md, item 1; approved checks and first-run captures.",
         "/Users/dan/portfolio-triage/repos/eyrie/README.md, introduction, architecture, framework capabilities, and alpha limitations.",
-        "/Users/dan/portfolio-triage/repos/eyrie/PORTFOLIO_REPORT.md, tech stack, build and test results, local run, and remaining limitations. Later approved captures supersede the report's screenshot blocker."
-      ]
+        "/Users/dan/portfolio-triage/repos/eyrie/PORTFOLIO_REPORT.md, tech stack, build and test results, local run, and remaining limitations. Later approved captures supersede the report's screenshot blocker.",
+        "Architecture diagram, read-only source inspection: /Users/dan/portfolio-triage/repos/eyrie/internal/server/server.go, events.go, and api.go; internal/cli/dashboard.go and lifecycle.go; web/src/lib/api.ts and components/Terminal.tsx. Embedded frontend, HTTP handlers, SSE, terminal WebSocket, and CLI entry points.",
+        "Architecture diagram, read-only source inspection: /Users/dan/portfolio-triage/repos/eyrie/internal/discovery/discovery.go; internal/adapter/agent.go and zeroclaw.go, sessionsFromDB; internal/project/project.go and internal/instance/store.go. Common adapter interface, discovery, local JSON stores, and read-only SQLite history access."
+      ],
+      "diagram": {
+        "title": "Simplified local architecture",
+        "summary": "The React dashboard exchanges HTTP requests, server-sent events, and terminal WebSocket traffic with a local Go server. The server uses discovery and framework adapters to reach agent runtimes. Project and instance data use local JSON files. The ZeroClaw adapter can read session history from SQLite.",
+        "steps": [
+          {
+            "title": "React dashboard",
+            "detail": [
+              "Browser interface",
+              "Served by the Go executable"
+            ]
+          },
+          {
+            "title": "Local Go server",
+            "detail": [
+              "HTTP API and event streams",
+              "Project and instance JSON stores"
+            ]
+          },
+          {
+            "title": "Discovery & adapters",
+            "detail": [
+              "Shared Agent interface",
+              "Framework-specific operations"
+            ]
+          },
+          {
+            "title": "Agent runtimes",
+            "detail": [
+              "ZeroClaw · OpenClaw · Hermes",
+              "PicoClaw · Codex"
+            ]
+          }
+        ],
+        "connections": [
+          [
+            "HTTP requests · SSE responses",
+            "WebSocket for terminal sessions"
+          ],
+          [
+            "Discover agents",
+            "Read state and dispatch actions"
+          ],
+          [
+            "Framework-specific calls",
+            "Responses and activity"
+          ]
+        ],
+        "description": [
+          "The Go executable embeds the built React dashboard. The browser calls its HTTP API, receives server-sent events, and connects to terminal sessions over WebSocket. The paired arrows show requests and responses.",
+          "Discovery finds configured agents and probes their health. Adapters expose a shared Agent interface for framework-specific operations. The command-line interface also uses discovery and lifecycle controls.",
+          "Projects and instances use local JSON files. The ZeroClaw adapter can also read session history directly from a local SQLite database, including when the gateway is unavailable."
+        ],
+        "caveat": "This diagram shows selected paths in the source. Live agent workflows remain unverified. Eyrie is a local-only alpha without authentication."
+      }
     }
   },
   {
@@ -111,8 +167,63 @@
       "sourceNotes": [
         "portfolio-brief/v2/verified-projects.md, item 2; approved build result and sign-in-only capture.",
         "/Users/dan/portfolio-triage/repos/swift-ship/README.portfolio.md, what the project implements, architecture, and demo access and current limits.",
-        "/Users/dan/portfolio-triage/repos/swift-ship/PORTFOLIO_REPORT.md, installation, build, runtime, and tests; typecheck and lint details."
-      ]
+        "/Users/dan/portfolio-triage/repos/swift-ship/PORTFOLIO_REPORT.md, installation, build, runtime, and tests; typecheck and lint details.",
+        "Architecture diagram, read-only source inspection: /Users/dan/portfolio-triage/repos/swift-ship/src/app/api/ai-support/route.ts; supabase/functions/docs-agent/index.ts and docs-agent.ts; supabase/functions/support-agent/index.ts; supabase/functions/shared/base-agent.ts, generateEmbedding and searchSimilarContent. Agent routing, forwarded SSE, OpenAI calls, and match_embeddings retrieval."
+      ],
+      "diagram": {
+        "title": "Simplified AI request path",
+        "summary": "The React support interface sends chat messages to the Next.js AI support API. The API forwards requests to one of four Supabase Edge Functions and relays server-sent events to the browser. The functions call OpenAI. The documentation agent also retrieves matching content from PostgreSQL with pgvector.",
+        "steps": [
+          {
+            "title": "React support interface",
+            "detail": [
+              "Next.js application",
+              "Chat messages and conversation"
+            ]
+          },
+          {
+            "title": "Next.js API route",
+            "detail": [
+              "/api/ai-support",
+              "Forwards requests and responses"
+            ]
+          },
+          {
+            "title": "Supabase Edge Functions",
+            "detail": [
+              "Support · docs",
+              "Quotes · shipments"
+            ]
+          },
+          {
+            "title": "AI & document retrieval",
+            "detail": [
+              "OpenAI chat and embeddings",
+              "PostgreSQL · pgvector"
+            ]
+          }
+        ],
+        "connections": [
+          [
+            "Chat request",
+            "SSE response to the browser"
+          ],
+          [
+            "HTTP to the selected function",
+            "SSE response through Next.js"
+          ],
+          [
+            "Model and retrieval calls",
+            "Generated text and matched docs"
+          ]
+        ],
+        "description": [
+          "The browser sends chat messages to the Next.js AI support route. That route forwards the request to a support, documentation, quote, or shipment Edge Function and relays its server-sent events. Paired arrows show requests and responses.",
+          "The documentation agent creates an OpenAI embedding of the query, retrieves matching content through the PostgreSQL match_embeddings function, and uses that content in an OpenAI chat completion.",
+          "This view follows the main AI route. Ticket services, Supabase Auth, and Realtime are separate application paths. A second agent implementation also exists inside the Next.js codebase."
+        ],
+        "caveat": "This is source-level structure. The public demo shows sign-in only. Authenticated support, AI responses, and a fresh database setup remain unverified."
+      }
     }
   },
   {

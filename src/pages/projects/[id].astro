@@ -3,6 +3,7 @@ import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 import Layout from '../../layouts/Layout.astro';
 import ProjectStatus from '../../components/ProjectStatus.astro';
 import ProjectMedia from '../../components/ProjectMedia.astro';
+import ArchitectureDiagram from '../../components/ArchitectureDiagram.astro';
 import { projects } from '../../data/content';
 
 export const getStaticPaths = (() => projects.map((project) => ({
@@ -44,6 +45,7 @@ const base = import.meta.env.BASE_URL;
         <section aria-labelledby="architecture-title">
           <h2 id="architecture-title">How it's built</h2>
           <p>{project.caseStudy.architecture}</p>
+          {project.caseStudy.diagram && <ArchitectureDiagram id={project.id} diagram={project.caseStudy.diagram} />}
         </section>
         <section class="verification-note" aria-labelledby="verification-title">
           <h2 id="verification-title">What's verified</h2>
