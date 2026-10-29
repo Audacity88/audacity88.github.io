@@ -354,8 +354,8 @@
         ]
       }
     ],
-    "verification": "Build passes, 341 test checks pass, and 24 local pages load.",
-    "verificationNote": "Eyrie checked this on October 29, 2026: the build succeeded, npm test passed all 341 non-browser checks, and all 24 local paths returned HTTP 200. A full browser playthrough was not verified.",
+    "verification": "Build passes, 352 test checks pass, and 24 local pages load.",
+    "verificationNote": "Re-checked on main at 63143ad on October 29, 2026: the build succeeded and npm test passed all 352 non-browser checks. An earlier check found all 24 local paths returned HTTP 200. A full browser playthrough was not verified.",
     "notes": "Evidence: portfolio-triage results/witness-lexington PORTFOLIO_REPORT.md and title-screen capture. No live demo is claimed.",
     "order": 3,
     "verificationDate": "2026-10-29",
@@ -363,9 +363,10 @@
       "problem": "History lessons often hand over a conclusion. This game asks the player to piece together what happened at Lexington Green from conflicting evidence.",
       "built": "I built a browser game with a night-ride opening, a dawn muster, an evidence notebook with source labels, and a short evidence-based essay. It has no combat or timer.",
       "architecture": "Static HTML, CSS, and JavaScript with a checked-in three.js bundle for low-poly WebGL scenes. Web Audio synthesizes the soundtrack, and localStorage keeps checkpoints and drafts. Node built-ins produce self-contained HTML builds.",
-      "limitations": "The 341 checks run without a browser, using renderer and audio stand-ins. WebGL rendering, real input, and audio quality across browsers still need a full playthrough check. No hosted demo is linked.",
+      "limitations": "The 352 checks run without a browser, using renderer and audio stand-ins. WebGL rendering, real input, and audio quality across browsers still need a full playthrough check. No hosted demo is linked.",
       "sourceNotes": [
         "portfolio-triage/results/witness-lexington/work/PORTFOLIO_REPORT.md: stack, build, npm test (341 checks), 24 HTTP 200 paths, remaining blockers.",
+        "Re-run on main 63143ad (October 29, 2026): npm run build OK; npm test 352 checks (17 + 58 + 125 + 139 + 13), exit 0.",
         "portfolio-triage/results/witness-lexington/shots/index.png: title screen."
       ]
     }
