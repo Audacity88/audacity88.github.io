@@ -67,3 +67,20 @@ Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/po
 Lighthouse was not installed or cached. `npx --offline --cache /private/tmp/dan-portfolio-npm-cache lighthouse --version` returned `ENOTCACHED`; the online download choice was still pending. No Lighthouse scores or 95+ result are claimed. Audit results and captures are in `/private/tmp/portfolio-pass4-*`.
 
 Before any separately approved publication, a subpath host needs an origin-root `robots.txt` pointing to the subpath sitemap and must serve `404.html` with status 404. Individual project builds, demos, physical phones, and production hosting remain unverified. All changes are local; nothing was committed, pushed, or deployed.
+
+## Pass 5: README and deployment preparation, 2026-10-29
+
+Expanded `README.md` with the site purpose, stack, Node 24 setup, local commands, project fields, evidence required before changing a project to `verified`, demo-link handling, open-source editing rules, experience approvals, base-path configuration, and deployment instructions. Retained the resume and social-card instructions.
+
+Added `.github/workflows/ci.yml` to run `npm ci` and `npm run build` on `pull_request` with read-only repository permissions. Added `.github/workflows/deploy.yml` with only `workflow_dispatch`, an explicit comment that Pages is not enabled and push triggers await Dan's publishing approval, and `configure-pages` automatic enablement set to false. The build reads Pages origin/base metadata, checks and builds the site, and uploads `dist/`. A dependent job deploys through the `github-pages` environment with Pages write and OIDC permissions. No dependencies changed.
+
+Re-read `facts.md` and the untested triage, then reconciled `experience.json` and all rendered experience copy. No experience corrections were needed. Employer/client approval flags, neutral partner fallback, team/solo roles, and explicit demo/pilot and not-shipped wording remain intact. Project states, null demo links, and the approved linked `750+ merged pull requests` label remain intact.
+
+Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/portfolio`:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints, using the installed Node v23.5.0 and npm 11.6.2. The new remote workflows select Node 24; that runner has not been exercised.
+- Parsed both workflow files with the installed YAML parser and checked unique keys, exact event triggers, install/build commands, Node selection, disabled Pages enablement, artifact path, job dependency, environment, and permissions. README relative file links resolved.
+- Inspected built HTML for neutral client fallbacks, explicit pilot wording, team/solo attribution, unchanged project verification badges, hidden null demo links, and the approved count linked to the upstream search. The client name, placeholder, and exact internal total are absent.
+- `git diff --check` passed.
+
+Remote Actions, clean `npm ci` installation, Node 24 execution, and deployment remain untested. Existing dependencies sufficed for local validation. No workflows were dispatched, Pages settings were not changed, and nothing was committed, pushed, or deployed. Individual project builds and demo flows remain unverified.
