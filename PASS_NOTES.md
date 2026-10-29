@@ -353,3 +353,20 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - Full HTML/JSON reports, extracted settings and metrics, and image-dimension evidence remain only in /private/tmp/portfolio-qa/pass21/, equivalent to /tmp/portfolio-qa/pass21/. The report names retain the baseline suffix because the initial successful scores already met the target and no site optimization was needed.
 
 Deep item 7 is next. Physical-device performance, production network/hosting, other browser engines, project runtime behavior, authenticated services, and remote CI remain untested in this pass. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 22: How I work, 2026-10-30
+
+deep item 7 done
+
+Gave the existing agent-assisted workflow statement its own short, labeled home-page section. The wording comes directly from facts.md, with the semicolon split into two sentences: coding agents write much of Dan's code; he specifies the problem, reviews every change, tests it live, and decides what ships. Kept biography and education in a separate About section and updated section numbering. Both sections share the existing responsive layout and print styling. No dependencies or project evidence changed.
+
+Re-read facts.md, the untested triage, verified-projects.md, and prior pass notes. Reconciled experience.json and all rendered experience copy with facts.md. No corrections were needed. Employer/client approval flags, neutral client fallback, team/solo attribution, and explicit demo/pilot and not-production wording remain correct. Hidden placeholders and their consumer/output safeguards were already complete and remain intact.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints, including 179 local references across eight HTML pages and the generated-output exclusion guard. `npm test` passed all ten tests. `git diff --check` passed.
+- Used installed Playwright and isolated headless Chrome against `npm run preview -- --host 127.0.0.1 --port 4346`. Home-page checks passed at 360/768/1280px in both system-selected themes: the workflow matches the supplied facts, appears once, has a labeled section and heading, stacks on phones, fits side by side at wider widths, and causes no horizontal overflow or runtime errors. Rechecked rendered experience summaries, highlights, and approval fallbacks.
+- Six full-home-page axe scans, with all default rules and no exclusions, reported zero violations. Existing color-contrast incomplete results remain in the reports; this pass does not claim full WCAG conformance. Captured both affected sections in all six combinations and visually inspected representative phone, tablet, desktop, and print-style captures. The print smoke check confirms the workflow remains visible in block layout, but does not verify pagination.
+- Reports, captures, and the temporary audit script remain only in /private/tmp/portfolio-qa/pass22/. The first sandboxed browser launch failed with `Target page, context or browser has been closed` and `Error: kill EPERM`; the isolated audit succeeded with sandbox escalation. Closed the audit browser, stopped exactly preview PID 94538 with sandbox escalation, and confirmed port 4346 was released.
+
+Deep item 8, the HTML resume, is next. Physical devices, other browser engines, project runtime behavior, authenticated services, remote CI, and hosting were outside this pass. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.

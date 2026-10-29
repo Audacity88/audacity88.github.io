@@ -95,7 +95,7 @@
   .section-intro { max-width: 325px; color: var(--muted); font-size: .95rem; }
   .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
   .contribution-layout { display: grid; grid-template-columns: 1fr 1.65fr; gap: 5rem; }
-  .about-section { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; }
+  .two-column-section { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; }
   .site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem 2rem; padding-block: 1.75rem; border-top: 1px solid var(--line); font-size: .75rem; color: var(--muted); }
   .site-footer a { display: inline-flex; align-items: center; min-height: 44px; gap: .4rem; text-decoration: none; }
   .site-footer .footer-name { gap: 0; }
@@ -208,7 +208,7 @@
   .timeline-content ul li + li { margin-top: .7rem; }
   .timeline-content li::marker { color: var(--accent-text); }
   .timeline-content .client-description { font-size: .8rem; }
-  .about-copy > p { margin-bottom: 1.25rem; color: var(--muted); }
+  .section-copy > p { margin-bottom: 1.25rem; color: var(--muted); }
   .education-list { border-top: 1px solid var(--line); margin-top: 2rem; padding-top: 1.5rem; }
   .education-list > div + div { margin-top: 1.25rem; }
   .education-list dt { font-size: .9rem; font-weight: 550; }
@@ -245,7 +245,7 @@
     .hero { grid-template-columns: minmax(0, 1fr) 230px; gap: 2.5rem; padding-top: 5rem; }
     .site-header { gap: 1.5rem; }
     .site-header nav { gap: 1.2rem; }
-    .contribution-layout, .about-section { gap: 3rem; }
+    .contribution-layout, .two-column-section { gap: 3rem; }
     .timeline > li { grid-template-columns: 190px minmax(0, 1fr); gap: 2rem; }
   }
   /* Keep the genuine dashboard capture legible before the phone layout begins. */
@@ -277,7 +277,7 @@
     .project-card.featured .project-card-media { margin-top: 1.5rem; }
     .card-topline { margin-bottom: 1.5rem; }
     .project-card h3 { font-size: 1.8rem; }
-    .contribution-layout, .about-section { grid-template-columns: 1fr; gap: 2rem; }
+    .contribution-layout, .two-column-section { grid-template-columns: 1fr; gap: 2rem; }
     .contribution-note { max-width: 500px; }
     .cache-values { font-size: 2rem; }
     .timeline > li { grid-template-columns: 1fr; gap: .75rem; padding-block: 1.75rem; }
