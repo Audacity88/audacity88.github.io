@@ -12,6 +12,14 @@ const projectSchema = z.object({
   verification: z.string().min(1),
   verificationDate: z.iso.date(),
   verificationNote: z.string().min(1),
+  caseStudy: z.object({
+    problem: z.string().min(1),
+    built: z.string().min(1),
+    architecture: z.string().min(1),
+    limitations: z.string().min(1),
+    // Keep local source references available to editors, out of public pages.
+    sourceNotes: z.array(z.string().min(1)).min(1),
+  }),
   tech: z.array(z.string()),
   github: httpsUrl,
   demo: httpsUrl.nullable(),

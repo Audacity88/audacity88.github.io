@@ -20,7 +20,7 @@ const base = import.meta.env.BASE_URL;
     <article aria-labelledby="project-title">
       <a class="text-link" href={`${base}#projects`}><span aria-hidden="true">← </span>All projects</a>
       <header class="project-detail-heading">
-        <p class="eyebrow">Selected work / Dan Gilles</p>
+        <p class="eyebrow">Selected work / Case study</p>
         <h1 id="project-title">{project.title}</h1>
         <p class="project-detail-pitch">{project.oneLiner}</p>
         <ProjectStatus status={project.status} label={project.statusLabel} />
@@ -33,10 +33,26 @@ const base = import.meta.env.BASE_URL;
             {project.tech.map((tech) => <li>{tech}</li>)}
           </ul>
         </section>
+        <section aria-labelledby="problem-title">
+          <h2 id="problem-title">The problem</h2>
+          <p>{project.caseStudy.problem}</p>
+        </section>
+        <section aria-labelledby="contribution-title">
+          <h2 id="contribution-title">My contribution</h2>
+          <p>{project.caseStudy.built}</p>
+        </section>
+        <section aria-labelledby="architecture-title">
+          <h2 id="architecture-title">How it's built</h2>
+          <p>{project.caseStudy.architecture}</p>
+        </section>
         <section class="verification-note" aria-labelledby="verification-title">
           <h2 id="verification-title">What's verified</h2>
-          <p class="project-verification"><time datetime={project.verificationDate}>Checked {project.verificationDate}</time>{project.verification}</p>
+          <p class="project-verification"><time datetime={project.verificationDate}>Eyrie's reported checks · {project.verificationDate}</time>{project.verification}</p>
           <p>{project.verificationNote}</p>
+        </section>
+        <section aria-labelledby="limitations-title">
+          <h2 id="limitations-title">What remains unverified</h2>
+          <p>{project.caseStudy.limitations}</p>
         </section>
         {project.images.length > 0 && <section id="captures" aria-labelledby="captures-title">
           <h2 id="captures-title">Captured screens</h2>

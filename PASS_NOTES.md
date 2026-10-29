@@ -176,3 +176,22 @@ Validation on Mac-mini.local, working directory /Users/natalie/Development/portf
 - Closed the isolated browser and stopped exactly preview PID 73049. No unrelated process was stopped.
 
 Project verification remains the supplied report dated Oct 29, 2026. Authenticated service workflows, native-test failures, simulator/device behavior, physical phones, other browser engines, remote CI, and production hosting retain their earlier validation limits. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 11: Project case studies, 2026-10-30
+
+deep item 1 done
+
+Added a short case study to each of the six project detail pages, with the problem, Dan's contribution, architecture, reported verification, and remaining limits. Used only v2/verified-projects.md and the corresponding local project reports and READMEs under /Users/dan/portfolio-triage/. Stored file and section references in caseStudy.sourceNotes, which are never rendered. The shared page attributes verification to Eyrie's dated report. Existing project order, statuses, evidence, demo links, and approved captures remain unchanged.
+
+The copy preserves the video tool's credited MIT-port attribution and Tono4's upstream foundation. It explains swift-ship's sign-in-only link, skipped build checks and failing standalone checks, ChatGenius's separate vector-retrieval package and frontend-only test evidence, codex-skills' native schema incompatibility, and Tono4's failed simulator build. No claims of users, adoption, or production outcomes were added.
+
+Extended the existing data schema and data test to require complete case-study fields and source references. Documented editing and sourcing in src/data/README.md and AGENTS.md. Re-read facts.md and reconciled experience.json and all rendered experience copy. No experience corrections were needed; approval flags, neutral client fallback, team/solo attribution, and demo/pilot and not-production wording remain correct.
+
+Validation on Mac-mini.local, working directory /Users/natalie/Development/portfolio:
+
+- `npm test` passed all seven tests, including project text and repository exclusion checks.
+- Final `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Its link checker passed 155 local references across eight HTML pages.
+- Inspected generated HTML for all six complete case studies, original verification copy, unique heading IDs, one H1 per page, repository/demo links, and absence of internal source paths. Compared project data against HEAD to confirm existing project fields were preserved. Home checks passed for all experience copy, neutral partner wording, and exactly one approved linked merged-PR label.
+- `git diff --check` passed. No dependencies, CSS, media, or client JavaScript were added.
+
+Project build and test results remain Eyrie's October 29 evidence; they were not repeated in this portfolio pass. Browser visual, axe, and Lighthouse rounds were not run. Authenticated services, native integrations, and physical-device behavior retain the stated limits. All changes remain local; nothing was committed, pushed, deployed, or changed on GitHub or Pages.

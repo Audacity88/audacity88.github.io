@@ -71,6 +71,10 @@ test('projects have complete cards and detail pages with valid states and URLs',
   for (const project of projects) {
     object(project);
     for (const field of ['id', 'title', 'oneLiner', 'description', 'verification', 'verificationNote', 'notes']) text(project[field], field);
+    object(project.caseStudy);
+    for (const field of ['problem', 'built', 'architecture', 'limitations']) text(project.caseStudy[field], `case study ${field}`);
+    texts(project.caseStudy.sourceNotes, 'case study sources');
+    assert.ok(project.caseStudy.sourceNotes.length, 'Case studies need source provenance');
     date(project.verificationDate);
     for (const field of ['statusLabel', 'demoLabel']) if (project[field] !== undefined) text(project[field], field);
     if (project.demoLabel !== undefined) assert.notEqual(project.demo, null);

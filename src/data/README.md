@@ -12,6 +12,7 @@ Edit `projects.json`. The page sorts projects by ascending `order`. Each object 
 | `title`, `oneLiner`, `description` | Public project copy. |
 | `verification`, `verificationDate` | Public check summary and date, shown on cards and detail pages. |
 | `verificationNote` | Detailed evidence and limitations on the detail page. |
+| `caseStudy` | Required detail-page copy: `problem`, `built`, `architecture`, and `limitations`. `sourceNotes` records nonempty internal source references and is never rendered. |
 | `statusLabel` | Optional evidence-specific label for a verified badge. Pending projects always show "Verifying". |
 | `demoLabel` | Optional demo-link label. Keep swift-ship labeled `Live sign-in page`. |
 | `tech` | Array of short technology labels. |
@@ -26,6 +27,8 @@ Edit `projects.json`. The page sorts projects by ascending `order`. Each object 
 Keep projects `pending-verification` until the owning verification pass supplies evidence. Use `demo-down` with `demo: null` for unavailable demos. A successful HTTP response alone does not verify login or application behavior.
 
 Each project generates `/projects/<id>/` under the configured base path and appears in the sitemap. Cards link to those pages. Keep `verificationNote` consistent with the status and actual checks. Internal `notes` never appear on the page. No separate page file is needed when adding a project.
+
+Source case studies only from the verified project list, the project's `PORTFOLIO_REPORT.md` and READMEs under `/Users/dan/portfolio-triage/`, or its public repository README. Record the source file and relevant sections in `caseStudy.sourceNotes`. Distinguish capabilities found in source from behavior that was actually checked. Preserve upstream attribution, known failures, and the original check date. The public verification section attributes these checks to Eyrie; editing a case study does not reverify the project.
 
 Approved media lives in `public/images/projects/`. Each image has `src` for its 1440px WebP, `srcSmall` for its 720px WebP, the full image's `width` and `height`, descriptive `alt` text, and an honest `caption`. Paths begin with `/images/` and omit the deployment base, which the component adds. Keep the whole captured screen. Do not crop, retouch, or fabricate content. Captures link to their full-size files. The flagship card previews its first image. Detail pages show all images.
 

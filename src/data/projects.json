@@ -58,7 +58,18 @@
     "verificationNote": "Eyrie checked the build, go test, go vet, and 7 web tests on October 29, 2026. The screenshots show the empty first-run state, not active agent workflows. Local only; no public demo.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md, supplied by Eyrie. Genuine first-run captures resized and converted to WebP without content changes.",
     "order": 1,
-    "verificationDate": "2026-10-29"
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "Agents in ZeroClaw, OpenClaw, and other frameworks expose different interfaces. Eyrie's goal is to manage their projects, sessions, and lifecycle from a shared local control room, with a hierarchy of commanders, captains, and specialist talons.",
+      "built": "I built the Go command-line application and React dashboard for agent discovery, lifecycle controls, project hierarchies, and streaming chat. Framework adapters translate a shared agent interface into each framework's gateway calls.",
+      "architecture": "The CLI and dashboard share the adapter and discovery core. The Go executable embeds the built React application. SSE carries live updates; adapters use framework-specific HTTP or WebSocket connections. Configuration and project stores use local files, with SQLite used for ZeroClaw session access.",
+      "limitations": "The approved captures show an empty first run. Live agent lifecycle, LLM chat, terminal sessions, and provisioning were not verified. Eyrie is an early local-only alpha with no authentication; it is not a hosted multi-user service.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 1; approved checks and first-run captures.",
+        "/Users/dan/portfolio-triage/repos/eyrie/README.md, introduction, architecture, framework capabilities, and alpha limitations.",
+        "/Users/dan/portfolio-triage/repos/eyrie/PORTFOLIO_REPORT.md, tech stack, build and test results, local run, and remaining limitations. Later approved captures supersede the report's screenshot blocker."
+      ]
+    }
   },
   {
     "id": "swift-ship",
@@ -91,7 +102,18 @@
     "verificationNote": "Eyrie verified the production build on October 29, 2026 using placeholder service configuration. The live capture shows sign-in only. Tests are not green; authenticated support and AI workflows remain unverified.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md and swift-ship-README.portfolio.md. No claim of passing tests, full type/lint checks, a complete database bootstrap, or working authenticated demo.",
     "order": 2,
-    "verificationDate": "2026-10-29"
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "swift-ship explores an AI-assisted customer support desk that combines ticket handling, knowledge search, and customer conversations. Its source also includes freight estimates and shipment tracking.",
+      "built": "I built a support prototype with ticket queues, replies and internal notes, knowledge editing, and customer portal pages. The AI chat routes requests to support, documentation, quote, or shipment agents. These capabilities are present in source; their authenticated behavior remains unverified.",
+      "architecture": "Next.js pages and API handlers use service modules backed by Supabase Auth, PostgreSQL, and Realtime. The AI route forwards responses from Supabase Edge Functions as server-sent events. Documentation search uses OpenAI embeddings and a pgvector database query.",
+      "limitations": "The public link shows sign-in only. The production build used placeholder service configuration and skips TypeScript and lint checks; those checks and the tests fail separately. The checked-in migrations are not a verified fresh-database setup. Login, ticket operations, and AI responses still need functional verification.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 2; approved build result and sign-in-only capture.",
+        "/Users/dan/portfolio-triage/repos/swift-ship/README.portfolio.md, what the project implements, architecture, and demo access and current limits.",
+        "/Users/dan/portfolio-triage/repos/swift-ship/PORTFOLIO_REPORT.md, installation, build, runtime, and tests; typecheck and lint details."
+      ]
+    }
   },
   {
     "id": "codex-video-vision",
@@ -113,7 +135,18 @@
     "verificationNote": "Eyrie reported 108 passing tests on October 29, 2026. This is a credited port of an MIT-licensed project. No live demo or end-to-end transcription check is claimed.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md. Preserve the credited-port attribution.",
     "order": 3,
-    "verificationDate": "2026-10-29"
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "A coding agent needs timestamped frames and audio information to inspect a local video. This project prepares metadata, images, scene analysis, and optional transcripts for the agent to interpret.",
+      "built": "I adapted the MIT-licensed claude-video-vision project for Codex, preserving its upstream credit and license. The port includes a local MCP server and workflows for video inspection and storyboard comparison.",
+      "architecture": "A TypeScript server exposes MCP tools for metadata, analysis, frame extraction, and closer inspection of selected timestamps. ffmpeg and ffprobe process local media. A session cache supports later frame retrieval. Transcription can use Gemini, OpenAI Whisper, or a local Whisper backend.",
+      "limitations": "Transcription tests use mocked backends; real API transcription and local Whisper inference were not verified. Codex Desktop plugin discovery and long-video performance also remain unchecked. The report validates the local source build, not a published npm installation or a hosted demo.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 3; credited MIT port and 108 passing tests.",
+        "/Users/dan/portfolio-triage/repos/codex-tools/codex-video-vision/README.md, what it does, local development, and recommended agent workflow.",
+        "/Users/dan/portfolio-triage/repos/codex-tools/codex-video-vision/PORTFOLIO_REPORT.md, build, tests, and runtime; small fixes; images and remaining limits."
+      ]
+    }
   },
   {
     "id": "codex-skills",
@@ -134,7 +167,18 @@
     "verificationNote": "Eyrie checked skill installation and scripted workflows on October 29, 2026. Some native tests still fail. This is not a green test suite.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md. Keep pending-verification until the remaining test failures are resolved and checked.",
     "order": 4,
-    "verificationDate": "2026-10-29"
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "Repeated agent work needs reusable procedures. This bundle collects workflows for source intake, writing, media review, maintenance, and recovery of local task history or workspace paths.",
+      "built": "I assembled a portable skill collection with Markdown instructions, supporting scripts, and an installer. The recovery tools report proposed changes, create backups, and support restoring archived data. The collection retains upstream source and license notes for included skills.",
+      "architecture": "Each skill lives in its own folder with instructions and optional resources. Shell installation copies bundled skill folders into a skills directory. Python recovery scripts use the standard library and SQLite. Optional PDF and video workflows depend on external tools; there is no compiled application build.",
+      "limitations": "Some native history-repair tests fail against the evaluated Codex alpha's database schema. The reported checks used synthetic profiles, not live user history. Agent-session discovery, connector-backed workflows, and the remote installation route remain unverified, so this project stays pending verification.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 4; installation and scripted workflows checked with native test failures remaining.",
+        "/Users/dan/portfolio-triage/repos/codex-tools/codex-skills/README.md, included skills, recovery toolkit, repository installer, and project notes.",
+        "/Users/dan/portfolio-triage/repos/codex-tools/codex-skills/PORTFOLIO_REPORT.md, dependencies, structure, installation, and tests; images and remaining blockers."
+      ]
+    }
   },
   {
     "id": "chatgenius",
@@ -157,7 +201,18 @@
     "verificationNote": "Eyrie reported all 55 frontend tests passing on October 29, 2026. Backend services and a live chat flow are not verified here. Code only; no demo link.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md supersedes the earlier demo-down seed. Do not restore old demo links.",
     "order": 5,
-    "verificationDate": "2026-10-29"
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "ChatGenius explores Slack-like communication with channels, direct messages, attachments, and AI replies based on message history. It combines the chat interface and AI response paths in one codebase.",
+      "built": "I built a React chat frontend and a Python API for AI replies and related chat operations. The source includes channel and direct-message organization, presence, threads, and file sharing. This portfolio presents the code only, without a live demo.",
+      "architecture": "The application lives in frontend/ and backend/; the root React starter is separate. The frontend uses Supabase for authentication, data, and live updates. FastAPI chat routes retrieve Supabase message history and call OpenAI directly. A separate SQLAlchemy package implements vector retrieval with PostgreSQL and pgvector.",
+      "limitations": "The passing frontend tests do not establish full type correctness or a working chat service. Standalone type checking fails, backend tests fail before assertions, and database migrations need reconciliation. Authenticated messaging, uploads, and AI replies remain unverified.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 5; frontend-only test result and code-only presentation.",
+        "/Users/dan/portfolio-triage/repos/gauntlet-ai/README.md, tech stack and chat feature list.",
+        "/Users/dan/portfolio-triage/repos/gauntlet-ai/PORTFOLIO_REPORT.md, project layout and stack, validation, and database replay limitations. The report distinguishes current AI routes from the separate vector retrieval package."
+      ]
+    }
   },
   {
     "id": "tono4",
@@ -179,6 +234,17 @@
     "verificationNote": "As of Eyrie's October 29, 2026 check, the simulator build was not verified. No device behavior, screenshots, or demo is claimed.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md. TODO: verify the simulator build and obtain approved genuine device captures.",
     "order": 6,
-    "verificationDate": "2026-10-29"
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "Tono4 explores learning Chinese vocabulary from objects around the learner. The intended flow connects camera recognition to saved words, pronunciation practice, and quizzes.",
+      "built": "I built an iOS vocabulary-learning prototype with camera exploration and practice modes. The README credits CoreML-in-ARKit as its foundation. These are source-level capabilities; a running app has not been verified.",
+      "architecture": "SwiftUI provides the interface, with ARKit, SceneKit, Vision, and bundled Core ML YOLO models for camera recognition. Core Data stores word collections. Audio and speech integrations support the intended pronunciation workflow. Model conversion utilities are separate Python scripts.",
+      "limitations": "The simulator build failed during Core ML compilation in the evaluation environment, and simulator services were unavailable. No tests ran. Installation, recognition, pronunciation assessment, and review scheduling remain unverified. AR behavior needs a physical device check; no screenshots or demo are presented.",
+      "sourceNotes": [
+        "portfolio-brief/v2/verified-projects.md, item 6; simulator build unverified and no approved media.",
+        "/Users/dan/portfolio-triage/repos/Tono4/README.md, overview, explore and practice modes, and acknowledgments. Platform and pronunciation-provider details defer to the evaluation report.",
+        "/Users/dan/portfolio-triage/repos/Tono4/PORTFOLIO_REPORT.md, tech stack, build, run, and test results; models and conversion; remaining blockers."
+      ]
+    }
   }
 ]
