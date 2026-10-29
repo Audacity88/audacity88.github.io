@@ -16,7 +16,7 @@
   .container { width: 100%; max-width: none; }
   .skip-link, .site-header nav, .theme-control, .site-footer,
   .hero-note, .hero-actions, .hero-scroll, .accent-mark,
-  .runtime-art, .media-placeholder, .project-media, .project-card-media, #captures,
+  .project-media, .project-card-media, #captures,
   .project-index, .pr-list, .contact-section > p:not(.eyebrow) { display: none !important; }
   .site-header { min-height: 0; padding: 0 0 5pt; margin-bottom: 10pt; border-color: #aaa; }
   .wordmark { font-size: 14pt; min-height: 0; }

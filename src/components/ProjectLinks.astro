@@ -1,0 +1,17 @@
+---
+import type { Project } from '../data/content';
+
+interface Props {
+  project: Project;
+  showDetails?: boolean;
+}
+
+const { project, showDetails = false } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<div class="project-links">
+  {showDetails && <a href={`${base}projects/${project.id}/`}>Project details<span aria-hidden="true"> →</span><span class="sr-only"> for {project.title}</span></a>}
+  <a href={project.github}>View on GitHub<span aria-hidden="true"> ↗</span><span class="sr-only"> for {project.title}</span></a>
+  {project.demo && <a href={project.demo}>{project.demoLabel ?? 'View demo'}{project.status === 'pending-verification' && <span class="demo-pending"> · pending</span>}<span aria-hidden="true"> ↗</span><span class="sr-only"> for {project.title}</span></a>}
+</div>

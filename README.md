@@ -37,7 +37,7 @@ Use `/Users/natalie/Development/portfolio-brief/facts.md` as the only source of 
 
 ### Projects
 
-Edit [src/data/projects.json](src/data/projects.json). Each object becomes a project card and a detail page at `/projects/<id>/` under the configured base path. Cards sort by ascending `order`.
+Edit [src/data/projects.json](src/data/projects.json). Each visible object becomes a project card and a detail page at `/projects/<id>/` under the configured base path. Cards sort by ascending `order`. Keep the reserved empty draft records hidden as described in the data guide.
 
 | Field | How to edit it |
 | --- | --- |
@@ -103,11 +103,11 @@ For another repository subpath, set `PUBLIC_BASE_PATH` to its path with leading 
 
 Use the same environment variables for `dev`, `build`, and `preview`. For example, after the root build above, run `PUBLIC_BASE_PATH=/ npm run preview` and open the root URL printed by Astro. Internal assets and the resume link use Astro's base URL.
 
-Canonical URLs, Open Graph and Twitter image URLs, `sitemap.xml`, and `robots.txt` use these settings. The sitemap lists the home page and all generated project pages. The custom `404.html` has `noindex` and links back to the portfolio.
+Canonical URLs, Open Graph and Twitter image URLs, `sitemap.xml`, and `robots.txt` use these settings. The sitemap lists the home page, resume, and all visible project pages. The custom `404.html` has `noindex` and links back to the portfolio.
 
 Search engines read `robots.txt` at the origin root. A root build includes it there. A subpath build includes it under that path; before any approved publication, the host's root `robots.txt` must point to the subpath sitemap. The host must also serve `404.html` for missing pages with HTTP status 404.
 
-Styles are inlined at build time to avoid a blocking stylesheet request. System fonts need no downloads. The only browser JavaScript restores and cycles the theme. Navigation works without JavaScript.
+Styles are inlined at build time to avoid a blocking stylesheet request. System fonts need no downloads. Browser JavaScript restores and cycles the theme and enables the resume's print button. Navigation works without JavaScript.
 
 ## Deployment, awaiting approval
 

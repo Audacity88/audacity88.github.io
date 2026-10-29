@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import ProjectStatus from '../../components/ProjectStatus.astro';
 import ProjectMedia from '../../components/ProjectMedia.astro';
 import ArchitectureDiagram from '../../components/ArchitectureDiagram.astro';
+import ProjectLinks from '../../components/ProjectLinks.astro';
 import { projects } from '../../data/content';
 
 export const getStaticPaths = (() => projects.map((project) => ({
@@ -62,10 +63,7 @@ const base = import.meta.env.BASE_URL;
         </section>}
         <section aria-labelledby="links-title">
           <h2 id="links-title">Links</h2>
-          <div class="project-links">
-            <a href={project.github}>View on GitHub <span aria-hidden="true">↗</span></a>
-            {project.demo && <a href={project.demo}>{project.demoLabel ?? 'View demo'}{project.status === 'pending-verification' && <span class="demo-pending"> · pending</span>}<span aria-hidden="true"> ↗</span></a>}
-          </div>
+          <ProjectLinks project={project} />
         </section>
       </div>
     </article>

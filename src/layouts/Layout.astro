@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/print.css';
+import ThemeToggle from '../components/ThemeToggle.astro';
 interface Props {
   title?: string;
   description?: string;
@@ -63,9 +64,7 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
         <a href={`${base}resume/`} aria-current={Astro.url.pathname === `${base}resume/` ? 'page' : undefined}>Resume</a>
         <a href={`${base}#contact`}>Contact</a>
       </nav>
-      <div class="theme-control">
-        <button type="button" class="theme-toggle" id="theme-toggle" hidden><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.4" /><path d="M10 3a7 7 0 0 1 0 14Z" fill="currentColor" /></svg><span id="theme-label">Auto</span></button>
-      </div>
+      <ThemeToggle />
     </header>
     <slot />
     <footer class="site-footer container">
@@ -73,31 +72,5 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
       <span>Built with Astro. No tracking.</span>
       <a href="#main">Back to top <span aria-hidden="true">↑</span></a>
     </footer>
-    <script>
-      const button = document.querySelector<HTMLButtonElement>('#theme-toggle');
-      const label = document.querySelector<HTMLElement>('#theme-label');
-      type Theme = 'system' | 'light' | 'dark';
-      let theme: Theme = document.documentElement.dataset.theme === 'dark' ? 'dark' : document.documentElement.dataset.theme === 'light' ? 'light' : 'system';
-      const nextTheme = { system: 'light', light: 'dark', dark: 'system' } as const;
-      function updateTheme() {
-        if (theme === 'system') delete document.documentElement.dataset.theme;
-        else document.documentElement.dataset.theme = theme;
-        const themeName = theme === 'system' ? 'Auto' : theme === 'light' ? 'Light' : 'Dark';
-        if (label) label.textContent = themeName;
-        button?.setAttribute('aria-label', `${themeName} color theme${theme === 'system' ? ', follows system' : ''}. Switch to ${nextTheme[theme]} theme`);
-      }
-      updateTheme();
-      if (button) {
-        button.hidden = false;
-        button.addEventListener('click', () => {
-          theme = nextTheme[theme];
-          try {
-            if (theme === 'system') localStorage.removeItem('portfolio-theme');
-            else localStorage.setItem('portfolio-theme', theme);
-          } catch { /* The current page still honors the selected theme. */ }
-          updateTheme();
-        });
-      }
-    </script>
   </body>
 </html>
