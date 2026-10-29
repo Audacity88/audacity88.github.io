@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
 
 const directory = new URL('../src/data/', import.meta.url);
 const read = (name) => JSON.parse(readFileSync(new URL(`${name}.json`, directory), 'utf8'));
@@ -51,7 +51,10 @@ test('projects have complete cards and detail pages with valid states and URLs',
   unique(projects, 'order');
   for (const project of projects) {
     object(project);
-    for (const field of ['id', 'title', 'oneLiner', 'description', 'verificationNote', 'notes']) text(project[field], field);
+    for (const field of ['id', 'title', 'oneLiner', 'description', 'verification', 'verificationNote', 'notes']) text(project[field], field);
+    date(project.verificationDate);
+    for (const field of ['statusLabel', 'demoLabel']) if (project[field] !== undefined) text(project[field], field);
+    if (project.demoLabel !== undefined) assert.notEqual(project.demo, null);
     assert.match(project.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
     assert.doesNotMatch(project.id, /superbuilders|ctm-system|witness-lexington/i);
     texts(project.tech, 'tech');
@@ -63,12 +66,17 @@ test('projects have complete cards and detail pages with valid states and URLs',
     assert.ok(project.demo === null || typeof project.demo === 'string');
     if (project.demo !== null) assert.equal(new URL(project.demo).protocol, 'https:');
     if (project.status === 'demo-down') assert.equal(project.demo, null);
-    if (project.images !== undefined) {
+    {
       assert.ok(Array.isArray(project.images));
       for (const image of project.images) {
-        assert.match(image.src, /^\/(?!\/)/);
-        assert.ok(!image.src.split('/').includes('..'), 'Image paths must stay within public/');
+        for (const field of ['src', 'srcSmall']) {
+          assert.match(image[field], /^\/(?!\/)/);
+          assert.ok(!image[field].split('/').includes('..'), 'Image paths must stay within public/');
+          assert.ok(statSync(new URL(`../public${image[field]}`, import.meta.url)).isFile(), 'Image must exist');
+        }
         text(image.alt, 'image alt');
+        text(image.caption, 'image caption');
+        for (const field of ['width', 'height']) assert.ok(Number.isInteger(image[field]) && image[field] > 0);
       }
     }
   }

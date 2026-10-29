@@ -1,6 +1,6 @@
 # Edit portfolio data
 
-Use `/Users/natalie/Development/portfolio-brief/facts.md` for biographical and experience facts. The project seed in the task supplies the initial project descriptions and links. Treat the triage document as untested context. Do not infer verified behavior from a repository README or the portfolio build.
+Use `/Users/natalie/Development/portfolio-brief/facts.md` for biographical and experience facts. `portfolio-brief/v2/verified-projects.md` supplies the current approved project list, evidence, and media, superseding earlier seeds. Treat the triage document as untested context. Do not infer verified behavior from a repository README or the portfolio build.
 
 ## Update projects
 
@@ -10,7 +10,10 @@ Edit `projects.json`. The page sorts projects by ascending `order`. Each object 
 | --- | --- |
 | `id` | Unique lowercase ID with optional hyphens. |
 | `title`, `oneLiner`, `description` | Public project copy. |
-| `verificationNote` | Public evidence and limitations, shown under "What's verified" on the detail page. |
+| `verification`, `verificationDate` | Public check summary and date, shown on cards and detail pages. |
+| `verificationNote` | Detailed evidence and limitations on the detail page. |
+| `statusLabel` | Optional evidence-specific label for a verified badge. Pending projects always show "Verifying". |
+| `demoLabel` | Optional demo-link label. Keep swift-ship labeled `Live sign-in page`. |
 | `tech` | Array of short technology labels. |
 | `github` | HTTPS repository or filtered upstream PR URL. |
 | `demo` | HTTPS demo URL, or `null` to hide the demo button. |
@@ -18,15 +21,29 @@ Edit `projects.json`. The page sorts projects by ascending `order`. Each object 
 | `featured` | Adds visual emphasis without changing the sort order. |
 | `order` | Positive integer controlling the card position. |
 | `notes` | Internal editing notes. Never rendered. |
-| `images` | Optional array of genuine, approved images. An empty array renders a clearly labeled placeholder. |
+| `images` | Array of genuine approved images, or `[]` for a text-only card. |
 
 Keep projects `pending-verification` until the owning verification pass supplies evidence. Use `demo-down` with `demo: null` for unavailable demos. A successful HTTP response alone does not verify login or application behavior.
 
 Each project generates `/projects/<id>/` under the configured base path and appears in the sitemap. Cards link to those pages. Keep `verificationNote` consistent with the status and actual checks. Internal `notes` never appear on the page. No separate page file is needed when adding a project.
 
-To add media, put genuine captures in `public/images/`. Add objects such as `{ "src": "/images/eyrie-dashboard.png", "alt": "Describe the actual captured screen" }` to `images`. Image paths omit the deployment base, which the component adds. Replace this example path and description with the real asset. Never use fabricated screenshots.
+Approved media lives in `public/images/projects/`. Each image has `src` for its 1440px WebP, `srcSmall` for its 720px WebP, the full image's `width` and `height`, descriptive `alt` text, and an honest `caption`. Paths begin with `/images/` and omit the deployment base, which the component adds. Keep the whole captured screen. Do not crop, retouch, or fabricate content. Captures link to their full-size files. The flagship card previews its first image. Detail pages show all images.
+
+The current approved captures are Eyrie's four empty first-run screens and swift-ship's sign-in page. The current project checks date to Oct 29, 2026 and come from Eyrie's supplied report, not this portfolio build. Preserve known native-test failures for codex-skills, the frontend-only scope for ChatGenius, and swift-ship's unverified authenticated workflows. Keep Tono4 pending until its simulator build is checked.
 
 To swap a project, replace its entire object and preserve unique IDs and the intended order. Keep private and employer-owned projects out of this file.
+
+### Record new project verification
+
+After completing the project's actual checks, record the evidence with the local helper:
+
+```sh
+npm run project:verify -- tono4 --demo https://example.com/demo --verification "Describe the checks you completed" --note "Describe any remaining limits" --label "Build checked"
+```
+
+Replace the example URL and evidence before running. `--verification` is required to prevent a status change without recorded evidence. The helper sets `status: verified`, the HTTPS demo URL, evidence summary, current date, public verification note, and an internal audit note. It rejects unknown IDs, unsafe URLs, and prohibited links before writing. Other projects stay unchanged. It does not run builds, access the demo, or prove that the evidence is accurate.
+
+Use `--demo-label "Live sign-in page"` for a sign-in-only link. The existing label is preserved if the demo URL is unchanged. For a local-only project, edit the evidence and status manually and keep `demo: null`. Run `npm test` and `npm run build`, then inspect the affected card and detail page. Append the checks and limits to `PASS_NOTES.md`.
 
 ## Update experience
 

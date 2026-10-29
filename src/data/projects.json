@@ -2,116 +2,183 @@
   {
     "id": "eyrie",
     "title": "Eyrie",
-    "oneLiner": "A control room for AI agents.",
-    "description": "Agent infrastructure with a Go backend and a Vite web UI. Runs locally, with no public live demo.",
-    "tech": ["Go", "Vite", "Agent orchestration"],
+    "oneLiner": "A local control room for AI agents.",
+    "description": "Coordinate agents across ZeroClaw, OpenClaw, Hermes, PicoClaw, and Codex. A Go backend connects to a React dashboard over SSE and WebSockets, with SQLite for storage. Runs locally, with no public demo.",
+    "tech": [
+      "Go",
+      "Cobra",
+      "SSE",
+      "WebSockets",
+      "SQLite",
+      "React 19",
+      "TypeScript",
+      "Vite",
+      "Tailwind"
+    ],
     "github": "https://github.com/EyrieCommander/eyrie",
     "demo": null,
-    "status": "pending-verification",
+    "status": "verified",
+    "statusLabel": "Build & tests checked",
     "featured": true,
+    "images": [
+      {
+        "src": "/images/projects/eyrie-mission-control-1440.webp",
+        "srcSmall": "/images/projects/eyrie-mission-control-720.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Eyrie mission control with zero active projects, no running agents, an empty timeline, and a commander setup panel.",
+        "caption": "Mission control, first run. No projects or agents running."
+      },
+      {
+        "src": "/images/projects/eyrie-home-1440.webp",
+        "srcSmall": "/images/projects/eyrie-home-720.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Eyrie setup page with commander, frameworks, and projects steps, plus an empty API key field.",
+        "caption": "Home, first run. Commander setup awaits an API key."
+      },
+      {
+        "src": "/images/projects/eyrie-frameworks-1440.webp",
+        "srcSmall": "/images/projects/eyrie-frameworks-720.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Eyrie framework catalog showing ZeroClaw, OpenClaw, Hermes Agent, PicoClaw, and Codex App Server install cards.",
+        "caption": "Framework catalog, first run. Frameworks are not installed."
+      },
+      {
+        "src": "/images/projects/eyrie-personas-1440.webp",
+        "srcSmall": "/images/projects/eyrie-personas-720.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Eyrie persona catalog with cards including Life Coach, Executive Strategist, and Marketing Lead, with none installed.",
+        "caption": "Persona catalog, first run. No personas installed."
+      }
+    ],
+    "verification": "Build, go test, go vet, and 7 web tests pass.",
+    "verificationNote": "Eyrie checked the build, go test, go vet, and 7 web tests on October 29, 2026. The screenshots show the empty first-run state, not active agent workflows. Local only; no public demo.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md, supplied by Eyrie. Genuine first-run captures resized and converted to WebP without content changes.",
     "order": 1,
-    "images": [],
-    "notes": "TODO: verify the build and add genuine screenshots. Local only. The abstract placeholder is not a screenshot.",
-    "verificationNote": "The local build and dashboard behavior have not been verified for this portfolio. No public demo is provided."
-  },
-  {
-    "id": "zeroclaw",
-    "title": "ZeroClaw contributions",
-    "oneLiner": "Upstream work on an open-source agent runtime.",
-    "description": "Code owner and core contributor. Work includes mid-turn steering, session recovery, prompt caching, and cost reporting.",
-    "tech": ["Rust", "Tokio", "Agent runtime"],
-    "github": "https://github.com/zeroclaw-labs/zeroclaw/pulls?q=is%3Apr+author%3AAudacity88+is%3Amerged",
-    "demo": null,
-    "status": "pending-verification",
-    "featured": true,
-    "order": 2,
-    "notes": "Individual merged PRs and the approved 750+ merged pull requests label are verified in facts.md. The project card remains pending verification for this pass.",
-    "verificationNote": "Selected upstream pull requests are confirmed merged. A local build and runtime demo have not been verified for this portfolio."
-  },
-  {
-    "id": "codex-video-vision",
-    "title": "codex-video-vision",
-    "oneLiner": "Video tools for Codex.",
-    "description": "A Codex plugin and MCP server for working with video. A credited port of an MIT-licensed project. Current build and smoke testing are pending.",
-    "tech": ["TypeScript", "MCP", "Codex"],
-    "github": "https://github.com/EyrieCommander/codex-video-vision",
-    "demo": null,
-    "status": "pending-verification",
-    "featured": false,
-    "order": 3,
-    "notes": "Credited port of an MIT-licensed project. CI was green as of August 2026, per the supplied project seed. Current build and smoke test pending.",
-    "verificationNote": "The current build and video tools have not been verified for this portfolio. No public demo is provided."
-  },
-  {
-    "id": "codex-skills",
-    "title": "codex-skills",
-    "oneLiner": "Field-tested skills for Codex.",
-    "description": "A collection of Codex skills for recurring work, listed on skills.sh.",
-    "tech": ["Codex", "Python", "Markdown"],
-    "github": "https://github.com/EyrieCommander/codex-skills",
-    "demo": null,
-    "status": "pending-verification",
-    "featured": false,
-    "order": 4,
-    "notes": "TODO: verify the current catalog. No installation or build has been tested in this pass.",
-    "verificationNote": "The current skill catalog and installation flow have not been verified for this portfolio."
+    "verificationDate": "2026-10-29"
   },
   {
     "id": "swift-ship",
     "title": "swift-ship",
     "oneLiner": "An AI customer support desk.",
-    "description": "A customer support application built with Next.js and Supabase, with AI support workflows.",
-    "tech": ["Next.js", "TypeScript", "Supabase"],
+    "description": "A customer support prototype built with Next.js 15, Supabase, and OpenAI, with pgvector for document search. The public link shows sign-in; authenticated support workflows need separate verification.",
+    "tech": [
+      "Next.js 15",
+      "Supabase",
+      "OpenAI",
+      "pgvector"
+    ],
     "github": "https://github.com/Audacity88/swift-ship",
     "demo": "https://swift-ship-pi.vercel.app",
+    "demoLabel": "Live sign-in page",
+    "status": "verified",
+    "statusLabel": "Build checked",
+    "featured": false,
+    "images": [
+      {
+        "src": "/images/projects/swift-ship-live-signin-1440.webp",
+        "srcSmall": "/images/projects/swift-ship-live-signin-720.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Swift Ship sign-in form with email and password fields, inside the application navigation shell.",
+        "caption": "Public sign-in page. Authenticated workflows are not verified."
+      }
+    ],
+    "verification": "Production build passes. Authenticated workflows are not verified.",
+    "verificationNote": "Eyrie verified the production build on October 29, 2026 using placeholder service configuration. The live capture shows sign-in only. Tests are not green; authenticated support and AI workflows remain unverified.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md and swift-ship-README.portfolio.md. No claim of passing tests, full type/lint checks, a complete database bootstrap, or working authenticated demo.",
+    "order": 2,
+    "verificationDate": "2026-10-29"
+  },
+  {
+    "id": "codex-video-vision",
+    "title": "codex-video-vision",
+    "oneLiner": "Video tools for Codex. A credited port of an MIT-licensed project.",
+    "description": "A Codex video tool server using MCP, TypeScript, and ffmpeg.",
+    "tech": [
+      "TypeScript",
+      "MCP",
+      "ffmpeg"
+    ],
+    "github": "https://github.com/EyrieCommander/codex-video-vision",
+    "demo": null,
+    "status": "verified",
+    "statusLabel": "Tests checked",
+    "featured": false,
+    "images": [],
+    "verification": "108 tests pass.",
+    "verificationNote": "Eyrie reported 108 passing tests on October 29, 2026. This is a credited port of an MIT-licensed project. No live demo or end-to-end transcription check is claimed.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md. Preserve the credited-port attribution.",
+    "order": 3,
+    "verificationDate": "2026-10-29"
+  },
+  {
+    "id": "codex-skills",
+    "title": "codex-skills",
+    "oneLiner": "Reusable workflows for Codex.",
+    "description": "A collection of Codex skills written in Python and Markdown, listed on skills.sh.",
+    "tech": [
+      "Python",
+      "Markdown",
+      "Codex"
+    ],
+    "github": "https://github.com/EyrieCommander/codex-skills",
+    "demo": null,
     "status": "pending-verification",
     "featured": false,
-    "order": 5,
-    "notes": "Demo URL supplied in the brief. Login, data, and AI behavior still need verification.",
-    "verificationNote": "Login, data, and AI support behavior on the linked demo have not been verified for this portfolio."
+    "images": [],
+    "verification": "Skill install and scripted workflows checked; some native tests still fail.",
+    "verificationNote": "Eyrie checked skill installation and scripted workflows on October 29, 2026. Some native tests still fail. This is not a green test suite.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md. Keep pending-verification until the remaining test failures are resolved and checked.",
+    "order": 4,
+    "verificationDate": "2026-10-29"
   },
   {
     "id": "chatgenius",
     "title": "ChatGenius",
-    "oneLiner": "Real-time chat with AI and RAG.",
-    "description": "A real-time chat application with AI features and retrieval-augmented generation. The demo is currently unavailable.",
-    "tech": ["React", "Supabase", "Python", "RAG"],
+    "oneLiner": "Slack-like chat with AI replies.",
+    "description": "A chat application built with React, Supabase, FastAPI, and pgvector. Code only; no public demo is linked.",
+    "tech": [
+      "React",
+      "Supabase",
+      "FastAPI",
+      "pgvector"
+    ],
     "github": "https://github.com/Audacity88/gauntlet-ai",
     "demo": null,
-    "status": "demo-down",
+    "status": "verified",
+    "statusLabel": "Frontend tests checked",
     "featured": false,
-    "order": 6,
-    "notes": "The supplied brief marks the Vercel demo down. Do not restore the demo link without verifying it.",
-    "verificationNote": "The demo is unavailable, so its link is hidden. The current build and chat behavior have not been verified for this portfolio."
+    "images": [],
+    "verification": "Frontend: 55 of 55 tests pass.",
+    "verificationNote": "Eyrie reported all 55 frontend tests passing on October 29, 2026. Backend services and a live chat flow are not verified here. Code only; no demo link.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md supersedes the earlier demo-down seed. Do not restore old demo links.",
+    "order": 5,
+    "verificationDate": "2026-10-29"
   },
   {
     "id": "tono4",
     "title": "Tono4",
-    "oneLiner": "Chinese learning through augmented reality.",
-    "description": "An iOS Chinese-learning app with ARKit, YOLO11 object detection converted to Core ML, and pronunciation scoring.",
-    "tech": ["Swift", "ARKit", "YOLO11", "Core ML"],
+    "oneLiner": "Learn Chinese vocabulary through the camera.",
+    "description": "An iOS app for learning Chinese vocabulary from camera input, built with SwiftUI, ARKit, and Core ML YOLO.",
+    "tech": [
+      "SwiftUI",
+      "ARKit",
+      "Core ML",
+      "YOLO"
+    ],
     "github": "https://github.com/Audacity88/Tono4",
     "demo": null,
     "status": "pending-verification",
     "featured": false,
-    "order": 7,
     "images": [],
-    "notes": "TODO: verify on iOS and add genuine video or screenshots. Media slot intentionally empty.",
-    "verificationNote": "The iOS build, object detection, and pronunciation scoring have not been verified for this portfolio. Genuine device captures are still pending."
-  },
-  {
-    "id": "cliktok",
-    "title": "cliktok",
-    "oneLiner": "A TikTok-style iOS app.",
-    "description": "A short-form video app built with SwiftUI and Firebase, with a Node.js server.",
-    "tech": ["SwiftUI", "Firebase", "Node.js"],
-    "github": "https://github.com/Audacity88/cliktok",
-    "demo": null,
-    "status": "pending-verification",
-    "featured": false,
-    "order": 8,
-    "images": [],
-    "notes": "TODO: verify on iOS and add genuine video or screenshots. Media slot intentionally empty.",
-    "verificationNote": "The iOS build and video flows have not been verified for this portfolio. Genuine device captures are still pending."
+    "verification": "Simulator build not verified.",
+    "verificationNote": "As of Eyrie's October 29, 2026 check, the simulator build was not verified. No device behavior, screenshots, or demo is claimed.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md. TODO: verify the simulator build and obtain approved genuine device captures.",
+    "order": 6,
+    "verificationDate": "2026-10-29"
   }
 ]

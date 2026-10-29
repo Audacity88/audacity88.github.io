@@ -120,3 +120,26 @@ Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/po
 - Stopped exactly preview PID `34453` and isolated Chrome PID `34553`. Confirmed ports 4337 and 9347 were released.
 
 Project builds and demo flows, physical devices and printers, other browser engines, remote CI, clean installation, and Node 24 execution remain unverified. The link checker checks static local output, not external service availability. Nothing was committed, pushed, or deployed, and no GitHub or Pages settings changed.
+
+## Pass 8: Verified project update and refinement, 2026-10-30
+
+verified-projects applied
+
+Replaced the project list with the six approved entries in the supplied order. Removed cliktok and the duplicate ZeroClaw project card; ZeroClaw remains in open source and experience with the approved linked total. Added dated, scoped verification text, honest build/test badges, a full-width Eyrie flagship, and detail-page capture galleries. Added only the five approved genuine captures as responsive WebP files, without cropping or content edits. Captions identify empty first-run screens and the public sign-in page. swift-ship's link says "Live sign-in page"; ChatGenius has no demo link. codex-skills and Tono4 remain pending.
+
+Verified all six repository URLs with read-only `gh repo view <owner/name> --json url`. Re-read facts.md and reconciled experience.json and all rendered experience copy; approval flags, neutral client fallback, team/solo roles, and explicit demo/pilot and not-production wording remain correct. Updated AGENTS.md and the data guides to remove superseded seeds and preserve the supplied verification rules.
+
+Completed refinement items **d and h**:
+
+- **d:** Used Playwright with installed Chrome against `npm run preview -- --host 127.0.0.1 --port 4338`. Captured home, project cards, Eyrie galleries, and swift-ship details at 360/768/1280px in light and dark under `/private/tmp/portfolio-qa/`, which is `/tmp/portfolio-qa` on this host. Inspected all six card captures and representative galleries. Removed the oversized swift-ship card preview after visual review; its genuine capture remains on its detail page. Kept the flagship preview on home. Preserved the MIT-port credit in the printable card copy. The print summary still fits two pages on A4 and Letter, with Letter pages visually inspected.
+- **h:** Added documented `npm run project:verify -- <id> --demo <url> --verification "Checks completed"`, with optional limitation, badge, and demo-label arguments. The helper records maintainer evidence and the date, sets verified status and the HTTPS demo link, and preserves other projects. It requires evidence and rejects unknown IDs, credentials, HTTP URLs, and prohibited project links before writing. It does not run remote checks or prove project behavior. Added a focused test for those safeguards and sign-in-label preservation, plus a CLI smoke in a temporary copy. Real project data was not changed by helper tests.
+
+Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/portfolio`:
+
+- `npm test` passed all six tests. `PUBLIC_SITE_URL=https://portfolio.example PUBLIC_BASE_PATH=/ ASTRO_TELEMETRY_DISABLED=1 npm run build` passed. Final `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints; its link checker passed 155 local references across eight HTML pages. `git diff --check` passed. No repository dependencies changed. Playwright was installed only in `/private/tmp/portfolio-playwright/`, with no browser download.
+- Extended data checks for dated verification evidence, status/demo labels, image dimensions, captions, and both image assets. All ten responsive WebP files total 228,502 bytes, converted only from the five approved PNGs. No image content was cropped or retouched.
+
+Project build and test evidence comes from the supplied Eyrie report dated Oct 29, 2026. This pass verified the portfolio, repository URL resolution, and supplied media, not the projects themselves. swift-ship authenticated workflows, ChatGenius backend/live flows, codex-skills native test failures, Tono4 simulator/device behavior, physical phones, other browser engines, remote CI, clean installation, and Node 24 execution remain outside this validation. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+
+Final Playwright run passed all 42 page/width/theme combinations with no horizontal overflow, broken images, console errors, or runtime exceptions. Card/detail navigation, theme persistence across pages and reload, the approved count/link, client fallback, and missing-project HTTP 404 passed. Final screenshots were inspected at all three widths in both themes. Stopped exactly preview listener PID `61073`, confirmed port 4338 was released, and closed Playwright's isolated browser. The npm launcher was PID `61043`; Astro detached the preview listener. QA files remain only in `/private/tmp/portfolio-qa/`.

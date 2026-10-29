@@ -44,7 +44,7 @@ const base = import.meta.env.BASE_URL;
     <section id="projects" class="section" aria-labelledby="projects-title">
       <div class="section-heading">
         <div><p class="eyebrow">01 / Selected work</p><h2 id="projects-title">Things I've built <br />and contributed to.</h2></div>
-        <p class="section-intro">Agent tooling, full-stack applications, and iOS experiments. Demo and build verification is in progress.</p>
+        <p class="section-intro">Agent tooling, full-stack applications, and iOS experiments. Each project states what was checked and what remains unverified.</p>
       </div>
       <div class="project-grid">
         {projects.map((project, index) => <ProjectCard project={project} index={index} />)}

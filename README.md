@@ -33,7 +33,7 @@ The print stylesheet formats the home page as a two-page summary on A4 and Lette
 
 ## Edit content
 
-Use `/Users/natalie/Development/portfolio-brief/facts.md` as the only source of biographical and experience facts. Preserve the supplied project seeds. Treat `triage.md` as untested context. See the [data guide](src/data/README.md) for the full editing rules.
+Use `/Users/natalie/Development/portfolio-brief/facts.md` as the only source of biographical and experience facts. Use `portfolio-brief/v2/verified-projects.md` for the approved project list, evidence, and media. It supersedes the earlier seeds. Treat `triage.md` as untested context. See the [data guide](src/data/README.md) for the full editing rules.
 
 ### Projects
 
@@ -43,36 +43,37 @@ Edit [src/data/projects.json](src/data/projects.json). Each object becomes a pro
 | --- | --- |
 | `id` | Keep a unique lowercase ID with optional hyphens. |
 | `title`, `oneLiner`, `description` | Use approved public copy. |
-| `verificationNote` | State what is verified and what remains untested. Shown on the detail page. |
+| `verification`, `verificationDate` | Short evidence summary and check date, shown on cards and detail pages. |
+| `verificationNote` | Detailed evidence and limits, shown on the detail page. |
+| `statusLabel` | Optional evidence-specific badge for verified projects, such as `Build checked`. |
+| `demoLabel` | Optional link label. swift-ship uses `Live sign-in page`. |
 | `tech` | Supply an array of technology labels. |
 | `github` | Use the approved HTTPS repository or upstream PR search URL. |
 | `status` | Use `pending-verification`, `verified`, or `demo-down`. |
 | `demo` | Use the tested HTTPS demo URL, or `null` to hide the demo link. |
 | `featured`, `order` | Set visual emphasis and card order. |
-| `images` | Omit it for a text-only card, or use an empty array for a labeled placeholder. Add only genuine, approved captures. |
+| `images` | An array of genuine approved captures, or `[]` for a text-only card. Each capture has `src`, `srcSmall`, `width`, `height`, `alt`, and `caption`. |
 | `notes` | Record internal verification evidence and remaining work. This field is never rendered. |
 
-Keep a new project `pending-verification`. Its card shows "Verifying", and any demo link carries a "pending" label. ChatGenius stays `demo-down` with `demo: null` until its replacement demo is verified.
+Keep new projects `pending-verification`. Their cards show "Verifying", and any demo link carries a "pending" label. The supplied Oct 29 project checks are recorded in the data. Eyrie has build and test evidence; swift-ship has build evidence only; codex-video-vision and ChatGenius have test evidence. codex-skills remains pending with known native test failures, and Tono4's simulator build remains unverified. ChatGenius is code only, with `demo: null`.
 
-To mark a project verified:
+A `verified` status applies only to the checks recorded in `verification` and `verificationNote`. It does not establish that every workflow works. A successful portfolio build does not verify a project. For live demo updates, test the public URL and the relevant user flow first. Keep a sign-in-only link labeled `Live sign-in page`.
 
-1. Verify the project itself with the relevant build and a representative functional check. For a live demo, test the public URL and its main user flow, including login when required. An HTTP response or a successful portfolio build is insufficient.
-2. Record the date, version, checks, and limitations in `notes` and the current pass notes. Update the public `verificationNote` to match that evidence. Keep biographical claims tied to `facts.md`.
-3. Change `status` to `verified`. To add a demo link, set `demo` to the exact tested HTTPS URL. A verified local project can keep `demo: null`.
-4. Run `npm test` and `npm run build`. Inspect the card and detail page with `npm run preview`.
-
-For example, only after verifying swift-ship and its existing demo, update these fields on its existing object:
-
-```json
-{
-	"status": "verified",
-	"demo": "https://swift-ship-pi.vercel.app"
-}
-```
-
-This is a partial example, not a replacement object or a claim that swift-ship has been verified. If a demo becomes unavailable, set `status` to `demo-down` and `demo` to `null`, then update any availability copy.
+Eyrie is the featured, full-width card. Its preview links to all four first-run captures on the detail page. The approved source PNGs were resized without cropping and converted to WebP at 720px and 1440px. Captions describe their first-run state. swift-ship's detail-page capture shows sign-in only.
 
 Keep private and Superbuilders projects out of the project cards. Never fabricate screenshots. For approved media, follow the paths and alt-text instructions in the data guide.
+
+### Record new project verification
+
+After completing the project's actual checks, record the evidence with the local helper:
+
+```sh
+npm run project:verify -- tono4 --demo https://example.com/demo --verification "Describe the checks you completed" --note "Describe any remaining limits" --label "Build checked"
+```
+
+Replace the example URL and evidence before running. `--verification` is required to prevent a status change without recorded evidence. The helper sets `status: verified`, the HTTPS demo URL, evidence summary, current date, public verification note, and an internal audit note. It rejects unknown IDs, unsafe URLs, and prohibited links before writing. Other projects stay unchanged. It does not run builds, access the demo, or prove that the evidence is accurate.
+
+Use `--demo-label "Live sign-in page"` for a sign-in-only link. The existing label is preserved if the demo URL is unchanged. For a local-only project, edit the evidence and status manually and keep `demo: null`. Run `npm test` and `npm run build`, then inspect the affected card and detail page. Append the checks and limits to `PASS_NOTES.md`.
 
 ### Open-source contributions
 

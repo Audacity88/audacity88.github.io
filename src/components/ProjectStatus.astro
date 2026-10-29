@@ -1,8 +1,8 @@
 ---
 import type { Project } from '../data/content';
 
-interface Props { status: Project['status'] }
-const { status } = Astro.props;
+interface Props { status: Project['status']; label?: string }
+const { status, label } = Astro.props;
 const labels = {
   'pending-verification': 'Verifying',
   'verified': 'Verified',
@@ -10,4 +10,4 @@ const labels = {
 };
 ---
 
-<span class="status" data-status={status}><span aria-hidden="true"></span>{labels[status]}</span>
+<span class="status" data-status={status}><span aria-hidden="true"></span>{status === 'verified' && label ? label : labels[status]}</span>

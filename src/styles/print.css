@@ -16,7 +16,7 @@
   .container { width: 100%; max-width: none; }
   .skip-link, .site-header nav, .theme-control, .site-footer,
   .hero-note, .hero-actions, .hero-scroll, .accent-mark,
-  .runtime-art, .media-placeholder, .project-media,
+  .runtime-art, .media-placeholder, .project-media, .project-card-media, #captures,
   .project-index, .pr-list, .contact-section > p:not(.eyebrow) { display: none !important; }
   .site-header { min-height: 0; padding: 0 0 5pt; margin-bottom: 10pt; border-color: #aaa; }
   .wordmark { font-size: 14pt; min-height: 0; }
@@ -35,6 +35,11 @@
   .section-intro { max-width: none; font-size: 9pt; margin-top: 4pt; }
   .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6pt; }
   .project-card { display: block; padding: 5pt; border: 1px solid #aaa; border-radius: 0; break-inside: avoid; }
+  .project-card.featured { display: block; grid-column: auto; }
+  .project-card.featured h3 { font-size: 11pt; }
+  .project-card-content { display: block; }
+  .project-card .project-verification { font-size: 7pt; margin-top: 4pt; }
+  .project-card .project-verification time { display: none; }
   .card-topline { margin-bottom: 4pt; }
   .status { padding: 1pt 4pt; font-size: 7pt; border-color: #aaa; }
   .project-card .project-oneliner { font-size: 9pt; margin-top: 4pt; }
