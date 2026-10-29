@@ -316,3 +316,11 @@ Validation on Mac-mini.local, working directory /Users/natalie/Development/portf
 - Inspected built home and Eyrie markup: no external scripts; all five image instances have lazy loading. Home HTML is 45,747 bytes, or 11,798 bytes with local gzip; Eyrie HTML is 38,835 bytes, or 9,508 bytes with local gzip. Confirmed all five approved captures have 360/720/960/1440px WebP variants and declared dimensions. These static checks are not Lighthouse scores or runtime measurements.
 
 Next action remains the install command in Pass 17, after Dan selects the runner, followed by mobile Lighthouse audits of home and Eyrie and fixes for scores below 95. No project runtime, physical-device, remote-CI, or hosting validation is claimed. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 19: Performance prerequisite and current validation, 2026-10-30
+
+Deep item 6 is still the first unfinished item. Re-read facts.md, triage.md, verified-projects.md, and prior pass notes. Confirmed the hidden-record safeguards already cover public data, cards, detail routes, sitemap, metadata, link checking, verification, and generated output. Reconciled experience.json and all rendered experience copy against facts.md. Approval flags, neutral partner wording, team/solo roles, and demo/pilot and not-production wording remain correct. No site-content changes were needed.
+
+Lighthouse remains absent from the dedicated temporary install and checked npx installations. Asked who should run the exact download command recorded in Pass 17, as required by the supplied global AGENTS.md instructions, and left the choice pending. No download, server, browser, or Lighthouse audit ran. No scores or item completion are claimed.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio: `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. The build checked 179 local references across eight HTML pages and passed the hidden-output guard. `npm test` passed all ten tests. Source, media, dependencies, and project-verification evidence remain unchanged. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
