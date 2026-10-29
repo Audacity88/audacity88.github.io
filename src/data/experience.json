@@ -1,27 +1,27 @@
 {
-  "reviewStatus": "needs-dan-ok",
-  "notes": "TODO: Dan must approve employer and client details before publication. Facts reconciled against portfolio-brief/facts.md on 2026-10-29. Partner names remain approval placeholders; only publicFallback is rendered.",
+  "reviewStatus": "approved",
+  "notes": "Approved by Dan on 2026-10-29 (2:09 PM ET) for publication: Superbuilders employer name, the Bill of Rights Institute partner name, and the 39-student pilot figure. No other client names, people, student data, code, or screenshots from contract work.",
   "roles": [
     {
       "id": "superbuilders",
       "role": "AI Engineer, Contract",
       "organization": "Superbuilders",
-      "needsDanOk": true,
+      "needsDanOk": false,
       "period": "Apr 2025 to Oct 2026",
       "summary": "Built full-stack pilots and agentic workflows directly with curriculum and product teams. Turned needs into requirements and explained cost, reliability, and readiness tradeoffs. These projects were demoed or piloted, not shipped to production.",
       "highlights": [
-        "Civics Debate Academy: co-wrote the PRD and built the full-stack app with AI judging and real-time multiplayer. Demoed to partner leadership. The app had a teacher-led classroom pilot.",
-        "Flying Colors: a team-built civics app. Produced the cinematic lesson videos with AI video generation and brought the partner in for a demo. Piloted with middle-school students.",
+        "Civics Debate Academy: co-wrote the PRD and built the full-stack app with AI judging and real-time multiplayer, in partnership with the Bill of Rights Institute. Demoed to Bill of Rights Institute leadership, then piloted in classrooms with 39 students.",
+        "Flying Colors: a team-built civics app. Produced the cinematic lesson videos with AI video generation and brought the Bill of Rights Institute in for a demo. Piloted with middle-school students.",
         "Civics Time Machine, later Witness: solo builder and video producer for a video-first history app. Built an AI video pipeline that retries defective clips before human review. Demoed to stakeholders."
       ],
       "clients": [
         {
-          "name": "[CLIENT: Bill of Rights Institute, needs Dan OK]",
-          "needsDanOk": true,
+          "name": "Bill of Rights Institute",
+          "needsDanOk": false,
           "publicFallback": "a national civics-education nonprofit"
         }
       ],
-      "notes": "Employer name is shown per facts.md but still needs Dan's approval. Contract projects were not shipped to production. Experience copy only; no links, screenshots, videos, internal details, or project cards."
+      "notes": "Approved by Dan for publication on 2026-10-29. Contract projects were demoed or piloted, not shipped to production. No links, screenshots, videos, internal details, people, or project cards."
     },
     {
       "id": "zeroclaw",

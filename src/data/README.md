@@ -56,9 +56,9 @@ Use `--demo-label "Live sign-in page"` for a sign-in-only link. The existing lab
 
 Re-read `facts.md` every pass, then reconcile `experience.json` and all experience copy. `roles` controls the timeline order. `summary` and `highlights` are public copy. `notes` is internal. The home page and `/resume/` use the same `ExperienceTimeline` component, including its approval fallbacks. Reconcile the resume's summary, skills, education, and languages against `facts.md` too. Its print button uses the browser's print dialog; no separate PDF is published.
 
-Keep the top-level `reviewStatus` as `needs-dan-ok`. Keep each unapproved client name inside a `[CLIENT: ..., needs Dan OK]` placeholder, with `needsDanOk: true`. Put the neutral description approved in `facts.md` in `publicFallback`. The component renders that fallback while approval is pending. Never render a placeholder. Change approval flags and client names only after explicit approval.
+Dan approved the Superbuilders employer name, the Bill of Rights Institute partner name, and the 39-student pilot figure on 2026-10-29 (`reviewStatus: "approved"`). Any new client name still needs `needsDanOk: true`, a `[CLIENT: ..., needs Dan OK]` placeholder, and a neutral `publicFallback` until he approves it.
 
-Keep Superbuilders' role-level `needsDanOk: true`. Its employer name is shown as instructed in `facts.md`, but still awaits Dan's approval. TODO: obtain approval before publication. Do not put client names in summaries or highlights. Include only contract project names and headline results allowed by `facts.md`, and state that they were demoed or piloted, not shipped to production. Keep contract project cards, links, screenshots, and videos out of the site.
+Superbuilders details are approved for publication. Name no client other than the Bill of Rights Institute. Include only contract project names and headline results allowed by `facts.md`, and state that they were demoed or piloted, not shipped to production. Keep contract project cards, links, screenshots, and videos out of the site.
 
 ## Update open-source work
 

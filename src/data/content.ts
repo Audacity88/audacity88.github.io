@@ -72,7 +72,7 @@ if (new Set(projectData.map((project) => project.id)).size !== projectData.lengt
 }
 
 export const experience = z.object({
-  reviewStatus: z.literal('needs-dan-ok'),
+  reviewStatus: z.enum(['needs-dan-ok', 'approved']),
   notes: z.string(),
   roles: z.array(z.object({
     id: z.string(),

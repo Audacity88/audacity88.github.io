@@ -168,7 +168,7 @@ test('built HTML and other generated text contain no hidden project titles or ID
 test('experience retains its required fields and approval safeguards', () => {
   const experience = read('experience');
   object(experience);
-  assert.equal(experience.reviewStatus, 'needs-dan-ok');
+  assert.equal(experience.reviewStatus, 'approved');
   text(experience.notes, 'experience notes');
   assert.ok(Array.isArray(experience.roles) && experience.roles.length);
   unique(experience.roles, 'id');
@@ -177,7 +177,11 @@ test('experience retains its required fields and approval safeguards', () => {
     for (const field of ['id', 'role', 'organization', 'period', 'summary']) text(role[field], field);
     assert.equal(typeof role.notes, 'string');
     if (role.needsDanOk !== undefined) assert.equal(typeof role.needsDanOk, 'boolean');
-    if (role.id === 'superbuilders') assert.equal(role.needsDanOk, true);
+    if (role.id === 'superbuilders') {
+      assert.equal(role.needsDanOk, false);
+      assert.deepEqual(role.clients.map((client) => client.name), ['Bill of Rights Institute'], 'Only the approved client may be named');
+      assert.ok(role.highlights.some((item) => item.includes('39 students')));
+    }
     texts(role.highlights, 'highlights');
     assert.ok(Array.isArray(role.clients));
     for (const client of role.clients) {

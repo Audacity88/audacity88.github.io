@@ -87,7 +87,7 @@ Keep `count.display` as `true` and `count.label` exactly `750+ merged pull reque
 
 Every pass, re-read `facts.md` and reconcile [src/data/experience.json](src/data/experience.json) and all rendered experience copy. The home page and [resume](src/pages/resume.astro) share [ExperienceTimeline](src/components/ExperienceTimeline.astro), including its client approval fallbacks.
 
-TODO before publication: obtain Dan's approval for employer and client details. Keep `reviewStatus: "needs-dan-ok"` and the Superbuilders `needsDanOk: true` flag. Keep unapproved client names in flagged placeholders. Render only their approved `publicFallback` descriptions. Describe contract work as demoed or piloted, not shipped to production, and preserve Dan's team and solo roles.
+Employer and client details were approved by Dan on 2026-10-29. Name no other clients, people, or student data, and describe contract work as demoed or piloted, not shipped to production, and preserve Dan's team and solo roles.
 
 Do not add phone numbers, addresses, family details, private repository links, or contract project media.
 
