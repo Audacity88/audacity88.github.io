@@ -87,8 +87,8 @@
   .site-header nav { display: flex; gap: 1.75rem; margin-left: auto; font-size: .82rem; }
   .site-header nav a { display: flex; align-items: center; position: relative; min-height: 44px; text-decoration: none; }
   .site-header nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 5px; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; }
-  .site-header nav a[aria-current='page'] { color: var(--accent-text); }
-  .site-header nav a:is(:hover, :focus-visible, [aria-current='page'])::after { transform: scaleX(1); }
+  .site-header nav a[aria-current] { color: var(--accent-text); }
+  .site-header nav a:is(:hover, :focus-visible, [aria-current])::after { transform: scaleX(1); }
   .hero { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 3rem; padding-block: 5rem 4rem; align-items: center; }
   .hero-scroll { grid-column: 1 / -1; display: inline-flex; justify-self: start; align-items: center; gap: 1rem; color: var(--muted); font-family: var(--mono); font-size: .7rem; text-decoration: none; padding-block: .5rem; min-height: 44px; margin-top: .5rem; }
   .section { padding-block: 6rem; border-top: 1px solid var(--line); }

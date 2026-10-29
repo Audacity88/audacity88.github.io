@@ -58,7 +58,7 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
     <header class="site-header container">
       <a class="wordmark" href={base} aria-label="Dan Gilles, home">Dan Gilles<span aria-hidden="true">.</span></a>
       <nav aria-label="Main navigation">
-        <a href={`${base}#projects`}>Projects</a>
+        <a href={`${base}#projects`} aria-current={Astro.url.pathname.startsWith(`${base}projects/`) ? 'location' : undefined}>Projects</a>
         <a href={`${base}#open-source`}>Open source</a>
         <a href={`${base}#experience`}>Experience</a>
         <a href={`${base}resume/`} aria-current={Astro.url.pathname === `${base}resume/` ? 'page' : undefined}>Resume</a>

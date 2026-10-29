@@ -433,3 +433,16 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - `npm test` passed all 12 tests with no skips. A temporary inline Node check confirmed that only the resume page marks Resume as current and that the compiled accent and underline rules appear in all 11 HTML pages. `git diff --check` passed.
 
 No preview or development server, browser, download, or Lighthouse run was started. Browser appearance and assistive technology behavior were not rechecked. This pass does not reverify project behavior, accessibility conformance, performance, print pagination, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 27: Case-study navigation polish, 2026-10-30
+
+All ten deep items are already recorded as done. Added `aria-current="location"` to the Projects navigation link on all eight case-study pages. It uses the existing accent and underline styling so readers can identify the section they are browsing. The Resume link retains its current-page marker.
+
+Re-read facts.md, the untested triage, verified-projects.md, and the pass notes. Reconciled experience.json, the shared experience timeline, and home/resume copy against facts.md. No corrections were needed. Employer/client approval flags, neutral client fallback, team/solo attribution, and explicit demo/pilot and not-production wording remain correct. The later eight-project content lock remains authoritative. Project data, verification claims, numbers, links, attribution, and media are unchanged.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Link and generated-output checks passed across 254 local references and 11 HTML pages.
+- `npm test` passed all 12 tests with no skips. A temporary inline Node check verified the current-location marker on all eight project pages, the current-page marker on Resume, no current marker on home or 404, and compiled highlight styling in all 11 pages. `git diff --check` passed.
+
+No server, browser, download, or Lighthouse run was started. Browser appearance and assistive technology behavior were not rechecked. This pass does not reverify project runtime behavior, accessibility conformance, performance, print pagination, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
