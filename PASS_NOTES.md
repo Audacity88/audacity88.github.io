@@ -589,3 +589,16 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - `npm test` passed all 12 tests with no skips.
 
 No server, browser, download, or Lighthouse run was started. Print pagination was not checked in a browser, so the requested line counts are verified only in the stylesheet. This pass does not reverify project behavior, accessibility conformance, performance, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 39: Capture link feedback, 2026-10-30
+
+All ten deep items are already recorded as done. Added an accent border on hover and keyboard focus to the genuine screenshot links, which open full-size captures. Kept the existing focus outline. No content, project data, verification claims, numbers, links, media, dependencies, or JavaScript changed.
+
+Re-read facts.md, the untested triage, verified-projects.md, and the deep-item completion records. Reconciled experience.json, the shared experience timeline, and the home and resume copy against facts.md. No corrections were needed. Employer/client approval flags, neutral client wording, team and solo attribution, and explicit demo/pilot and not-production wording remain correct. The later eight-project content lock remains authoritative.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Link checks passed across 262 local references and 11 HTML pages.
+- `npm test` passed all 12 tests with no skips. `git diff --check` passed.
+
+No server, browser, download, or Lighthouse run was started. The border rule was checked in source and generated CSS; its appearance was not checked in a browser. This pass does not reverify project behavior, accessibility conformance, performance, print layout, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
