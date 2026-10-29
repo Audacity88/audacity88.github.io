@@ -289,3 +289,16 @@ Validation on Mac-mini.local, working directory /Users/natalie/Development/portf
 - Reports, scripts, and captures remain only in /private/tmp/portfolio-qa/pass16/, equivalent to /tmp/portfolio-qa/pass16/. No repository dependencies changed. Closed the isolated browsers, stopped exactly preview PID 47019, and confirmed port 4344 was released. Browser launch and preview shutdown required sandbox escalation.
 
 Next: after Dan selects the download runner, install Lighthouse outside the repo, run mobile audits on home and Eyrie's detail page, fix scores below 95, and record actual results before marking deep item 6 complete. Project runtime behavior, physical devices, other browser engines, remote CI, and hosting remain outside this pass. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 17: Performance audit prerequisites, 2026-10-30
+
+Deep item 6 remains the first unfinished item. Confirmed that Lighthouse is absent from the dedicated temporary install and existing npx installations. Requested the required download-runner choice; no answer arrived during this pass. No download, preview server, browser, or Lighthouse audit was started. No scores or completion are claimed. Existing responsive WebP variants remain unchanged.
+
+Re-read facts.md, the untested triage, and verified-projects.md. Reconciled experience.json and every rendered experience summary and highlight against facts.md. No corrections were needed. Employer/client approval flags, neutral partner wording, team/solo attribution, and demo/pilot and not-production wording remain correct. Hidden placeholders and deep items 1 through 5 were already completed in prior passes.
+
+Validation on Mac-mini.local, working directory /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. All 179 local references across eight HTML pages and the hidden-output guard passed.
+- `npm test` passed all ten tests. No source, media, dependencies, or project evidence changed.
+
+The pending download command, to run on Mac-mini.local in /private/tmp, is `npm install --prefix /private/tmp/portfolio-lighthouse --cache /private/tmp/portfolio-lighthouse-cache --no-audit --no-fund lighthouse`. After Dan chooses the runner and the install succeeds, continue item 6 with mobile Lighthouse audits of home and Eyrie, fix scores below 95, and stop any preview server by its recorded PID. All existing validation limits remain. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
