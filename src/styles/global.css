@@ -99,6 +99,7 @@
   .two-column-section { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; }
   .site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem 2rem; padding-block: 1.75rem; border-top: 1px solid var(--line); font-size: .75rem; color: var(--muted); }
   .site-footer a { display: inline-flex; align-items: center; min-height: 44px; gap: .4rem; text-decoration: none; }
+  .site-footer a:is(:hover, :focus-visible) { text-decoration: underline; }
   .site-footer .footer-name { gap: 0; }
   .not-found .section { border-top: 0; }
 }
