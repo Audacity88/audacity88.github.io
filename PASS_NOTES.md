@@ -602,3 +602,16 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - `npm test` passed all 12 tests with no skips. `git diff --check` passed.
 
 No server, browser, download, or Lighthouse run was started. The border rule was checked in source and generated CSS; its appearance was not checked in a browser. This pass does not reverify project behavior, accessibility conformance, performance, print layout, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 40: Header home-link feedback, 2026-10-30
+
+All ten deep items are already recorded as done. Added an underline on hover and keyboard focus to the header's home link, matching the footer link treatment. Retained the global focus outline and existing touch-target size. No content, project data, verification claims, numbers, links, media, dependencies, or JavaScript changed.
+
+Re-read facts.md, the untested triage, verified-projects.md, and the deep-item completion records. Reconciled experience.json, the shared experience timeline, and the home and resume copy against facts.md. No corrections were needed. Employer/client approval flags, neutral client wording, team and solo attribution, and explicit demo/pilot and not-production wording remain correct. The later eight-project content lock remains authoritative.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Link checks passed across 262 local references and 11 HTML pages.
+- `npm test` passed all 12 tests with no skips against the rebuilt output. `git diff --check` passed.
+
+No server, browser, download, or Lighthouse run was started. The underline rule was checked in source and generated CSS; its appearance was not checked in a browser. This pass does not reverify project behavior, accessibility conformance, performance, print layout, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.

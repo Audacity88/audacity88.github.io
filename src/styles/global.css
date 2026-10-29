@@ -107,6 +107,7 @@
 
 @layer components {
   .wordmark { font-size: 1.15rem; font-weight: 700; letter-spacing: -.055em; text-decoration: none; white-space: nowrap; min-height: 44px; display: flex; align-items: center; }
+  .wordmark:is(:hover, :focus-visible) { text-decoration: underline; }
   .wordmark span, .footer-name span { color: var(--accent-text); }
   /* Reserve space before the script reveals the control, including without JS. */
   .theme-control { flex: 0 0 86px; width: 86px; height: 44px; }
