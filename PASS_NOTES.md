@@ -125,7 +125,7 @@ Project builds and demo flows, physical devices and printers, other browser engi
 
 verified-projects applied
 
-Replaced the project list with the six approved entries in the supplied order. Removed cliktok and the duplicate ZeroClaw project card; ZeroClaw remains in open source and experience with the approved linked total. Added dated, scoped verification text, honest build/test badges, a full-width Eyrie flagship, and detail-page capture galleries. Added only the five approved genuine captures as responsive WebP files, without cropping or content edits. Captions identify empty first-run screens and the public sign-in page. swift-ship's link says "Live sign-in page"; ChatGenius has no demo link. codex-skills and Tono4 remain pending.
+Replaced the project list with the six approved entries in the supplied order. Removed the excluded iOS project and the duplicate ZeroClaw project card; ZeroClaw remains in open source and experience with the approved linked total. Added dated, scoped verification text, honest build/test badges, a full-width Eyrie flagship, and detail-page capture galleries. Added only the five approved genuine captures as responsive WebP files, without cropping or content edits. Captions identify empty first-run screens and the public sign-in page. swift-ship's link says "Live sign-in page"; ChatGenius has no demo link. codex-skills and Tono4 remain pending.
 
 Verified all six repository URLs with read-only `gh repo view <owner/name> --json url`. Re-read facts.md and reconciled experience.json and all rendered experience copy; approval flags, neutral client fallback, team/solo roles, and explicit demo/pilot and not-production wording remain correct. Updated AGENTS.md and the data guides to remove superseded seeds and preserve the supplied verification rules.
 
@@ -405,3 +405,18 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - Baseline files, temporary audit script, and JSON reports remain only in /private/tmp/portfolio-qa/pass24/. The initial sandboxed Chrome launch failed with `Target page, context or browser has been closed` and `Error: kill EPERM`; the isolated audit succeeded with sandbox escalation. Corrected the temporary audit to request a missing URL rather than expect the directly served 404.html file to return HTTP 404. Closed all audit browsers, stopped exactly preview PID 10274 with sandbox escalation, and confirmed port 4348 was released.
 
 Deep item 10, final content consistency, is next. This pass does not reverify project runtime behavior, authenticated services, physical devices, other browser engines, print pagination, performance scores, remote CI, or hosting. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 25: Final content consistency, 2026-10-30
+
+deep item 10 done
+
+Re-read facts.md, the untested triage, verified-projects.md, and prior pass notes. Applied Dan's later 2:10 PM ET content lock over the older six-project brief. All eight projects were already visible in the correct order. Preserved every project claim, number, status, link, capture, and attribution; all three JSON data files remain unchanged. Reconciled home and resume experience, summaries, education, skills, and languages with facts.md. Employer/client approval flags, neutral client fallback, team/solo roles, and demo/pilot and not-production wording need no corrections.
+
+Updated AGENTS.md and both editing guides to record the locked order, approved visible entries, Model Picker privacy/link restrictions, and the no-server and external-Lighthouse instructions. Removed one excluded project name from an old pass note. Model Picker now omits its empty Links section. Its repository/demo fields are guarded by the build schema, and the verification helper refuses to add a demo. Replaced inactive hidden-record test loops with synthetic fixtures. Added generated-output checks for card order, exact routes and sitemap, evidence and limitations, pending badges, hidden null demos, MIT-port attribution, private source notes, approval placeholders, and the approved linked PR total.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `PUBLIC_SITE_URL=https://portfolio.example PUBLIC_BASE_PATH=/ ASTRO_TELEMETRY_DISABLED=1 npm run build` and final default `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Both checked 254 local references across 11 HTML pages.
+- `npm test` passed all 12 tests against each build, with no skips. The stronger checks first caught the historical exclusion reference and empty Links section in the previous output; both are resolved. `git diff --check` passed.
+
+No preview or development server, browser, download, or Lighthouse run was started. This pass checks portfolio source and static output; it does not reverify the projects, authenticated workflows, devices, browser visuals, accessibility, performance, print pagination, remote CI, or hosting. The prohibited checkout was not opened or used. No dependencies or media changed. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.

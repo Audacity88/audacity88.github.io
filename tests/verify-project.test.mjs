@@ -15,9 +15,9 @@ test('verification helper requires evidence and safe URLs before changing projec
     { ...valid, demo: 'https://superbuilders.example' }, { ...valid, label: ' ' },
   ]) assert.throws(() => verifyProject(projects, 'tono4', options));
   assert.throws(() => verifyProject(projects, 'missing', valid));
-  for (const project of projects.filter((project) => project.hidden === true)) {
-    assert.throws(() => verifyProject(projects, project.id, valid), /Hidden projects cannot be verified/);
-  }
+  assert.throws(() => verifyProject(projects, 'model-picker', valid), /must remain local only/);
+  const hidden = [{ id: 'fixture-private', hidden: true, status: 'draft' }];
+  assert.throws(() => verifyProject(hidden, 'fixture-private', valid), /Hidden projects cannot be verified/);
   assert.deepEqual(projects, original);
   const updated = verifyProject(projects, 'tono4', { ...valid, note: 'Device behavior remains unchecked.', label: 'Build checked' }, '2026-10-30');
   const target = updated.find((project) => project.id === 'tono4');

@@ -15,27 +15,8 @@ const texts = (value, label) => {
   value.forEach((item) => text(item, label));
 };
 const unique = (items, field) => assert.equal(new Set(items.map((item) => item[field])).size, items.length, `${field} must be unique`);
-const excludedText = /ctm-system/i;
-const excludedProjectText = /superbuilders|ctm-system/i;
-const reservedPlaceholders = new Map();
-function checkPlaceholders(projects) {
-  for (const [id, title] of reservedPlaceholders) {
-    const matches = projects.filter((project) => project.id === id);
-    assert.ok(matches.length <= 1, 'A reserved placeholder may exist at most once');
-    if (!matches.length) continue;
-    const project = matches[0];
-    assert.equal(project.hidden, true);
-    assert.equal(project.status, 'draft');
-    assert.equal(project.title, title);
-    for (const [field, value] of Object.entries(project)) {
-      if (['id', 'title', 'status', 'hidden'].includes(field)) continue;
-      assert.ok(value === null || value === '' || (Array.isArray(value) && value.length === 0), `Hidden ${field} must be empty or null`);
-    }
-  }
-  for (const project of projects) {
-    if (project.hidden === true) assert.ok(reservedPlaceholders.has(project.id), 'Only reserved placeholders may be hidden');
-  }
-}
+const excludedText = /ctm-system|cliktok/i;
+const excludedProjectText = /superbuilders|ctm-system|cliktok/i;
 const date = (value) => {
   assert.match(value, /^\d{4}-\d{2}-\d{2}$/);
   assert.equal(new Date(value).toISOString().slice(0, 10), value);
@@ -93,9 +74,10 @@ test('projects have complete cards and detail pages with valid states and URLs',
   const allProjects = read('projects');
   assert.ok(Array.isArray(allProjects) && allProjects.length);
   unique(allProjects, 'id');
-  checkPlaceholders(allProjects);
+  assert.ok(allProjects.every((project) => project.hidden !== true), 'The locked list contains only visible projects');
   const projects = allProjects.filter((project) => project.hidden !== true);
   assert.deepEqual(projects.map((project) => project.id), ['eyrie', 'swift-ship', 'witness-lexington', 'model-picker', 'codex-video-vision', 'codex-skills', 'chatgenius', 'tono4']);
+  assert.deepEqual([...projects].sort((a, b) => a.order - b.order).map((project) => project.id), projects.map((project) => project.id), 'Rendered order must match the locked list');
   unique(projects, 'order');
   for (const project of projects) {
     object(project);
@@ -143,8 +125,9 @@ test('projects have complete cards and detail pages with valid states and URLs',
 test('generated-output guard rejects hidden titles, IDs, metadata, and routes', (t) => {
   const root = mkdtempSync(join(tmpdir(), 'portfolio-hidden-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
-  const projects = read('projects');
-  for (const project of projects.filter((project) => project.hidden === true)) {
+  // Use a synthetic hidden record so the guard runs even when every real project is visible.
+  const projects = [{ id: 'fixture-private', title: 'Private fixture', hidden: true, status: 'draft' }];
+  for (const project of projects) {
     for (const [name, content] of [
       ['index.html', `<h1>${project.title}</h1>`],
       ['index.html', `<meta property="og:title" content="${project.title}">`],
@@ -260,5 +243,68 @@ test('Model Picker and Witness Lexington stay neutral', () => {
     assert.ok(project && project.hidden !== true, `${id} must be visible`);
     assert.doesNotMatch(JSON.stringify(project), /superbuilders|teammate|bill of rights|[\u201c\u201d]/i);
   }
-  assert.equal(projects.find((item) => item.id === 'model-picker').demo, null);
+  const picker = projects.find((item) => item.id === 'model-picker');
+  assert.equal(picker.github, null);
+  assert.equal(picker.demo, null);
+  assert.doesNotMatch(JSON.stringify(picker), /https?:\/\//i, 'No repository or demo links embedded in Model Picker copy');
+});
+
+test('built pages retain the locked project list, evidence, attribution, and approved total', {
+  skip: !existsSync(new URL('../dist/', import.meta.url)) && 'No build yet',
+}, () => {
+  const root = new URL('../dist/', import.meta.url);
+  const projects = read('projects');
+  const source = read('opensource');
+  const home = readFileSync(new URL('index.html', root), 'utf8');
+  const base = new URL(home.match(/<link rel="canonical" href="([^"]+)"/)[1]);
+  const sitemap = readFileSync(new URL('sitemap.xml', root), 'utf8');
+  const expectedIds = projects.map((project) => project.id);
+  assert.deepEqual([...home.matchAll(/data-project="([^"]+)"/g)].map((match) => match[1]), expectedIds);
+  assert.deepEqual(readdirSync(new URL('projects/', root)).sort(), [...expectedIds].sort());
+  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]),
+    ['', 'resume/', ...expectedIds.map((id) => `projects/${id}/`)].map((path) => new URL(path, base).href));
+  const escape = (text) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+  for (const project of projects) {
+    const html = readFileSync(new URL(`projects/${project.id}/index.html`, root), 'utf8');
+    assert.ok(home.includes(escape(project.verification)), `${project.id} card must retain its evidence`);
+    for (const claim of [project.verification, project.verificationNote, project.caseStudy.limitations]) {
+      assert.ok(html.includes(escape(claim)), `${project.id} must retain its evidence and limits`);
+    }
+    assert.ok(html.includes(`data-status="${project.status}"`));
+    if (project.status === 'pending-verification') assert.ok(html.includes('Verifying'));
+    const links = [...html.matchAll(/<a\b[^>]*href="([^"]+)"/g)].map((match) => match[1]);
+    if (project.demo) assert.ok(links.includes(escape(project.demo)));
+    else assert.ok(!html.includes('View demo'), `${project.id} must hide a null demo`);
+    if (!project.github && !project.demo) {
+      assert.ok(!html.includes('id="links-title"'), 'Do not render an empty Links section');
+      assert.ok(!html.includes('class="project-links"'), 'Do not render empty project links');
+    }
+    for (const note of [project.notes, ...project.caseStudy.sourceNotes]) {
+      assert.ok(!html.includes(escape(note)), 'Internal source notes must stay out of generated pages');
+    }
+  }
+  const portLabel = 'credited port of an MIT-licensed project';
+  assert.ok(home.includes(portLabel));
+  assert.ok(readFileSync(new URL('projects/codex-video-vision/index.html', root), 'utf8').includes(portLabel));
+  function inspect(folder) {
+    for (const entry of readdirSync(folder, { withFileTypes: true })) {
+      const file = new URL(entry.name, folder);
+      if (entry.isDirectory()) inspect(new URL(`${entry.name}/`, folder));
+      else if (/\.(?:html|xml|json|webmanifest|svg|txt|js|css)$/i.test(entry.name)) {
+        const content = readFileSync(file, 'utf8');
+        assert.doesNotMatch(content, new RegExp(`\\b${source.count.value}\\b`), 'Do not render the internal PR total');
+        assert.doesNotMatch(content, /\/Users\/|\[CLIENT:|needs Dan OK/i, 'No local source paths or approval placeholders');
+        for (const match of content.matchAll(/\b[\d,]+\+?\s+merged\s+(?:pull requests|PRs)\b/gi)) {
+          assert.equal(match[0], source.count.label, 'Only the approved total label may appear');
+        }
+        if (content.includes(source.count.label)) {
+          const totalLinks = [...content.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)]
+            .filter(([, , label]) => label.includes(source.count.label));
+          assert.equal(totalLinks.length, content.split(source.count.label).length - 1, 'Every total label must be a link');
+          for (const [, href] of totalLinks) assert.equal(href, escape(source.mergedList), 'Total links must use the upstream search');
+        }
+      }
+    }
+  }
+  inspect(root);
 });

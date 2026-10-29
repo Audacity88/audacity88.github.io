@@ -1,10 +1,10 @@
 # Edit portfolio data
 
-Use `/Users/natalie/Development/portfolio-brief/facts.md` for biographical and experience facts. `portfolio-brief/v2/verified-projects.md` supplies the current approved project list, evidence, and media, superseding earlier seeds. Treat the triage document as untested context. Do not infer verified behavior from a repository README or the portfolio build.
+Use `/Users/natalie/Development/portfolio-brief/facts.md` for biographical and experience facts. `portfolio-brief/v2/verified-projects.md` supplies the original project evidence and media. Dan's later 2:10 PM ET content lock supersedes its list and exclusions. Keep the Eyrie-approved copy and existing captures for Witness Lexington and Model Picker. Treat the triage document as untested context. Do not infer verified behavior from a repository README or the portfolio build.
 
 ## Update projects
 
-Edit `projects.json`. The page sorts projects by ascending `order`. Each object has these fields:
+Edit `projects.json`. Keep exactly eight visible projects in this order: `eyrie`, `swift-ship`, `witness-lexington`, `model-picker`, `codex-video-vision`, `codex-skills`, `chatgenius`, `tono4`. Preserve their verification claims and numbers. The page sorts projects by ascending `order`. Each object has these fields:
 
 | Field | Meaning |
 | --- | --- |
@@ -16,7 +16,7 @@ Edit `projects.json`. The page sorts projects by ascending `order`. Each object 
 | `statusLabel` | Optional evidence-specific label for a verified badge. Pending projects always show "Verifying". |
 | `demoLabel` | Optional demo-link label. Keep swift-ship labeled `Live sign-in page`. |
 | `tech` | Array of short technology labels. |
-| `github` | HTTPS repository or filtered upstream PR URL. |
+| `github` | Approved HTTPS repository URL, or `null` for Model Picker. |
 | `demo` | HTTPS demo URL, or `null` to hide the demo button. |
 | `status` | `pending-verification`, `verified`, or `demo-down`. |
 | `featured` | Adds visual emphasis without changing the sort order. |
@@ -24,11 +24,11 @@ Edit `projects.json`. The page sorts projects by ascending `order`. Each object 
 | `notes` | Internal editing notes. Never rendered. |
 | `images` | Array of genuine approved images, or `[]` for a text-only card. |
 
-Keep projects `pending-verification` until the owning verification pass supplies evidence. Use `demo-down` with `demo: null` for unavailable demos. A successful HTTP response alone does not verify login or application behavior.
+New projects require approval and default to `pending-verification` until the owning verification pass supplies evidence. Use `demo-down` with `demo: null` for unavailable demos. A successful HTTP response alone does not verify login or application behavior.
 
 Each visible project generates `/projects/<id>/` under the configured base path and appears in the sitemap. Cards link to those pages. Keep `verificationNote` consistent with the status and actual checks. Internal `notes` never appear on the page. No separate page file is needed when adding a project.
 
-The two reserved placeholders are exceptions to the public project schema. They have `hidden: true`, `status: draft`, and only an ID and title; all other content is empty or null. Keep them in this data file only. The shared public export excludes them before cards, routes, the sitemap, and page metadata are generated. The social-card generator uses a static approved asset and never reads project data. The verification helper refuses hidden entries. The build's link check also rejects hidden titles, IDs, and paths anywhere in generated text output.
+The current list has no hidden entries. Generic draft safeguards remain available: hidden records are excluded from public exports, routes, the sitemap, and metadata, and the verification helper refuses them. The output guard checks any hidden titles, IDs, and paths without requiring hidden records in the live data. Its tests use a synthetic fixture. The social-card generator uses a static approved asset and never reads project data.
 
 Source case studies only from the verified project list, the project's `PORTFOLIO_REPORT.md` and READMEs under `/Users/dan/portfolio-triage/`, or its public repository README. Record the source file and relevant sections in `caseStudy.sourceNotes`. Distinguish capabilities found in source from behavior that was actually checked. Preserve upstream attribution, known failures, and the original check date. The public verification section attributes these checks to Eyrie; editing a case study does not reverify the project.
 
@@ -36,9 +36,9 @@ Eyrie and swift-ship also have `caseStudy.diagram`. Each simplified inline SVG h
 
 Approved media lives in `public/images/projects/`. Each image has `src` for its 1440px WebP, the full image's `width` and `height`, descriptive `alt` text, and an honest `caption`. Its `sources` array lists `{ src, width }` candidates at 360px, 720px, 960px, and 1440px. Paths begin with `/images/` and omit the deployment base, which the component adds. The shared component uses lazy loading and automatic image sizing, with breakpoint hints for browsers without automatic sizing. Keep these hints aligned with the CSS container and flagship card. The build checks every candidate path. Keep the whole captured screen. Do not crop, retouch, or fabricate content. Captures link to their full-size files. The flagship card previews its first image. Detail pages show all images.
 
-The current approved captures are Eyrie's four empty first-run screens and swift-ship's sign-in page. The current project checks date to Oct 29, 2026 and come from Eyrie's supplied report, not this portfolio build. Preserve known native-test failures for codex-skills, the frontend-only scope for ChatGenius, and swift-ship's unverified authenticated workflows. Keep Tono4 pending until its simulator build is checked.
+The existing approved captures are Eyrie's four empty first-run screens, swift-ship's sign-in page, Witness Lexington's title screen, and Model Picker's start screen. The current project checks date to Oct 29, 2026 and come from Eyrie's supplied report, not this portfolio build. Preserve known native-test failures for codex-skills, the frontend-only scope for ChatGenius, and swift-ship's unverified authenticated workflows. Keep Tono4 pending until its simulator build is checked.
 
-To swap a public project, replace its entire object and preserve unique IDs and the intended order. Keep private and employer-owned project content out of this file. Preserve the empty reserved placeholders.
+Do not swap or hide projects in the locked list without new approval. Witness Lexington and Model Picker remain visible with their approved copy. Model Picker must have `github: null` and `demo: null`, with no embedded repository or demo links, teammate names, quotes, or employer details. Preserve the credited MIT-port label on codex-video-vision. Keep excluded project content and private links out of data, notes, and generated output.
 
 ### Record new project verification
 
@@ -48,7 +48,7 @@ After completing the project's actual checks, record the evidence with the local
 npm run project:verify -- tono4 --demo https://example.com/demo --verification "Describe the checks you completed" --note "Describe any remaining limits" --label "Build checked"
 ```
 
-Replace the example URL and evidence before running. `--verification` is required to prevent a status change without recorded evidence. The helper sets `status: verified`, the HTTPS demo URL, evidence summary, current date, public verification note, and an internal audit note. It rejects unknown or hidden IDs, unsafe URLs, and employer links before writing. Run `npm test` afterward to check all content exclusions. Other projects stay unchanged. The helper does not run builds, access the demo, or prove that the evidence is accurate.
+Replace the example URL and evidence before running. `--verification` is required to prevent a status change without recorded evidence. The helper sets `status: verified`, the HTTPS demo URL, evidence summary, current date, public verification note, and an internal audit note. It rejects unknown or hidden IDs, Model Picker, unsafe URLs, and employer links before writing. Run `npm test` afterward to check all content exclusions. Other projects stay unchanged. The helper does not run builds, access the demo, or prove that the evidence is accurate.
 
 Use `--demo-label "Live sign-in page"` for a sign-in-only link. The existing label is preserved if the demo URL is unchanged. For a local-only project, edit the evidence and status manually and keep `demo: null`. Run `npm test` and `npm run build`, then inspect the affected card and detail page. Append the checks and limits to `PASS_NOTES.md`.
 

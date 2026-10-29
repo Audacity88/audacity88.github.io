@@ -61,10 +61,10 @@ const base = import.meta.env.BASE_URL;
           <h2 id="captures-title">Captured screens</h2>
           <ProjectMedia project={project} />
         </section>}
-        <section aria-labelledby="links-title">
+        {(project.github || project.demo) && <section aria-labelledby="links-title">
           <h2 id="links-title">Links</h2>
           <ProjectLinks project={project} />
-        </section>
+        </section>}
       </div>
     </article>
   </main>

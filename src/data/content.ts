@@ -53,10 +53,12 @@ const projectSchema = z.object({
   notes: z.string(),
 }).refine((project) => project.status !== 'demo-down' || project.demo === null, {
   message: 'A demo-down project must have demo: null.',
+}).refine((project) => project.id !== 'model-picker' || (project.github === null && project.demo === null), {
+  message: 'Model Picker must not have repository or demo links.',
 });
 
 export type Project = z.infer<typeof projectSchema>;
-// Validate private placeholders separately. Public consumers receive only complete, visible records.
+// Retain generic draft handling. The current locked list contains only visible records.
 const hiddenProjectSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
   title: z.string().min(1),
