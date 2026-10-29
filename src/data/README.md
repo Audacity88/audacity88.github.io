@@ -54,7 +54,7 @@ Use `--demo-label "Live sign-in page"` for a sign-in-only link. The existing lab
 
 ## Update experience
 
-Re-read `facts.md` every pass, then reconcile `experience.json` and all experience copy. `roles` controls the timeline order. `summary` and `highlights` are public copy. `notes` is internal.
+Re-read `facts.md` every pass, then reconcile `experience.json` and all experience copy. `roles` controls the timeline order. `summary` and `highlights` are public copy. `notes` is internal. The home page and `/resume/` use the same `ExperienceTimeline` component, including its approval fallbacks. Reconcile the resume's summary, skills, education, and languages against `facts.md` too. Its print button uses the browser's print dialog; no separate PDF is published.
 
 Keep the top-level `reviewStatus` as `needs-dan-ok`. Keep each unapproved client name inside a `[CLIENT: ..., needs Dan OK]` placeholder, with `needsDanOk: true`. Put the neutral description approved in `facts.md` in `publicFallback`. The component renders that fallback while approval is pending. Never render a placeholder. Change approval flags and client names only after explicit approval.
 

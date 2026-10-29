@@ -85,7 +85,7 @@ Keep `count.display` as `true` and `count.label` exactly `750+ merged pull reque
 
 ### Experience and approval
 
-Every pass, re-read `facts.md` and reconcile [src/data/experience.json](src/data/experience.json) and the rendered copy in [src/pages/index.astro](src/pages/index.astro).
+Every pass, re-read `facts.md` and reconcile [src/data/experience.json](src/data/experience.json) and all rendered experience copy. The home page and [resume](src/pages/resume.astro) share [ExperienceTimeline](src/components/ExperienceTimeline.astro), including its client approval fallbacks.
 
 TODO before publication: obtain Dan's approval for employer and client details. Keep `reviewStatus: "needs-dan-ok"` and the Superbuilders `needsDanOk: true` flag. Keep unapproved client names in flagged placeholders. Render only their approved `publicFallback` descriptions. Describe contract work as demoed or piloted, not shipped to production, and preserve Dan's team and solo roles.
 
@@ -101,7 +101,7 @@ PUBLIC_BASE_PATH=/ npm run build
 
 For another repository subpath, set `PUBLIC_BASE_PATH` to its path with leading and trailing slashes. For a custom domain, set `PUBLIC_SITE_URL` to its HTTPS origin and `PUBLIC_BASE_PATH=/`. These variables configure the build; they do not publish anything or configure a domain.
 
-Use the same environment variables for `dev`, `build`, and `preview`. For example, after the root build above, run `PUBLIC_BASE_PATH=/ npm run preview` and open the root URL printed by Astro. Internal assets and the optional resume link use Astro's base URL.
+Use the same environment variables for `dev`, `build`, and `preview`. For example, after the root build above, run `PUBLIC_BASE_PATH=/ npm run preview` and open the root URL printed by Astro. Internal assets and the resume link use Astro's base URL.
 
 Canonical URLs, Open Graph and Twitter image URLs, `sitemap.xml`, and `robots.txt` use these settings. The sitemap lists the home page and all generated project pages. The custom `404.html` has `noindex` and links back to the portfolio.
 
@@ -131,6 +131,8 @@ The workflow expects Pages to be enabled beforehand and fails if that prerequisi
 
 `public/og-card.png` is a text-only social card made from `public/og-card.svg`, not a project screenshot. If the SVG copy changes, run `npm run generate:og` before rebuilding. This uses installed Google Chrome on macOS; set `CHROME_PATH` to use another Chrome executable. The PNG is 1200 × 630 and is metadata-only, so it does not load during a normal page visit.
 
-## Add the resume
+## Update the resume
 
-Place an approved PDF at `public/resume.pdf`, then rebuild. The hero renders the resume link only when that file exists at build time.
+The HTML resume lives at `/resume/` under the configured base path. The home-page hero and main navigation link to it, and the sitemap includes it. Edit experience through `src/data/experience.json`; the summary, skills, education, and languages in `src/pages/resume.astro` must also match `facts.md`.
+
+Use the resume's Print / save PDF button or the browser's print command. The print layout removes site navigation and controls, prints profile URLs, and retains all experience and client fallbacks. Verified as one page on A4 and Letter in Chrome at 100% scale with browser headers and footers disabled. Other print settings can change pagination. No separate PDF is published. The page stays readable without JavaScript; use the browser's print command in that case.

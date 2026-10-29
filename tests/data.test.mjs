@@ -220,6 +220,28 @@ test('experience retains its required fields and approval safeguards', () => {
   }
 });
 
+test('built home and resume preserve experience copy and client approval fallbacks', {
+  skip: !existsSync(new URL('../dist/', import.meta.url)) && 'No build yet',
+}, () => {
+  const experience = read('experience');
+  for (const path of ['index.html', 'resume/index.html']) {
+    const html = readFileSync(new URL(`../dist/${path}`, import.meta.url), 'utf8');
+    assert.doesNotMatch(html, /\[CLIENT:|needs Dan OK/i, 'Never render approval placeholders');
+    for (const role of experience.roles) {
+      for (const value of [role.role, role.organization, role.period, role.summary, ...role.highlights]) {
+        assert.ok(html.includes(value), `${path} must retain approved experience copy`);
+      }
+      for (const client of role.clients) {
+        if (client.needsDanOk) {
+          assert.ok(html.includes(client.publicFallback), `${path} must use the neutral client fallback`);
+          const name = client.name.replace(/^\[CLIENT:\s*|,\s*needs Dan OK\]$/g, '');
+          assert.ok(!html.includes(name), `${path} must not disclose a pending client name`);
+        }
+      }
+    }
+  }
+});
+
 test('open-source data uses the approved total and matching upstream PR links', () => {
   const source = read('opensource');
   assert.equal(source.repository, 'zeroclaw-labs/zeroclaw');

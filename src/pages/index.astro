@@ -1,13 +1,9 @@
 ---
-import { existsSync, statSync } from 'node:fs';
-import { resolve } from 'node:path';
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { projects, experience, openSource } from '../data/content';
+import ExperienceTimeline from '../components/ExperienceTimeline.astro';
+import { projects, openSource } from '../data/content';
 
-// TODO: Add an approved resume as public/resume.pdf. The link stays hidden until it exists.
-const resumePath = resolve('public/resume.pdf');
-const hasResume = existsSync(resumePath) && statSync(resumePath).isFile();
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -22,7 +18,7 @@ const base = import.meta.env.BASE_URL;
         <div class="hero-actions">
           <a class="button primary" href="mailto:dangilles@gmail.com">Get in touch <span aria-hidden="true">↗</span></a>
           <a class="button secondary" href="https://github.com/Audacity88">GitHub <span aria-hidden="true">↗</span></a>
-          {hasResume && <a class="button secondary" href={`${base}resume.pdf`}>Resume <span class="sr-only">PDF</span><span aria-hidden="true">↗</span></a>}
+          <a class="button secondary" href={`${base}resume/`}>Resume <span aria-hidden="true">↗</span></a>
         </div>
       </div>
       <aside class="hero-note" aria-label="Current work">
@@ -84,22 +80,7 @@ const base = import.meta.env.BASE_URL;
 
     <section id="experience" class="section" aria-labelledby="experience-title">
       <div class="section-heading"><div><p class="eyebrow">03 / Experience</p><h2 id="experience-title">Engineering, research, <br />and teaching.</h2></div></div>
-      <ol class="timeline">
-        {experience.roles.map((job) => (
-          <li>
-            <p class="timeline-period">{job.period}</p>
-            <div class="timeline-content">
-              <h3>{job.role}</h3><p class="organization">{job.organization}</p>
-              <p>{job.summary}</p>
-              {job.highlights.length > 0 && <ul>{job.highlights.map((highlight) => <li>{highlight}</li>)}</ul>}
-              {job.clients.map((client) => {
-                const name = client.needsDanOk ? client.publicFallback : client.name;
-                return name && !name.includes('[CLIENT:') ? <p class="client-description">Partner: {name}</p> : null;
-              })}
-            </div>
-          </li>
-        ))}
-      </ol>
+      <ExperienceTimeline />
     </section>
 
     <section id="how-i-work" class="section two-column-section" aria-labelledby="workflow-title">

@@ -370,3 +370,21 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - Reports, captures, and the temporary audit script remain only in /private/tmp/portfolio-qa/pass22/. The first sandboxed browser launch failed with `Target page, context or browser has been closed` and `Error: kill EPERM`; the isolated audit succeeded with sandbox escalation. Closed the audit browser, stopped exactly preview PID 94538 with sandbox escalation, and confirmed port 4346 was released.
 
 Deep item 8, the HTML resume, is next. Physical devices, other browser engines, project runtime behavior, authenticated services, remote CI, and hosting were outside this pass. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 23: HTML resume, 2026-10-30
+
+deep item 8 done
+
+Added `/resume/` under the configured base path, linked from the home-page hero and main navigation and included in the sitemap. Its summary, skills, education, languages, and contact links come only from facts.md. Extracted the existing experience timeline into one component shared by home and resume, preserving every summary, highlight, employer approval flag, neutral client fallback, and explicit demo/pilot and not-production qualification. Added a built-output test for experience parity and client-name privacy on both pages. Updated the editing guides. No dependencies or project evidence changed.
+
+The resume has a progressively enabled Print / save PDF button and remains readable without JavaScript. Its print layout removes site controls, displays profile URLs, uses black text and bullet markers, and groups skills beside education and languages. Initial proofs exposed a sparse second page and fragmented text extraction with the system font. Adjusted the layout and selected Arial for print. The final A4 and Letter proofs each fit one page at 100% scale with browser headers and footers disabled. Rendered both with macOS PDFKit, visually inspected them, and confirmed readable extracted text. No PDF was added to the site. Other print settings, browsers, physical printers, and applicant-tracking systems remain untested.
+
+Re-read facts.md, the untested triage, verified-projects.md, and prior pass notes. Reconciled experience.json and all home and resume experience copy; no factual or approval-flag corrections were needed. Existing hidden placeholders, public project evidence limits, and all consumer/output exclusions remain intact.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `PUBLIC_BASE_PATH=/ ASTRO_TELEMETRY_DISABLED=1 npm run build` and the final default `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Each checked 204 local references across nine HTML pages and passed the generated-output exclusion guard. `npm test` passed all eleven tests. `git diff --check` passed.
+- Playwright checked home, resume, and Eyrie at 360/768/1280px in both system-selected themes, 18 combinations. All had zero axe violations, horizontal overflow, or runtime errors. Axe retains color-contrast incomplete results; this does not establish full WCAG conformance. Checked rendered experience parity and fallbacks, hidden-output exclusions, the approved linked total, resume navigation state, keyboard skip link, theme persistence, print-button behavior, and the no-JavaScript fallback. Captured all six resume combinations and inspected representative phone, tablet, desktop, and both final print proofs. The final print-font change received focused print verification.
+- Reports, screenshots, temporary scripts, and print proofs remain only in /private/tmp/portfolio-qa/pass23/. Used the existing Playwright, Chrome, and axe-core installations. The initial sandboxed Chrome launch failed with `Target page, context or browser has been closed` and `Error: kill EPERM`; isolated browser checks succeeded with sandbox escalation. PDFKit rendering used a temporary Swift module cache after the default cache was denied. Closed the browsers, stopped exactly preview PIDs 98745 and 3936 with sandbox escalation, and confirmed port 4347 was released.
+
+Deep item 9 is next. Project runtime behavior, authenticated services, physical devices, other browser engines, remote CI, and hosting were outside this pass. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
