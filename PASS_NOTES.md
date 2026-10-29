@@ -302,3 +302,17 @@ Validation on Mac-mini.local, working directory /Users/natalie/Development/portf
 - `npm test` passed all ten tests. No source, media, dependencies, or project evidence changed.
 
 The pending download command, to run on Mac-mini.local in /private/tmp, is `npm install --prefix /private/tmp/portfolio-lighthouse --cache /private/tmp/portfolio-lighthouse-cache --no-audit --no-fund lighthouse`. After Dan chooses the runner and the install succeeds, continue item 6 with mobile Lighthouse audits of home and Eyrie, fix scores below 95, and stop any preview server by its recorded PID. All existing validation limits remain. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 18: Performance readiness check, 2026-10-30
+
+Deep item 6 remains unfinished. Reconfirmed Lighthouse is absent from the temporary install and checked temporary and npx installations. Asked for the download-runner choice required by the supplied global AGENTS.md instructions. The choice remains pending; no download, preview server, browser, or Lighthouse audit ran. No score or item completion is claimed. Site source, media, and dependencies are unchanged.
+
+Re-read facts.md, the untested triage, and verified-projects.md. Reconciled experience.json and all rendered experience copy against facts.md. No corrections were needed. Employer/client approval flags, neutral partner fallback, team/solo attribution, and explicit demo/pilot and not-production wording remain correct. The existing hidden placeholders, public project list, and verification limits remain intact.
+
+Validation on Mac-mini.local, working directory /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. All 179 local references across eight HTML pages and the hidden-output guard passed.
+- `npm test` passed all ten tests. `git diff --check` passed before this notes append.
+- Inspected built home and Eyrie markup: no external scripts; all five image instances have lazy loading. Home HTML is 45,747 bytes, or 11,798 bytes with local gzip; Eyrie HTML is 38,835 bytes, or 9,508 bytes with local gzip. Confirmed all five approved captures have 360/720/960/1440px WebP variants and declared dimensions. These static checks are not Lighthouse scores or runtime measurements.
+
+Next action remains the install command in Pass 17, after Dan selects the runner, followed by mobile Lighthouse audits of home and Eyrie and fixes for scores below 95. No project runtime, physical-device, remote-CI, or hosting validation is claimed. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
