@@ -446,3 +446,16 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - `npm test` passed all 12 tests with no skips. A temporary inline Node check verified the current-location marker on all eight project pages, the current-page marker on Resume, no current marker on home or 404, and compiled highlight styling in all 11 pages. `git diff --check` passed.
 
 No server, browser, download, or Lighthouse run was started. Browser appearance and assistive technology behavior were not rechecked. This pass does not reverify project runtime behavior, accessibility conformance, performance, print pagination, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 28: Case-study return link, 2026-10-30
+
+All ten deep items are already recorded as done. Added an All projects link after each case study so readers can return to the project grid without scrolling to the top. Reused the existing link styling and keyboard focus treatment, with a divider and spacing after the case-study content. No factual copy, project data, verification claims, numbers, media, dependencies, or JavaScript changed.
+
+Re-read facts.md, the untested triage, verified-projects.md, and the deep-item completion records. Reconciled experience.json, the shared experience timeline, and all home/resume experience, summary, workflow, education, skills, and language copy against facts.md. No corrections were needed. Employer/client approval flags, neutral client fallback, team/solo attribution, and explicit demo/pilot and not-production wording remain correct. The later eight-project content lock remains authoritative.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Its link and generated-output checks passed across 262 local references and 11 HTML pages.
+- `npm test` passed all 12 tests with no skips. A temporary inline Node check confirmed exactly one closing return link on each of the eight case-study pages, its destination at the project grid, its position after the limitations section, and compiled divider/spacing styling. `git diff --check` passed.
+
+No server, browser, download, or Lighthouse run was started. Browser appearance, keyboard interaction, assistive technology behavior, and print layout were not rechecked. This pass does not reverify project runtime behavior, accessibility conformance, performance, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.

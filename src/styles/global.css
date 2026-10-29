@@ -164,6 +164,7 @@
   .project-detail .tech-list { margin-top: 1.5rem; }
   .verification-note { border-left: 2px solid var(--accent); padding: 1rem 1.5rem; background: var(--tint); border-radius: 0 6px 6px 0; }
   .project-detail .project-links { margin-top: 0; }
+  .project-detail-back { margin-top: 2.5rem; border-top: 1px solid var(--line); padding-top: 1rem; }
   .project-oneliner { font-size: 1rem; line-height: 1.5; margin-top: .65rem; }
   .project-description { font-size: .9rem; color: var(--muted); margin-top: .9rem; margin-bottom: 1.75rem; }
   .project-verification { font-size: .78rem; color: var(--muted); margin-top: 1.25rem; line-height: 1.6; }
