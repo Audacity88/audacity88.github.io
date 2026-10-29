@@ -192,7 +192,7 @@
   .pr-list { list-style: none; padding: 0; }
   .pr-card { display: block; padding: 1.4rem .75rem; border-top: 1px solid var(--line); text-decoration: none; border-radius: 3px; }
   .pr-list li:last-child .pr-card { border-bottom: 1px solid var(--line); }
-  .pr-card:hover { text-decoration: none; background: var(--tint); }
+  .pr-card:is(:hover, :focus-visible) { text-decoration: none; background: var(--tint); }
   .pr-card h3 > span { color: var(--accent-text); }
   .pr-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1rem; font-size: .65rem; font-family: var(--mono); color: var(--muted); margin-bottom: .65rem; }
   .pr-card h3 { font-size: 1.05rem; line-height: 1.45; }
