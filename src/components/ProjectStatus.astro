@@ -1,0 +1,13 @@
+---
+import type { Project } from '../data/content';
+
+interface Props { status: Project['status'] }
+const { status } = Astro.props;
+const labels = {
+  'pending-verification': 'Verifying',
+  'verified': 'Verified',
+  'demo-down': 'Demo unavailable',
+};
+---
+
+<span class="status" data-status={status}><span aria-hidden="true"></span>{labels[status]}</span>

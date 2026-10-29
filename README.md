@@ -20,11 +20,12 @@ The default local URL is `http://localhost:4321/portfolio/`.
 ## Build locally
 
 ```sh
+npm test
 npm run build
 npm run preview
 ```
 
-`build` checks Astro and TypeScript, validates the content data, and generates static files in `dist/`.
+`test` uses Node's built-in test runner with no additional dependencies. It checks JSON fields, project states, URLs, approval flags, and prohibited links. `build` checks Astro and TypeScript, validates the content data, and generates static files in `dist/`.
 
 ## Edit content
 
@@ -32,12 +33,13 @@ Use `/Users/natalie/Development/portfolio-brief/facts.md` as the only source of 
 
 ### Projects
 
-Edit [src/data/projects.json](src/data/projects.json). Each object becomes a project card, sorted by ascending `order`.
+Edit [src/data/projects.json](src/data/projects.json). Each object becomes a project card and a detail page at `/projects/<id>/` under the configured base path. Cards sort by ascending `order`.
 
 | Field | How to edit it |
 | --- | --- |
 | `id` | Keep a unique lowercase ID with optional hyphens. |
 | `title`, `oneLiner`, `description` | Use approved public copy. |
+| `verificationNote` | State what is verified and what remains untested. Shown on the detail page. |
 | `tech` | Supply an array of technology labels. |
 | `github` | Use the approved HTTPS repository or upstream PR search URL. |
 | `status` | Use `pending-verification`, `verified`, or `demo-down`. |
@@ -51,9 +53,9 @@ Keep a new project `pending-verification`. Its card shows "Verifying", and any d
 To mark a project verified:
 
 1. Verify the project itself with the relevant build and a representative functional check. For a live demo, test the public URL and its main user flow, including login when required. An HTTP response or a successful portfolio build is insufficient.
-2. Record the date, version, checks, and limitations in `notes` and the current pass notes. Keep biographical claims tied to `facts.md`.
+2. Record the date, version, checks, and limitations in `notes` and the current pass notes. Update the public `verificationNote` to match that evidence. Keep biographical claims tied to `facts.md`.
 3. Change `status` to `verified`. To add a demo link, set `demo` to the exact tested HTTPS URL. A verified local project can keep `demo: null`.
-4. Run `npm run build` and inspect the card with `npm run preview`.
+4. Run `npm test` and `npm run build`. Inspect the card and detail page with `npm run preview`.
 
 For example, only after verifying swift-ship and its existing demo, update these fields on its existing object:
 
@@ -96,7 +98,7 @@ For another repository subpath, set `PUBLIC_BASE_PATH` to its path with leading 
 
 Use the same environment variables for `dev`, `build`, and `preview`. For example, after the root build above, run `PUBLIC_BASE_PATH=/ npm run preview` and open the root URL printed by Astro. Internal assets and the optional resume link use Astro's base URL.
 
-Canonical URLs, Open Graph and Twitter image URLs, `sitemap.xml`, and `robots.txt` use these settings. The sitemap lists only the home page. The custom `404.html` has `noindex` and links back to the portfolio.
+Canonical URLs, Open Graph and Twitter image URLs, `sitemap.xml`, and `robots.txt` use these settings. The sitemap lists the home page and all generated project pages. The custom `404.html` has `noindex` and links back to the portfolio.
 
 Search engines read `robots.txt` at the origin root. A root build includes it there. A subpath build includes it under that path; before any approved publication, the host's root `robots.txt` must point to the subpath sitemap. The host must also serve `404.html` for missing pages with HTTP status 404.
 
@@ -104,7 +106,7 @@ Styles are inlined at build time to avoid a blocking stylesheet request. System 
 
 ## Deployment, awaiting approval
 
-[.github/workflows/ci.yml](.github/workflows/ci.yml) runs `npm ci` and `npm run build` on `pull_request`. It builds only and has read-only repository permissions.
+[.github/workflows/ci.yml](.github/workflows/ci.yml) runs `npm ci`, `npm test`, and `npm run build` on `pull_request`. It has read-only repository permissions.
 
 [.github/workflows/deploy.yml](.github/workflows/deploy.yml) is prepared for GitHub Pages, triggered only by `workflow_dispatch`. Push and pull-request deployment triggers are intentionally absent until Dan approves publishing. The workflow explicitly disables automatic Pages enablement.
 

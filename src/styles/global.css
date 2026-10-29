@@ -142,6 +142,20 @@
   .status[data-status='verified'] > span { background: var(--accent); border-color: var(--accent); }
   .status[data-status='demo-down'] > span { border-radius: 1px; }
   .project-card h3 { font-size: clamp(1.65rem, 2.3vw, 2.1rem); overflow-wrap: anywhere; }
+  .project-title-link { text-decoration: none; }
+  .project-title-link:hover { text-decoration: underline; }
+  .project-detail { padding-block: 2rem 5rem; }
+  .project-detail article { max-width: 800px; margin-inline: auto; }
+  .project-detail-heading { padding-block: 2rem 3rem; }
+  .project-detail-heading .eyebrow { margin-bottom: 1rem; }
+  .project-detail h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); overflow-wrap: anywhere; }
+  .project-detail-pitch { margin-block: 1.5rem; font-size: 1.2rem; }
+  .project-detail-body { display: grid; gap: 2.5rem; }
+  .project-detail-body h2 { font-size: 1.5rem; letter-spacing: -.025em; margin-bottom: 1rem; }
+  .project-detail-body p { color: var(--muted); }
+  .project-detail .tech-list { margin-top: 1.5rem; }
+  .verification-note { border-left: 2px solid var(--accent); padding: 1rem 1.5rem; background: var(--tint); border-radius: 0 6px 6px 0; }
+  .project-detail .project-links { margin-top: 0; }
   .project-oneliner { font-size: 1rem; line-height: 1.5; margin-top: .65rem; }
   .project-description { font-size: .9rem; color: var(--muted); margin-top: .9rem; margin-bottom: 1.75rem; }
   .tech-list { display: flex; flex-wrap: wrap; gap: .45rem; list-style: none; padding: 0; margin-top: auto; }

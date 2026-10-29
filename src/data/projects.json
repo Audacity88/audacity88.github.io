@@ -11,7 +11,8 @@
     "featured": true,
     "order": 1,
     "images": [],
-    "notes": "TODO: verify the build and add genuine screenshots. Local only. The abstract placeholder is not a screenshot."
+    "notes": "TODO: verify the build and add genuine screenshots. Local only. The abstract placeholder is not a screenshot.",
+    "verificationNote": "The local build and dashboard behavior have not been verified for this portfolio. No public demo is provided."
   },
   {
     "id": "zeroclaw",
@@ -24,20 +25,22 @@
     "status": "pending-verification",
     "featured": true,
     "order": 2,
-    "notes": "Individual merged PRs and the approved 750+ merged pull requests label are verified in facts.md. The project card remains pending verification for this pass."
+    "notes": "Individual merged PRs and the approved 750+ merged pull requests label are verified in facts.md. The project card remains pending verification for this pass.",
+    "verificationNote": "Selected upstream pull requests are confirmed merged. A local build and runtime demo have not been verified for this portfolio."
   },
   {
     "id": "codex-video-vision",
     "title": "codex-video-vision",
     "oneLiner": "Video tools for Codex.",
-    "description": "A Codex plugin and MCP server for working with video. A credited port of an MIT-licensed project. CI was green as of August 2026; current verification is pending.",
+    "description": "A Codex plugin and MCP server for working with video. A credited port of an MIT-licensed project. Current build and smoke testing are pending.",
     "tech": ["TypeScript", "MCP", "Codex"],
     "github": "https://github.com/EyrieCommander/codex-video-vision",
     "demo": null,
     "status": "pending-verification",
     "featured": false,
     "order": 3,
-    "notes": "Credited port of an MIT-licensed project. CI was green as of August 2026, per the supplied project seed. Current build and smoke test pending."
+    "notes": "Credited port of an MIT-licensed project. CI was green as of August 2026, per the supplied project seed. Current build and smoke test pending.",
+    "verificationNote": "The current build and video tools have not been verified for this portfolio. No public demo is provided."
   },
   {
     "id": "codex-skills",
@@ -50,7 +53,8 @@
     "status": "pending-verification",
     "featured": false,
     "order": 4,
-    "notes": "TODO: verify the current catalog. No installation or build has been tested in this pass."
+    "notes": "TODO: verify the current catalog. No installation or build has been tested in this pass.",
+    "verificationNote": "The current skill catalog and installation flow have not been verified for this portfolio."
   },
   {
     "id": "swift-ship",
@@ -63,7 +67,8 @@
     "status": "pending-verification",
     "featured": false,
     "order": 5,
-    "notes": "Demo URL supplied in the brief. Login, data, and AI behavior still need verification."
+    "notes": "Demo URL supplied in the brief. Login, data, and AI behavior still need verification.",
+    "verificationNote": "Login, data, and AI support behavior on the linked demo have not been verified for this portfolio."
   },
   {
     "id": "chatgenius",
@@ -76,7 +81,8 @@
     "status": "demo-down",
     "featured": false,
     "order": 6,
-    "notes": "The supplied brief marks the Vercel demo down. Do not restore the demo link without verifying it."
+    "notes": "The supplied brief marks the Vercel demo down. Do not restore the demo link without verifying it.",
+    "verificationNote": "The demo is unavailable, so its link is hidden. The current build and chat behavior have not been verified for this portfolio."
   },
   {
     "id": "tono4",
@@ -90,7 +96,8 @@
     "featured": false,
     "order": 7,
     "images": [],
-    "notes": "TODO: verify on iOS and add genuine video or screenshots. Media slot intentionally empty."
+    "notes": "TODO: verify on iOS and add genuine video or screenshots. Media slot intentionally empty.",
+    "verificationNote": "The iOS build, object detection, and pronunciation scoring have not been verified for this portfolio. Genuine device captures are still pending."
   },
   {
     "id": "cliktok",
@@ -104,6 +111,7 @@
     "featured": false,
     "order": 8,
     "images": [],
-    "notes": "TODO: verify on iOS and add genuine video or screenshots. Media slot intentionally empty."
+    "notes": "TODO: verify on iOS and add genuine video or screenshots. Media slot intentionally empty.",
+    "verificationNote": "The iOS build and video flows have not been verified for this portfolio. Genuine device captures are still pending."
   }
 ]

@@ -10,6 +10,7 @@ Edit `projects.json`. The page sorts projects by ascending `order`. Each object 
 | --- | --- |
 | `id` | Unique lowercase ID with optional hyphens. |
 | `title`, `oneLiner`, `description` | Public project copy. |
+| `verificationNote` | Public evidence and limitations, shown under "What's verified" on the detail page. |
 | `tech` | Array of short technology labels. |
 | `github` | HTTPS repository or filtered upstream PR URL. |
 | `demo` | HTTPS demo URL, or `null` to hide the demo button. |
@@ -20,6 +21,8 @@ Edit `projects.json`. The page sorts projects by ascending `order`. Each object 
 | `images` | Optional array of genuine, approved images. An empty array renders a clearly labeled placeholder. |
 
 Keep projects `pending-verification` until the owning verification pass supplies evidence. Use `demo-down` with `demo: null` for unavailable demos. A successful HTTP response alone does not verify login or application behavior.
+
+Each project generates `/projects/<id>/` under the configured base path and appears in the sitemap. Cards link to those pages. Keep `verificationNote` consistent with the status and actual checks. Internal `notes` never appear on the page. No separate page file is needed when adding a project.
 
 To add media, put genuine captures in `public/images/`. Add objects such as `{ "src": "/images/eyrie-dashboard.png", "alt": "Describe the actual captured screen" }` to `images`. Image paths omit the deployment base, which the component adds. Replace this example path and description with the real asset. Never use fabricated screenshots.
 
@@ -41,4 +44,4 @@ The `count` field has `display: true` and the approved label `750+ merged pull r
 
 ## Check changes
 
-Run `npm run build` after edits. `content.ts` validates required fields, HTTPS links, allowed statuses, unique project IDs, and the approved count flag and label. Validation cannot establish whether a factual claim or demo is correct. Append the pass outcome and remaining verification work to `PASS_NOTES.md`.
+Run `npm test` and `npm run build` after edits. The dependency-free Node tests check JSON shapes, required fields, allowed statuses, demo and GitHub URLs, unique IDs and order values, approval flags, and prohibited contract/private links. CI runs these tests before building. `content.ts` also validates required fields, HTTPS links, statuses, unique project IDs, and the approved count flag and label during the build. Validation cannot establish whether a factual claim or demo is correct. Append the pass outcome and remaining verification work to `PASS_NOTES.md`.

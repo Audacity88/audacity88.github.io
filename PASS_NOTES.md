@@ -84,3 +84,20 @@ Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/po
 - `git diff --check` passed.
 
 Remote Actions, clean `npm ci` installation, Node 24 execution, and deployment remain untested. Existing dependencies sufficed for local validation. No workflows were dispatched, Pages settings were not changed, and nothing was committed, pushed, or deployed. Individual project builds and demo flows remain unverified.
+
+## Pass 6: Content, data tests, and project details, 2026-10-29
+
+Completed refinement items **a, b, and c**:
+
+- **a:** Re-read `facts.md` and the untested triage, then checked public copy and `experience.json`. Approval flags, neutral client fallback, team/solo attribution, and explicit demo/pilot and not-production wording match the facts. Tightened the hero to describe working pilots and agent infrastructure; removed the video plugin's historical CI claim from public copy. The approved linked `750+ merged pull requests` label appears once on the home page. No private links, client placeholders, disallowed student count, or exact internal PR total appear in generated HTML.
+- **b:** Added four dependency-free Node tests behind `npm test` for all JSON data shapes, required fields, statuses, HTTPS demo/GitHub URLs, approval flags, count rules, and prohibited links. CI runs them before the build. Updated the editing guides. No dependencies changed.
+- **c:** Generated eight `/projects/<id>/` pages from `projects.json`, with descriptions, technologies, links, shared status badges, and a required public `verificationNote`. Cards link to the pages; the sitemap includes them. Internal editing notes stay private. Preserved all project statuses and hidden null demo links.
+
+Validation on `Mac-mini.local`, working directory `/Users/natalie/Development/portfolio`:
+
+- `npm test` passed all four tests. Twelve malformed-data fixtures in a temporary copy were rejected, including invalid states, URLs, approval flags, missing fields, and prohibited encoded links.
+- `PUBLIC_SITE_URL=https://portfolio.example PUBLIC_BASE_PATH=/ ASTRO_TELEMETRY_DISABLED=1 npm run build` passed. The final default `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Both base configurations passed static checks for 136 local links, fragment targets, ten HTML pages, eight detail pages, nine sitemap URLs, canonical URLs, experience copy, and privacy rules. Parsed CI YAML and confirmed install/test/build order and read-only permissions. `git diff --check` passed.
+- Headless Chrome over CDP checked home and every detail page at 360/768/1280px in light and dark mode, 54 combinations. No horizontal overflow or console/runtime errors. Card/return navigation, theme persistence across pages and reload, and missing-project HTTP 404 passed. Inspected detail-page captures at all three widths in both themes, plus the updated cards. Temporary scripts, captures, and results are in `/private/tmp/portfolio-refinement-qa/`; none were added to the repo.
+- Stopped the preview listener PID 21994 and isolated Chrome PID 24580. The npm launcher PID 21959 had already exited. Confirmed ports 4326 and 9346 were released.
+
+Individual project builds, demo flows, genuine media, physical devices, other browser engines, remote CI, clean installation, and Node 24 execution remain unverified. This portfolio build changes no project verification state. All work remains local; nothing was committed, pushed, or deployed.

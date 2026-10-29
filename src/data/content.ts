@@ -9,6 +9,7 @@ const projectSchema = z.object({
   title: z.string().min(1),
   oneLiner: z.string().min(1),
   description: z.string().min(1),
+  verificationNote: z.string().min(1),
   tech: z.array(z.string()),
   github: httpsUrl,
   demo: httpsUrl.nullable(),
