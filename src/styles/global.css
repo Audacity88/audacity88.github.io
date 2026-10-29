@@ -109,7 +109,7 @@
   /* Reserve space before the script reveals the control, including without JS. */
   .theme-control { flex: 0 0 86px; width: 86px; height: 44px; }
   .theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; background: var(--surface); border: 1px solid var(--line); color: var(--muted); padding: .45rem .75rem; height: 44px; width: 86px; font-family: var(--mono); font-size: .68rem; white-space: nowrap; border-radius: 999px; }
-  .theme-toggle:hover { color: var(--accent-text); border-color: var(--accent); }
+  .theme-toggle:is(:hover, :focus-visible) { color: var(--accent-text); border-color: var(--accent); }
   .eyebrow { font-family: var(--mono); font-size: .7rem; letter-spacing: .085em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
   .hero .eyebrow { display: flex; align-items: center; gap: .65rem; }
   .accent-mark { width: 7px; height: 7px; background: var(--accent); box-shadow: 0 0 0 4px var(--tint); border-radius: 50%; }
