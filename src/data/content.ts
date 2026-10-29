@@ -32,7 +32,7 @@ const projectSchema = z.object({
     sourceNotes: z.array(z.string().min(1)).min(1),
   }),
   tech: z.array(z.string()),
-  github: httpsUrl,
+  github: httpsUrl.nullable(),
   demo: httpsUrl.nullable(),
   demoLabel: z.string().min(1).optional(),
   status: z.enum(['pending-verification', 'verified', 'demo-down']),
@@ -63,8 +63,8 @@ const hiddenProjectSchema = z.object({
   status: z.literal('draft'),
   hidden: z.literal(true),
 }).catchall(z.union([z.null(), z.literal(''), z.array(z.never()).length(0)]));
-z.array(hiddenProjectSchema).parse(projectData.filter((project) => project.hidden === true));
-export const projects = z.array(projectSchema).parse(projectData.filter((project) => project.hidden !== true)).sort((a, b) => a.order - b.order);
+z.array(hiddenProjectSchema).parse((projectData as Array<{ hidden?: boolean }>).filter((project) => project.hidden === true));
+export const projects = z.array(projectSchema).parse((projectData as Array<{ hidden?: boolean }>).filter((project) => project.hidden !== true)).sort((a, b) => a.order - b.order);
 if (new Set(projectData.map((project) => project.id)).size !== projectData.length) {
   throw new Error('Project IDs must be unique.');
 }

@@ -312,6 +312,125 @@
     }
   },
   {
+    "id": "witness-lexington",
+    "title": "Witness Lexington",
+    "oneLiner": "A 3D history game set at Lexington, April 1775.",
+    "description": "A static three.js game about the night ride and dawn muster at Lexington in April 1775. It runs in the browser with no runtime dependencies, account, or API.",
+    "tech": [
+      "three.js",
+      "JavaScript",
+      "WebGL",
+      "Web Audio"
+    ],
+    "github": "https://github.com/Audacity88/witness-lexington",
+    "demo": null,
+    "status": "verified",
+    "statusLabel": "Build & tests checked",
+    "featured": false,
+    "images": [
+      {
+        "src": "/images/projects/witness-lexington-title-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Witness Lexington title card over a low-poly 3D view of Lexington at dawn, with Begin the opening and Mute music buttons.",
+        "caption": "Title screen, captured from a local run.",
+        "sources": [
+          {
+            "src": "/images/projects/witness-lexington-title-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/witness-lexington-title-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/witness-lexington-title-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/witness-lexington-title-1440.webp",
+            "width": 1440
+          }
+        ]
+      }
+    ],
+    "verification": "Build passes, 341 test checks pass, and 24 local pages load.",
+    "verificationNote": "Eyrie checked this on October 29, 2026: the build succeeded, npm test passed all 341 non-browser checks, and all 24 local paths returned HTTP 200. A full browser playthrough was not verified.",
+    "notes": "Evidence: portfolio-triage results/witness-lexington PORTFOLIO_REPORT.md and title-screen capture. No live demo is claimed.",
+    "order": 3,
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "History lessons often hand over a conclusion. This game asks the player to piece together what happened at Lexington Green from conflicting evidence.",
+      "built": "I built a browser game with a night-ride opening, a dawn muster, an evidence notebook with source labels, and a short evidence-based essay. It has no combat or timer.",
+      "architecture": "Static HTML, CSS, and JavaScript with a checked-in three.js bundle for low-poly WebGL scenes. Web Audio synthesizes the soundtrack, and localStorage keeps checkpoints and drafts. Node built-ins produce self-contained HTML builds.",
+      "limitations": "The 341 checks run without a browser, using renderer and audio stand-ins. WebGL rendering, real input, and audio quality across browsers still need a full playthrough check. No hosted demo is linked.",
+      "sourceNotes": [
+        "portfolio-triage/results/witness-lexington/work/PORTFOLIO_REPORT.md: stack, build, npm test (341 checks), 24 HTTP 200 paths, remaining blockers.",
+        "portfolio-triage/results/witness-lexington/shots/index.png: title screen."
+      ]
+    }
+  },
+  {
+    "id": "model-picker",
+    "title": "Model Picker",
+    "oneLiner": "Recommends AI models for a task.",
+    "description": "A standalone Go and React app that suggests which models fit a task and a priority. It works with any OpenAI-compatible provider, with OpenRouter as the default, and runs locally.",
+    "tech": [
+      "Go",
+      "React",
+      "TypeScript",
+      "OpenAI-compatible API"
+    ],
+    "github": null,
+    "demo": null,
+    "status": "verified",
+    "statusLabel": "Build & tests checked",
+    "featured": false,
+    "images": [
+      {
+        "src": "/images/projects/model-picker-home-1440.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "Model Picker start screen with the sentence I want to build a feature from my spec, using anything, and my priority is balanced, and a Pick a model button.",
+        "caption": "Start screen, captured from a local run.",
+        "sources": [
+          {
+            "src": "/images/projects/model-picker-home-360.webp",
+            "width": 360
+          },
+          {
+            "src": "/images/projects/model-picker-home-720.webp",
+            "width": 720
+          },
+          {
+            "src": "/images/projects/model-picker-home-960.webp",
+            "width": 960
+          },
+          {
+            "src": "/images/projects/model-picker-home-1440.webp",
+            "width": 1440
+          }
+        ]
+      }
+    ],
+    "verification": "Build and tests pass. Code is local only.",
+    "verificationNote": "Eyrie checked this on October 29, 2026: the Go build and tests passed, the web build and tests passed, and the local server answered on its page and catalog routes. The code has no public repository.",
+    "notes": "Evidence: portfolio-triage lanes/picker REPORT.md, README.md, and start-screen capture. No repo link, by design.",
+    "order": 4,
+    "verificationDate": "2026-10-29",
+    "caseStudy": {
+      "problem": "Picking a model means weighing price, quality, context, and where it can run. This app turns a one-line task and a priority into a ranked shortlist.",
+      "built": "I built a local app where you describe a task in plain language, choose a priority such as price or balance, and get ranked model suggestions with the evidence behind them. It can also list models available locally.",
+      "architecture": "A Go server hosts the API and the React UI on 127.0.0.1. It reads a model catalog snapshot and calls the configured model through an OpenAI-compatible chat completions endpoint for classification and ranking. Local inventory is optional and read-only.",
+      "limitations": "Recommendations need a provider key and model, and catalog prices and availability are a snapshot that can go stale. The code is local only, so there is no repository or hosted demo to link.",
+      "sourceNotes": [
+        "portfolio-triage/lanes/picker/work/REPORT.md: Go build and tests, web build and tests, startup and HTTP checks.",
+        "portfolio-triage/lanes/picker/work/README.md: configuration and API.",
+        "portfolio-triage/lanes/picker/shots/picker.png: start screen."
+      ]
+    }
+  },
+  {
     "id": "codex-video-vision",
     "title": "codex-video-vision",
     "oneLiner": "Video tools for Codex. A credited port of an MIT-licensed project.",
@@ -330,7 +449,7 @@
     "verification": "108 tests pass.",
     "verificationNote": "Eyrie reported 108 passing tests on October 29, 2026. This is a credited port of an MIT-licensed project. No live demo or end-to-end transcription check is claimed.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md. Preserve the credited-port attribution.",
-    "order": 3,
+    "order": 5,
     "verificationDate": "2026-10-29",
     "caseStudy": {
       "problem": "A coding agent needs timestamped frames and audio information to inspect a local video. This project prepares metadata, images, scene analysis, and optional transcripts for the agent to interpret.",
@@ -362,7 +481,7 @@
     "verification": "Skill install and scripted workflows checked; some native tests still fail.",
     "verificationNote": "Eyrie checked skill installation and scripted workflows on October 29, 2026. Some native tests still fail. This is not a green test suite.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md. Keep pending-verification until the remaining test failures are resolved and checked.",
-    "order": 4,
+    "order": 6,
     "verificationDate": "2026-10-29",
     "caseStudy": {
       "problem": "Repeated agent work needs reusable procedures. This bundle collects workflows for source intake, writing, media review, maintenance, and recovery of local task history or workspace paths.",
@@ -396,7 +515,7 @@
     "verification": "Frontend: 55 of 55 tests pass.",
     "verificationNote": "Eyrie reported all 55 frontend tests passing on October 29, 2026. Backend services and a live chat flow are not verified here. Code only; no demo link.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md supersedes the earlier demo-down seed. Do not restore old demo links.",
-    "order": 5,
+    "order": 7,
     "verificationDate": "2026-10-29",
     "caseStudy": {
       "problem": "ChatGenius explores Slack-like communication with channels, direct messages, attachments, and AI replies based on message history. It combines the chat interface and AI response paths in one codebase.",
@@ -429,7 +548,7 @@
     "verification": "Simulator build not verified.",
     "verificationNote": "As of Eyrie's October 29, 2026 check, the simulator build was not verified. No device behavior, screenshots, or demo is claimed.",
     "notes": "Evidence: portfolio-brief/v2/verified-projects.md. TODO: verify the simulator build and obtain approved genuine device captures.",
-    "order": 6,
+    "order": 8,
     "verificationDate": "2026-10-29",
     "caseStudy": {
       "problem": "Tono4 explores learning Chinese vocabulary from objects around the learner. The intended flow connects camera recognition to saved words, pronunciation practice, and quizzes.",
@@ -442,47 +561,5 @@
         "/Users/dan/portfolio-triage/repos/Tono4/PORTFOLIO_REPORT.md, tech stack, build, run, and test results; models and conversion; remaining blockers."
       ]
     }
-  },
-  {
-    "id": "model-picker",
-    "title": "Model Picker",
-    "status": "draft",
-    "hidden": true,
-    "oneLiner": "",
-    "description": "",
-    "verification": "",
-    "verificationDate": null,
-    "verificationNote": "",
-    "caseStudy": null,
-    "tech": [],
-    "github": null,
-    "demo": null,
-    "demoLabel": null,
-    "statusLabel": null,
-    "featured": null,
-    "order": null,
-    "images": [],
-    "notes": ""
-  },
-  {
-    "id": "witness-lexington",
-    "title": "Witness: Lexington",
-    "status": "draft",
-    "hidden": true,
-    "oneLiner": "",
-    "description": "",
-    "verification": "",
-    "verificationDate": null,
-    "verificationNote": "",
-    "caseStudy": null,
-    "tech": [],
-    "github": null,
-    "demo": null,
-    "demoLabel": null,
-    "statusLabel": null,
-    "featured": null,
-    "order": null,
-    "images": [],
-    "notes": ""
   }
 ]

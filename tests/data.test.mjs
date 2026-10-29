@@ -15,16 +15,14 @@ const texts = (value, label) => {
   value.forEach((item) => text(item, label));
 };
 const unique = (items, field) => assert.equal(new Set(items.map((item) => item[field])).size, items.length, `${field} must be unique`);
-const excludedText = /ctm-system|witness-lexington|picker/i;
-const excludedProjectText = /superbuilders|ctm-system|witness-lexington|picker/i;
-const reservedPlaceholders = new Map([
-  ['model-picker', 'Model Picker'],
-  ['witness-lexington', 'Witness: Lexington'],
-]);
+const excludedText = /ctm-system/i;
+const excludedProjectText = /superbuilders|ctm-system/i;
+const reservedPlaceholders = new Map();
 function checkPlaceholders(projects) {
   for (const [id, title] of reservedPlaceholders) {
     const matches = projects.filter((project) => project.id === id);
-    assert.equal(matches.length, 1, 'Each reserved placeholder must exist exactly once');
+    assert.ok(matches.length <= 1, 'A reserved placeholder may exist at most once');
+    if (!matches.length) continue;
     const project = matches[0];
     assert.equal(project.hidden, true);
     assert.equal(project.status, 'draft');
@@ -97,7 +95,7 @@ test('projects have complete cards and detail pages with valid states and URLs',
   unique(allProjects, 'id');
   checkPlaceholders(allProjects);
   const projects = allProjects.filter((project) => project.hidden !== true);
-  assert.deepEqual(projects.map((project) => project.id), ['eyrie', 'swift-ship', 'codex-video-vision', 'codex-skills', 'chatgenius', 'tono4']);
+  assert.deepEqual(projects.map((project) => project.id), ['eyrie', 'swift-ship', 'witness-lexington', 'model-picker', 'codex-video-vision', 'codex-skills', 'chatgenius', 'tono4']);
   unique(projects, 'order');
   for (const project of projects) {
     object(project);
@@ -113,7 +111,8 @@ test('projects have complete cards and detail pages with valid states and URLs',
     assert.doesNotMatch(JSON.stringify(project), excludedProjectText, 'Project IDs and all project text must respect exclusions');
     texts(project.tech, 'tech');
     assert.ok(project.tech.length);
-    github(project.github);
+    if (project.id === 'model-picker') assert.equal(project.github, null, 'Model Picker code is local only; no repo link');
+    else github(project.github);
     assert.ok(['pending-verification', 'verified', 'demo-down'].includes(project.status));
     assert.equal(typeof project.featured, 'boolean');
     assert.ok(Number.isInteger(project.order) && project.order > 0);
@@ -139,17 +138,6 @@ test('projects have complete cards and detail pages with valid states and URLs',
       }
     }
   }
-});
-
-test('hidden placeholders reject content, visibility changes, and extra hidden projects', () => {
-  const projects = read('projects');
-  for (const change of [{ hidden: false }, { status: 'verified' }, { description: 'Unapproved claim' }, { github: 'https://example.com' }, { images: ['capture.png'] }, { caseStudy: {} }]) {
-    const changed = structuredClone(projects);
-    Object.assign(changed.find((project) => project.id === 'model-picker'), change);
-    assert.throws(() => checkPlaceholders(changed));
-  }
-  assert.throws(() => checkPlaceholders([...projects, { id: 'extra', hidden: true }]));
-  assert.throws(() => checkPlaceholders(projects.filter((project) => project.id !== 'witness-lexington')));
 });
 
 test('generated-output guard rejects hidden titles, IDs, metadata, and routes', (t) => {
@@ -263,4 +251,14 @@ test('open-source data uses the approved total and matching upstream PR links', 
     assert.equal(pr.url, `${source.url}/pull/${pr.number}`);
     if (pr.summary !== undefined) text(pr.summary, 'PR explanation');
   }
+});
+
+test('Model Picker and Witness Lexington stay neutral', () => {
+  const projects = read('projects');
+  for (const id of ['model-picker', 'witness-lexington']) {
+    const project = projects.find((item) => item.id === id);
+    assert.ok(project && project.hidden !== true, `${id} must be visible`);
+    assert.doesNotMatch(JSON.stringify(project), /superbuilders|teammate|bill of rights|[\u201c\u201d]/i);
+  }
+  assert.equal(projects.find((item) => item.id === 'model-picker').demo, null);
 });
