@@ -420,3 +420,16 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - `npm test` passed all 12 tests against each build, with no skips. The stronger checks first caught the historical exclusion reference and empty Links section in the previous output; both are resolved. `git diff --check` passed.
 
 No preview or development server, browser, download, or Lighthouse run was started. This pass checks portfolio source and static output; it does not reverify the projects, authenticated workflows, devices, browser visuals, accessibility, performance, print pagination, remote CI, or hosting. The prohibited checkout was not opened or used. No dependencies or media changed. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 26: Current-page navigation polish, 2026-10-30
+
+All ten deep items are already recorded as done. Limited this pass to a small navigation improvement. The Resume navigation link now keeps its accent color and underline on the resume page, using its existing `aria-current="page"` attribute. Hover and keyboard focus retain the same underline. No content, data, media, dependencies, or JavaScript changed.
+
+Re-read facts.md, the untested triage, verified-projects.md, and the completion records in these pass notes. Reconciled experience.json and the shared home/resume experience component, plus the home and resume summaries, workflow, education, skills, and languages, against facts.md. No corrections were needed. Approval flags, neutral client fallback, team/solo attribution, and explicit demo/pilot and not-production wording remain correct. The later eight-project content lock still supersedes the older verified-project list.
+
+Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Its link and generated-output checks passed across 254 local references and 11 HTML pages.
+- `npm test` passed all 12 tests with no skips. A temporary inline Node check confirmed that only the resume page marks Resume as current and that the compiled accent and underline rules appear in all 11 HTML pages. `git diff --check` passed.
+
+No preview or development server, browser, download, or Lighthouse run was started. Browser appearance and assistive technology behavior were not rechecked. This pass does not reverify project behavior, accessibility conformance, performance, print pagination, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
