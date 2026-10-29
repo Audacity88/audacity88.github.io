@@ -357,5 +357,47 @@
         "/Users/dan/portfolio-triage/repos/Tono4/PORTFOLIO_REPORT.md, tech stack, build, run, and test results; models and conversion; remaining blockers."
       ]
     }
+  },
+  {
+    "id": "model-picker",
+    "title": "Model Picker",
+    "status": "draft",
+    "hidden": true,
+    "oneLiner": "",
+    "description": "",
+    "verification": "",
+    "verificationDate": null,
+    "verificationNote": "",
+    "caseStudy": null,
+    "tech": [],
+    "github": null,
+    "demo": null,
+    "demoLabel": null,
+    "statusLabel": null,
+    "featured": null,
+    "order": null,
+    "images": [],
+    "notes": ""
+  },
+  {
+    "id": "witness-lexington",
+    "title": "Witness: Lexington",
+    "status": "draft",
+    "hidden": true,
+    "oneLiner": "",
+    "description": "",
+    "verification": "",
+    "verificationDate": null,
+    "verificationNote": "",
+    "caseStudy": null,
+    "tech": [],
+    "github": null,
+    "demo": null,
+    "demoLabel": null,
+    "statusLabel": null,
+    "featured": null,
+    "order": null,
+    "images": [],
+    "notes": ""
   }
 ]

@@ -10,12 +10,57 @@
     "notes": "Approved by facts.md on Oct 29, 2026. Render only the label, linked to mergedList. Keep the exact value internal."
   },
   "pullRequests": [
-    { "number": 10801, "title": "Reload notification-lag sessions without cancelling running turns", "area": "Session recovery", "mergedAt": "2026-09-28", "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10801" },
-    { "number": 11725, "title": "Deliver mid-turn steering at the next step", "area": "Runtime", "mergedAt": "2026-10-17", "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11725" },
-    { "number": 11617, "title": "Close the steering channel before a turn finishes", "area": "Agent reliability", "mergedAt": "2026-10-11", "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11617" },
-    { "number": 11755, "title": "Patch Wasmtime and Rustls security advisories", "area": "Dependencies", "mergedAt": "2026-10-15", "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11755" },
-    { "number": 11692, "title": "Show cost threshold warnings in ZeroCode", "area": "Cost reporting", "mergedAt": "2026-10-18", "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11692" },
-    { "number": 11609, "title": "Keep failed-turn status across reconnect and lag reload", "area": "Session recovery", "mergedAt": "2026-10-11", "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11609" },
-    { "number": 11619, "title": "Requeue a queued message the daemon refused as busy", "area": "Message delivery", "mergedAt": "2026-10-14", "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11619" }
+    {
+      "number": 10801,
+      "title": "Reload notification-lag sessions without cancelling running turns",
+      "area": "Session recovery",
+      "mergedAt": "2026-09-28",
+      "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10801",
+      "summary": "When ZeroCode's notification stream overflowed, recovery cancelled running turns, including background sessions. The fix reattaches to the client's own running turns, keeps displayed output, and reloads the saved transcript again when the turn ends. Reconnect and resume paths retain their existing cancellation behavior."
+    },
+    {
+      "number": 11725,
+      "title": "Deliver mid-turn steering at the next step",
+      "area": "Runtime",
+      "mergedAt": "2026-10-17",
+      "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11725",
+      "summary": "Follow-up messages sent while an agent was using tools waited until its final answer, and cancellation could lose them. The fix pauses the tool loop when steering is waiting and delivers the message at the next step within the same turn. A long tool call still runs to completion before the agent reads the message."
+    },
+    {
+      "number": 11617,
+      "title": "Close the steering channel before a turn finishes",
+      "area": "Agent reliability",
+      "mergedAt": "2026-10-11",
+      "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11617",
+      "summary": "A finishing turn could acknowledge a follow-up message and then exit without reading it. The fix closes the steering channel before the turn finishes and checks once more for messages already accepted. Later messages receive a closed-channel response so the client can send them as ordinary prompts."
+    },
+    {
+      "number": 11755,
+      "title": "Patch Wasmtime and Rustls security advisories",
+      "area": "Dependencies",
+      "mergedAt": "2026-10-15",
+      "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11755"
+    },
+    {
+      "number": 11692,
+      "title": "Show cost threshold warnings in ZeroCode",
+      "area": "Cost reporting",
+      "mergedAt": "2026-10-18",
+      "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11692"
+    },
+    {
+      "number": 11609,
+      "title": "Keep failed-turn status across reconnect and lag reload",
+      "area": "Session recovery",
+      "mergedAt": "2026-10-11",
+      "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11609"
+    },
+    {
+      "number": 11619,
+      "title": "Requeue a queued message the daemon refused as busy",
+      "area": "Message delivery",
+      "mergedAt": "2026-10-14",
+      "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11619"
+    }
   ]
 }

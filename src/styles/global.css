@@ -192,6 +192,7 @@
   .pr-card h3 > span { color: var(--accent-text); }
   .pr-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1rem; font-size: .65rem; font-family: var(--mono); color: var(--muted); margin-bottom: .65rem; }
   .pr-card h3 { font-size: 1.05rem; line-height: 1.45; }
+  .pr-summary { max-width: 62ch; margin-top: .75rem; color: var(--muted); font-size: .9rem; line-height: 1.65; }
   .pr-card time { display: block; font-family: var(--mono); font-size: .65rem; color: var(--muted); margin-top: .7rem; }
   .timeline { list-style: none; padding: 0; }
   .timeline > li { position: relative; display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 3rem; padding-block: 2.25rem; border-top: 1px solid var(--line); }

@@ -73,6 +73,7 @@ const base = import.meta.env.BASE_URL;
               <a class="pr-card" href={pr.url}>
                 <span class="pr-meta">{pr.area}<span>#{pr.number} · Merged</span></span>
                 <h3>{pr.title}<span aria-hidden="true"> ↗</span></h3>
+                {pr.summary && <p class="pr-summary">{pr.summary}</p>}
                 <time datetime={pr.mergedAt}>{new Date(`${pr.mergedAt}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time>
               </a>
             </li>

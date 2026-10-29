@@ -1,6 +1,9 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, join, relative } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { assertHiddenProjectsAbsent } from './check-hidden-projects.mjs';
+
+const projectData = JSON.parse(readFileSync(new URL('../src/data/projects.json', import.meta.url), 'utf8'));
 
 const decode = (text) => text.replace(/&(#x[\da-f]+|#\d+|amp|quot|apos|lt|gt);/gi, (_, entity) => {
   if (entity.startsWith('#')) return String.fromCodePoint(parseInt(entity.slice(entity[1].toLowerCase() === 'x' ? 2 : 1), entity[1].toLowerCase() === 'x' ? 16 : 10));
@@ -20,6 +23,7 @@ function tags(html) {
 
 export function checkSite(directory = 'dist') {
   const root = resolve(directory);
+  assertHiddenProjectsAbsent(root, projectData);
   const pages = new Map();
   function walk(folder) {
     for (const entry of readdirSync(folder, { withFileTypes: true })) {

@@ -10,6 +10,7 @@ const usage = 'npm run project:verify -- <id> --demo <https-url> --verification 
 export function verifyProject(projects, id, options, date = new Date().toISOString().slice(0, 10)) {
   if (!Array.isArray(projects)) throw new Error('Projects must be an array.');
   if (projects.filter((project) => project.id === id).length !== 1) throw new Error(`Unknown or duplicate project ID: ${id}`);
+  if (projects.find((project) => project.id === id).hidden === true) throw new Error('Hidden projects cannot be verified.');
   if (typeof options.verification !== 'string' || !options.verification.trim()) throw new Error('--verification must describe checks you completed.');
   const demo = new URL(options.demo);
   if (demo.protocol !== 'https:' || demo.username || demo.password) throw new Error('Demo must be an HTTPS URL without credentials.');

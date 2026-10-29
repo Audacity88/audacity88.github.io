@@ -53,8 +53,16 @@ const projectSchema = z.object({
 });
 
 export type Project = z.infer<typeof projectSchema>;
-export const projects = z.array(projectSchema).parse(projectData).sort((a, b) => a.order - b.order);
-if (new Set(projects.map((project) => project.id)).size !== projects.length) {
+// Validate private placeholders separately. Public consumers receive only complete, visible records.
+const hiddenProjectSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  title: z.string().min(1),
+  status: z.literal('draft'),
+  hidden: z.literal(true),
+}).catchall(z.union([z.null(), z.literal(''), z.array(z.never()).length(0)]));
+z.array(hiddenProjectSchema).parse(projectData.filter((project) => project.hidden === true));
+export const projects = z.array(projectSchema).parse(projectData.filter((project) => project.hidden !== true)).sort((a, b) => a.order - b.order);
+if (new Set(projectData.map((project) => project.id)).size !== projectData.length) {
   throw new Error('Project IDs must be unique.');
 }
 
@@ -91,5 +99,6 @@ export const openSource = z.object({
     area: z.string(),
     mergedAt: z.string(),
     url: httpsUrl,
+    summary: z.string().min(1).optional(),
   })),
 }).parse(openSourceData);

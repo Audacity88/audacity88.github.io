@@ -213,3 +213,25 @@ Validation on Mac-mini.local, working directory /Users/natalie/Development/portf
 - QA captures and results remain only in /private/tmp/portfolio-qa/pass12/. The isolated browsers are closed. Stopped exactly preview PID 92691 and verified port 4340 was released. Browser launch and preview shutdown required sandbox escalation.
 
 The diagrams describe selected source paths, not verified runtime behavior. Project evidence remains Eyrie's October 29 report. Full-site visual, axe, Lighthouse, physical-device, and remote checks remain for their respective passes. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass 13: Hidden records and open-source explanations, 2026-10-30
+
+hidden placeholders added
+
+Added the two reserved draft records with `hidden: true` and empty or null content fields. The shared public project export excludes them before cards, static routes, sitemap entries, and page metadata are generated. The social card remains a static approved asset with no project-data input. The verification helper refuses hidden records. Added a generated-output guard to the build's link check, covering hidden titles, IDs, paths, HTML, sitemap, metadata, and serialized text. Tests require the exact two empty placeholders, preserve the six public projects in their approved order, reject content or visibility changes, and check the actual built output. Updated AGENTS.md and the editing guide to preserve this policy without repeating the reserved names outside their allowed files.
+
+deep item 3 done
+
+Added three short problem-and-fix explanations to the linked ZeroClaw cards in `opensource.json`. Read PRs #10801, #11725, and #11617 directly with `gh pr view <number> -R zeroclaw-labs/zeroclaw --json title,body,mergedAt,additions,deletions`. Their returned merge dates match the existing data. The copy explains notification-lag recovery without cancelling running turns, next-step steering delivery, and closing the late-message race. It preserves reconnect cancellation behavior, the long-tool-call limit, and the client's ordinary-prompt fallback. No adoption, user, or production metrics were added. The other PR cards and the approved linked total remain unchanged.
+
+Re-read facts.md, the untested triage, and verified-projects.md. Reconciled experience.json and all rendered experience copy. No experience corrections were needed. Employer and client approval flags, the neutral partner fallback, team and solo roles, and explicit demo/pilot and not-production wording remain correct. Existing public project content, verification evidence, links, and approved captures are unchanged.
+
+Validation on Mac-mini.local, working directory /Users/natalie/Development/portfolio:
+
+- `npm test` passed all ten tests, including malformed hidden-record fixtures, generated-output leak fixtures, verification-helper refusal, and the built-output exclusions.
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed with zero errors, warnings, or hints. Only the six public project detail pages were generated. The output guard and all 155 local-reference checks passed across eight HTML pages. `git diff --check` passed. No dependencies or media were added.
+- Ran `npm run preview -- --host 127.0.0.1 --port 4341`, listener PID 14074. Playwright with installed Chrome checked the updated home section at 360/768/1280px in light and dark, six combinations. All three explanations match their data and source links, with no horizontal overflow, clipped paragraphs, console errors, or runtime exceptions. Reviewed all six final viewport captures. An element-capture artifact was absent from normal viewport captures; the skip link's bounds remained above the viewport when unfocused.
+- Browser checks confirmed both hidden project URLs return 404 with no hidden content, six public cards remain, every experience summary and highlight is present, client placeholders are absent, and the approved linked total appears exactly once. Captures, the audit script, and results remain only in /private/tmp/portfolio-qa/pass13/, equivalent to /tmp/portfolio-qa/pass13/ on this host.
+- Closed the isolated browser, stopped exactly preview PID 14074, and confirmed port 4341 was released. Browser launch and preview shutdown required sandbox escalation.
+
+This pass verified the portfolio output and read merged PR descriptions; it did not rerun ZeroClaw or project tests. The full-site visual, axe, and Lighthouse rounds remain pending, starting with deep item 4. Existing authenticated-service, native-test, device, remote-CI, and hosting limits remain. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.

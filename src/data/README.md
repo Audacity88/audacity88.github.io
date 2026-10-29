@@ -26,7 +26,9 @@ Edit `projects.json`. The page sorts projects by ascending `order`. Each object 
 
 Keep projects `pending-verification` until the owning verification pass supplies evidence. Use `demo-down` with `demo: null` for unavailable demos. A successful HTTP response alone does not verify login or application behavior.
 
-Each project generates `/projects/<id>/` under the configured base path and appears in the sitemap. Cards link to those pages. Keep `verificationNote` consistent with the status and actual checks. Internal `notes` never appear on the page. No separate page file is needed when adding a project.
+Each visible project generates `/projects/<id>/` under the configured base path and appears in the sitemap. Cards link to those pages. Keep `verificationNote` consistent with the status and actual checks. Internal `notes` never appear on the page. No separate page file is needed when adding a project.
+
+The two reserved placeholders are exceptions to the public project schema. They have `hidden: true`, `status: draft`, and only an ID and title; all other content is empty or null. Keep them in this data file only. The shared public export excludes them before cards, routes, the sitemap, and page metadata are generated. The social-card generator uses a static approved asset and never reads project data. The verification helper refuses hidden entries. The build's link check also rejects hidden titles, IDs, and paths anywhere in generated text output.
 
 Source case studies only from the verified project list, the project's `PORTFOLIO_REPORT.md` and READMEs under `/Users/dan/portfolio-triage/`, or its public repository README. Record the source file and relevant sections in `caseStudy.sourceNotes`. Distinguish capabilities found in source from behavior that was actually checked. Preserve upstream attribution, known failures, and the original check date. The public verification section attributes these checks to Eyrie; editing a case study does not reverify the project.
 
@@ -36,7 +38,7 @@ Approved media lives in `public/images/projects/`. Each image has `src` for its 
 
 The current approved captures are Eyrie's four empty first-run screens and swift-ship's sign-in page. The current project checks date to Oct 29, 2026 and come from Eyrie's supplied report, not this portfolio build. Preserve known native-test failures for codex-skills, the frontend-only scope for ChatGenius, and swift-ship's unverified authenticated workflows. Keep Tono4 pending until its simulator build is checked.
 
-To swap a project, replace its entire object and preserve unique IDs and the intended order. Keep private and employer-owned projects out of this file.
+To swap a public project, replace its entire object and preserve unique IDs and the intended order. Keep private and employer-owned project content out of this file. Preserve the empty reserved placeholders.
 
 ### Record new project verification
 
@@ -46,7 +48,7 @@ After completing the project's actual checks, record the evidence with the local
 npm run project:verify -- tono4 --demo https://example.com/demo --verification "Describe the checks you completed" --note "Describe any remaining limits" --label "Build checked"
 ```
 
-Replace the example URL and evidence before running. `--verification` is required to prevent a status change without recorded evidence. The helper sets `status: verified`, the HTTPS demo URL, evidence summary, current date, public verification note, and an internal audit note. It rejects unknown IDs, unsafe URLs, and employer links before writing. Run `npm test` afterward to check all content exclusions. Other projects stay unchanged. The helper does not run builds, access the demo, or prove that the evidence is accurate.
+Replace the example URL and evidence before running. `--verification` is required to prevent a status change without recorded evidence. The helper sets `status: verified`, the HTTPS demo URL, evidence summary, current date, public verification note, and an internal audit note. It rejects unknown or hidden IDs, unsafe URLs, and employer links before writing. Run `npm test` afterward to check all content exclusions. Other projects stay unchanged. The helper does not run builds, access the demo, or prove that the evidence is accurate.
 
 Use `--demo-label "Live sign-in page"` for a sign-in-only link. The existing label is preserved if the demo URL is unchanged. For a local-only project, edit the evidence and status manually and keep `demo: null`. Run `npm test` and `npm run build`, then inspect the affected card and detail page. Append the checks and limits to `PASS_NOTES.md`.
 
@@ -60,7 +62,7 @@ Keep Superbuilders' role-level `needsDanOk: true`. Its employer name is shown as
 
 ## Update open-source work
 
-Edit `opensource.json` to update the selected merged PR cards and verification date. Keep PR numbers, URLs, dates, and claims tied to approved evidence.
+Edit `opensource.json` to update the selected merged PR cards and verification date. Keep PR numbers, URLs, dates, and claims tied to approved evidence. An optional `summary` adds a short problem-and-fix explanation to its linked card. Source it only from that merged PR, preserve relevant behavior limits, and use read-only `gh pr view <number> -R zeroclaw-labs/zeroclaw --json title,body,mergedAt,additions,deletions` to check the source. Do not infer adoption or production results from a merge.
 
 The `count` field has `display: true` and the approved label `750+ merged pull requests`, linked to the filtered upstream search. The build enforces that flag and label. Keep the exact `value` and notes internal. Do not render another total. This approval comes from the Oct 29 update in `facts.md`.
 

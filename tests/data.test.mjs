@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { assertHiddenProjectsAbsent } from '../scripts/check-hidden-projects.mjs';
 
 const directory = new URL('../src/data/', import.meta.url);
 const read = (name) => JSON.parse(readFileSync(new URL(`${name}.json`, directory), 'utf8'));
@@ -13,6 +17,27 @@ const texts = (value, label) => {
 const unique = (items, field) => assert.equal(new Set(items.map((item) => item[field])).size, items.length, `${field} must be unique`);
 const excludedText = /ctm-system|witness-lexington|picker/i;
 const excludedProjectText = /superbuilders|ctm-system|witness-lexington|picker/i;
+const reservedPlaceholders = new Map([
+  ['model-picker', 'Model Picker'],
+  ['witness-lexington', 'Witness: Lexington'],
+]);
+function checkPlaceholders(projects) {
+  for (const [id, title] of reservedPlaceholders) {
+    const matches = projects.filter((project) => project.id === id);
+    assert.equal(matches.length, 1, 'Each reserved placeholder must exist exactly once');
+    const project = matches[0];
+    assert.equal(project.hidden, true);
+    assert.equal(project.status, 'draft');
+    assert.equal(project.title, title);
+    for (const [field, value] of Object.entries(project)) {
+      if (['id', 'title', 'status', 'hidden'].includes(field)) continue;
+      assert.ok(value === null || value === '' || (Array.isArray(value) && value.length === 0), `Hidden ${field} must be empty or null`);
+    }
+  }
+  for (const project of projects) {
+    if (project.hidden === true) assert.ok(reservedPlaceholders.has(project.id), 'Only reserved placeholders may be hidden');
+  }
+}
 const date = (value) => {
   assert.match(value, /^\d{4}-\d{2}-\d{2}$/);
   assert.equal(new Date(value).toISOString().slice(0, 10), value);
@@ -56,7 +81,10 @@ test('source files and pass notes retain the content exclusions', () => {
         if (!ignored.has(entry.name)) inspect(new URL(`${entry.name}/`, directory));
       } else if (entry.isFile() && /\.(?:md|mjs|ts|json|astro|css|yml|yaml|svg|txt)$/.test(entry.name)
         && file.href !== import.meta.url && entry.name !== 'package-lock.json') {
-        assert.doesNotMatch(readFileSync(file, 'utf8'), excludedText, `Excluded content in ${file.pathname}`);
+        const content = file.href === new URL('projects.json', directory).href
+          ? JSON.stringify(read('projects').filter((project) => project.hidden !== true))
+          : readFileSync(file, 'utf8');
+        assert.doesNotMatch(content, excludedText, `Excluded content in ${file.pathname}`);
       }
     }
   }
@@ -64,9 +92,12 @@ test('source files and pass notes retain the content exclusions', () => {
 });
 
 test('projects have complete cards and detail pages with valid states and URLs', () => {
-  const projects = read('projects');
-  assert.ok(Array.isArray(projects) && projects.length);
-  unique(projects, 'id');
+  const allProjects = read('projects');
+  assert.ok(Array.isArray(allProjects) && allProjects.length);
+  unique(allProjects, 'id');
+  checkPlaceholders(allProjects);
+  const projects = allProjects.filter((project) => project.hidden !== true);
+  assert.deepEqual(projects.map((project) => project.id), ['eyrie', 'swift-ship', 'codex-video-vision', 'codex-skills', 'chatgenius', 'tono4']);
   unique(projects, 'order');
   for (const project of projects) {
     object(project);
@@ -103,6 +134,59 @@ test('projects have complete cards and detail pages with valid states and URLs',
       }
     }
   }
+});
+
+test('hidden placeholders reject content, visibility changes, and extra hidden projects', () => {
+  const projects = read('projects');
+  for (const change of [{ hidden: false }, { status: 'verified' }, { description: 'Unapproved claim' }, { github: 'https://example.com' }, { images: ['capture.png'] }, { caseStudy: {} }]) {
+    const changed = structuredClone(projects);
+    Object.assign(changed.find((project) => project.id === 'model-picker'), change);
+    assert.throws(() => checkPlaceholders(changed));
+  }
+  assert.throws(() => checkPlaceholders([...projects, { id: 'extra', hidden: true }]));
+  assert.throws(() => checkPlaceholders(projects.filter((project) => project.id !== 'witness-lexington')));
+});
+
+test('generated-output guard rejects hidden titles, IDs, metadata, and routes', (t) => {
+  const root = mkdtempSync(join(tmpdir(), 'portfolio-hidden-'));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const projects = read('projects');
+  for (const project of projects.filter((project) => project.hidden === true)) {
+    for (const [name, content] of [
+      ['index.html', `<h1>${project.title}</h1>`],
+      ['index.html', `<meta property="og:title" content="${project.title}">`],
+      ['index.html', `<a href="/projects/${project.id}/">Project</a>`],
+      ['sitemap.xml', `<loc>https://example.com/projects/${project.id}/</loc>`],
+    ]) {
+      const file = join(root, name);
+      writeFileSync(file, content);
+      assert.throws(() => assertHiddenProjectsAbsent(root, projects), /Hidden project/);
+      rmSync(file);
+    }
+    const route = join(root, project.id);
+    mkdirSync(route);
+    assert.throws(() => assertHiddenProjectsAbsent(root, projects), /Hidden project path/);
+    rmSync(route, { recursive: true });
+  }
+  writeFileSync(join(root, 'index.html'), '<h1>Selected work</h1>');
+  assert.doesNotThrow(() => assertHiddenProjectsAbsent(root, projects));
+});
+
+test('built HTML and other generated text contain no hidden project titles or IDs', {
+  skip: !existsSync(new URL('../dist/', import.meta.url)) && 'No build yet; every build also runs this guard through check:links',
+}, () => {
+  const root = fileURLToPath(new URL('../dist/', import.meta.url));
+  assertHiddenProjectsAbsent(root, read('projects'));
+  function inspect(folder) {
+    for (const entry of readdirSync(folder, { withFileTypes: true })) {
+      const path = join(folder, entry.name);
+      if (entry.isDirectory()) inspect(path);
+      else if (/\.(?:html|xml|json|webmanifest|svg|txt|js|css)$/i.test(entry.name)) {
+        assert.doesNotMatch(readFileSync(path, 'utf8'), excludedText, 'Excluded content in generated output');
+      }
+    }
+  }
+  inspect(root);
 });
 
 test('experience retains its required fields and approval safeguards', () => {
@@ -150,5 +234,6 @@ test('open-source data uses the approved total and matching upstream PR links', 
     text(pr.area, 'PR area');
     date(pr.mergedAt);
     assert.equal(pr.url, `${source.url}/pull/${pr.number}`);
+    if (pr.summary !== undefined) text(pr.summary, 'PR explanation');
   }
 });
