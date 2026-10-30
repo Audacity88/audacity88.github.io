@@ -26,7 +26,12 @@ const base = import.meta.env.BASE_URL;
           <svg viewBox="0 0 280 230" fill="none" focusable="false">
             <path class="signal-grid" d="M0 46H280M0 92H280M0 138H280M0 184H280M46 0V230M92 0V230M138 0V230M184 0V230M230 0V230" />
             <g class="signal-orbits"><ellipse cx="140" cy="115" rx="110" ry="42" transform="rotate(-35 140 115)" /><ellipse cx="140" cy="115" rx="110" ry="42" transform="rotate(35 140 115)" /><ellipse cx="140" cy="115" rx="42" ry="100" /></g>
-            <circle class="signal-center" cx="140" cy="115" r="10" /><circle class="signal-node" cx="221" cy="61" r="5" /><circle class="signal-node" cx="58" cy="62" r="5" /><circle class="signal-node" cx="140" cy="215" r="5" />
+            <circle class="signal-center" cx="140" cy="115" r="10" /><g class="signal-static"><circle class="signal-node" cx="221" cy="61" r="5" /><circle class="signal-node" cx="58" cy="62" r="5" /><circle class="signal-node" cx="140" cy="215" r="5" /></g>
+            <g class="signal-electrons">
+              <g transform="rotate(-35 140 115)"><g class="electron-x e1"><g class="electron-y e1"><circle class="signal-node" cx="140" cy="115" r="5" /></g></g></g>
+              <g transform="rotate(35 140 115)"><g class="electron-x e2"><g class="electron-y e2"><circle class="signal-node" cx="140" cy="115" r="5" /></g></g></g>
+              <g><g class="electron-x e3"><g class="electron-y e3"><circle class="signal-node" cx="140" cy="115" r="5" /></g></g></g>
+            </g>
           </svg>
         </div>
         <p class="eyebrow">What I work on</p>
