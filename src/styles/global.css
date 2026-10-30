@@ -132,6 +132,7 @@
   .signal-orbits { stroke: currentColor; stroke-width: 1; }
   .signal-center { fill: var(--accent); }
   .signal-node { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
+  .signal-electrons { display: none; }
   .hero-note .eyebrow { margin-bottom: .75rem; }
   .hero-note > p:not(.eyebrow) { font-size: 1.15rem; line-height: 1.5; letter-spacing: -.025em; margin-bottom: 1.75rem; }
   .focus-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: .75rem; border-top: 1px solid var(--line); }
@@ -240,6 +241,21 @@
     .hero-intro { animation: arrive 600ms ease both; }
     .hero-note { animation: arrive 700ms 100ms ease both; }
     @keyframes arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    /* Atom: each electron orbits its own ring. x and y are separate sine-eased
+       oscillations a quarter period apart, which traces the ellipse. Static
+       electrons are shown instead when motion is reduced. */
+    .signal-static { display: none; }
+    .signal-electrons { display: inline; }
+    .electron-x, .electron-y { animation: var(--axis) calc(var(--t) / 2) cubic-bezier(.37, 0, .63, 1) infinite alternate both; }
+    .electron-x { --axis: electron-x; animation-delay: var(--dx); }
+    .electron-y { --axis: electron-y; animation-delay: var(--dy); }
+    .e1 { --t: 7s; --rx: 110px; --ry: 42px; --dx: -3.5s; --dy: -1.75s; }
+    .e2 { --t: 11s; --rx: 110px; --ry: 42px; --dx: 0s; --dy: -8.25s; }
+    .e3 { --t: 9s; --rx: 42px; --ry: 100px; --dx: -6.75s; --dy: 0s; }
+    .signal-center { transform-box: fill-box; transform-origin: center; animation: nucleus-pulse 3.2s ease-in-out infinite alternate; }
+    @keyframes electron-x { from { transform: translateX(calc(var(--rx) * -1)); } to { transform: translateX(var(--rx)); } }
+    @keyframes electron-y { from { transform: translateY(calc(var(--ry) * -1)); } to { transform: translateY(var(--ry)); } }
+    @keyframes nucleus-pulse { from { transform: scale(1); } to { transform: scale(1.12); } }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
