@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.astro';
 import { openSource } from '../data/content';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <Layout title="Resume | Dan Gilles" description="Dan Gilles's resume. AI engineering, agent infrastructure, open-source contributions, research, and education.">
@@ -12,6 +13,7 @@ import { openSource } from '../data/content';
         <h1>Dan Gilles</h1>
         <p class="resume-role">AI engineer · Agent infrastructure · Developer tools</p>
       </div>
+      <a class="button primary" id="resume-pdf" href={`${base}resume.pdf`} download="Dan_Gilles_Resume.pdf">Download PDF <span aria-hidden="true">↓</span></a>
       <button type="button" id="print-resume" class="button secondary" hidden>Print / save PDF <span aria-hidden="true">↗</span></button>
       <ul class="resume-contact" aria-label="Contact and profiles">
         <li><a href="mailto:dangilles@gmail.com">dangilles@gmail.com</a></li>
@@ -93,7 +95,7 @@ import { openSource } from '../data/content';
   @media print {
     .resume { max-width: none; padding: 0; font-family: Arial, Helvetica, sans-serif; }
     .resume-heading { display: block; }
-    .resume-heading .eyebrow, #print-resume { display: none; }
+    .resume-heading .eyebrow, #print-resume, #resume-pdf { display: none; }
     .resume h1 { font-size: 25pt; }
     .resume-role { margin-top: 4pt; font-size: 10pt; }
     .resume-contact { display: flex; flex-direction: row; gap: 0 14pt; margin-top: 5pt; font-size: 8pt; }
