@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.astro';
+import TerminalFetch from '../components/TerminalFetch.astro';
 import { projects, openSource } from '../data/content';
 
 const base = import.meta.env.BASE_URL;
@@ -15,6 +16,7 @@ const base = import.meta.env.BASE_URL;
         <h1 id="hero-title">I build AI agents and <span>developer tools.</span></h1>
         <p class="hero-pitch">From an ambiguous brief to a working pilot.</p>
         <p class="hero-description">I work directly with the people who use the software. I also build agent infrastructure and contribute as a code owner to ZeroClaw, an open-source Rust agent runtime.</p>
+        <TerminalFetch />
         <div class="hero-actions">
           <a class="button primary" href="mailto:dangilles@gmail.com">Get in touch <span aria-hidden="true">↗</span></a>
           <a class="button secondary" href="https://github.com/Audacity88">GitHub <span aria-hidden="true">↗</span></a>

@@ -26,7 +26,22 @@
     --mono: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
     --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   }
-  :root[data-theme='dark'] {
+  :root[data-palette='light'] {
+    color-scheme: light;
+    --bg: #f6f5f1;
+    --surface: #fcfbf8;
+    --text: #202631;
+    --muted: #5e6570;
+    --line: #d6d8dc;
+    --accent: #354ed7;
+    --accent-text: #354ed7;
+    --on-accent: #ffffff;
+    --tint: #eeeffb;
+    --subtle: #eeede9;
+    --focus: #354ed7;
+    --shadow: 0 14px 36px -24px #1c284340;
+  }
+  :root[data-palette='dark'] {
     color-scheme: dark;
     --bg: #14171e;
     --surface: #1b1f28;
@@ -41,8 +56,38 @@
     --focus: #a7b3ff;
     --shadow: 0 14px 36px -24px #000000a0;
   }
+  :root[data-palette='mono'] {
+    color-scheme: dark;
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --text: #f0f0f0;
+    --muted: #909090;
+    --line: #2a2a2a;
+    --accent: #ffffff;
+    --accent-text: #ffffff;
+    --on-accent: #000000;
+    --tint: #1a1a1a;
+    --subtle: #101010;
+    --focus: #ffffff;
+    --shadow: 0 14px 36px -24px #000000d0;
+  }
+  :root[data-palette='ocean'] {
+    color-scheme: dark;
+    --bg: #0d1117;
+    --surface: #161b22;
+    --text: #c9d1d9;
+    --muted: #8b949e;
+    --line: #30363d;
+    --accent: #58a6ff;
+    --accent-text: #58a6ff;
+    --on-accent: #0d1117;
+    --tint: #1c2128;
+    --subtle: #161b22;
+    --focus: #58a6ff;
+    --shadow: 0 14px 36px -24px #00000080;
+  }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) {
+    :root:not([data-palette='light']) {
       color-scheme: dark;
       --bg: #14171e;
       --surface: #1b1f28;
@@ -102,6 +147,8 @@
   .site-footer a { display: inline-flex; align-items: center; min-height: 44px; gap: .4rem; text-decoration: none; }
   .site-footer a:is(:hover, :focus-visible) { text-decoration: underline; }
   .site-footer .footer-name { gap: 0; }
+  .command-hint { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--mono); font-size: .7rem; }
+  kbd { display: inline-flex; align-items: center; justify-content: center; min-width: 1.5rem; height: 1.5rem; padding: 0 .4rem; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; font-family: var(--mono); font-size: .65rem; color: var(--text); box-shadow: 0 1px 2px rgba(0, 0, 0, .1); }
   .not-found .section { border-top: 0; }
 }
 
@@ -110,9 +157,12 @@
   .wordmark:is(:hover, :focus-visible) { text-decoration: underline; }
   .wordmark span, .footer-name span { color: var(--accent-text); }
   /* Reserve space before the script reveals the control, including without JS. */
-  .theme-control { flex: 0 0 86px; width: 86px; height: 44px; }
-  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; background: var(--surface); border: 1px solid var(--line); color: var(--muted); padding: .45rem .75rem; height: 44px; width: 86px; font-family: var(--mono); font-size: .68rem; white-space: nowrap; border-radius: 999px; }
-  .theme-toggle:is(:hover, :focus-visible) { color: var(--accent-text); border-color: var(--accent); }
+  .theme-control,
+  .palette-control { flex: 0 0 86px; width: 86px; height: 44px; }
+  .theme-toggle,
+  .palette-toggle { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; background: var(--surface); border: 1px solid var(--line); color: var(--muted); padding: .45rem .75rem; height: 44px; width: 86px; font-family: var(--mono); font-size: .68rem; white-space: nowrap; border-radius: 999px; }
+  .theme-toggle:is(:hover, :focus-visible),
+  .palette-toggle:is(:hover, :focus-visible) { color: var(--accent-text); border-color: var(--accent); }
   .eyebrow { font-family: var(--mono); font-size: .7rem; letter-spacing: .085em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
   .hero .eyebrow { display: flex; align-items: center; gap: .65rem; }
   .accent-mark { width: 7px; height: 7px; background: var(--accent); box-shadow: 0 0 0 4px var(--tint); border-radius: 50%; }

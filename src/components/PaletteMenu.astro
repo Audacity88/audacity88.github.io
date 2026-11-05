@@ -1,0 +1,261 @@
+---
+// Named palette picker with persisted preference
+---
+
+<div class="palette-control">
+  <button type="button" class="palette-toggle" id="palette-toggle" hidden>
+    <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false">
+      <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.4" />
+      <circle cx="10" cy="6" r="1.5" fill="currentColor" />
+      <circle cx="14" cy="10" r="1.5" fill="currentColor" />
+      <circle cx="10" cy="14" r="1.5" fill="currentColor" />
+      <circle cx="6" cy="10" r="1.5" fill="currentColor" />
+    </svg>
+    <span id="palette-label">Auto</span>
+  </button>
+  <div class="palette-menu" id="palette-menu" hidden>
+    <div class="palette-menu-header">:theme</div>
+    <button type="button" class="palette-option" data-palette="system">
+      <span class="palette-name">Auto</span>
+      <span class="palette-desc">System preference</span>
+    </button>
+    <button type="button" class="palette-option" data-palette="light">
+      <span class="palette-name">Day</span>
+      <span class="palette-desc">Light neutral</span>
+    </button>
+    <button type="button" class="palette-option" data-palette="dark">
+      <span class="palette-name">Night</span>
+      <span class="palette-desc">Dark neutral</span>
+    </button>
+    <button type="button" class="palette-option" data-palette="mono">
+      <span class="palette-name">Mono</span>
+      <span class="palette-desc">High contrast</span>
+    </button>
+    <button type="button" class="palette-option" data-palette="ocean">
+      <span class="palette-name">Ocean</span>
+      <span class="palette-desc">Blue depths</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  type Palette = 'system' | 'light' | 'dark' | 'mono' | 'ocean';
+  
+  const button = document.querySelector<HTMLButtonElement>('#palette-toggle');
+  const label = document.querySelector<HTMLElement>('#palette-label');
+  const menu = document.querySelector<HTMLElement>('#palette-menu');
+  const options = document.querySelectorAll<HTMLButtonElement>('.palette-option');
+  
+  const paletteNames: Record<Palette, string> = {
+    system: 'Auto',
+    light: 'Day',
+    dark: 'Night',
+    mono: 'Mono',
+    ocean: 'Ocean',
+  };
+  
+  // Restore saved palette
+  const initialPalette = document.documentElement.dataset.palette;
+  let palette: Palette = (initialPalette && Object.keys(paletteNames).includes(initialPalette))
+    ? initialPalette as Palette
+    : 'system';
+  
+  function applyPalette(p: Palette) {
+    if (p === 'system') {
+      delete document.documentElement.dataset.palette;
+    } else {
+      document.documentElement.dataset.palette = p;
+    }
+    
+    if (label) {
+      label.textContent = paletteNames[p];
+    }
+    
+    // Update active state
+    options.forEach((opt) => {
+      if (opt.dataset.palette === p) {
+        opt.setAttribute('aria-pressed', 'true');
+      } else {
+        opt.removeAttribute('aria-pressed');
+      }
+    });
+  }
+  
+  function savePalette(p: Palette) {
+    try {
+      if (p === 'system') {
+        localStorage.removeItem('portfolio-palette');
+      } else {
+        localStorage.setItem('portfolio-palette', p);
+      }
+    } catch {
+      // Storage unavailable
+    }
+  }
+  
+  function toggleMenu() {
+    const isOpen = menu?.getAttribute('hidden') === null;
+    if (isOpen) {
+      menu?.setAttribute('hidden', '');
+    } else {
+      menu?.removeAttribute('hidden');
+    }
+  }
+  
+  function closeMenu() {
+    menu?.setAttribute('hidden', '');
+  }
+  
+  // Initialize
+  applyPalette(palette);
+  
+  if (button) {
+    button.hidden = false;
+    button.setAttribute('aria-label', 'Choose color palette');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', 'palette-menu');
+    
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+      button.setAttribute('aria-expanded', menu?.getAttribute('hidden') === null ? 'true' : 'false');
+    });
+  }
+  
+  options.forEach((option) => {
+    option.addEventListener('click', () => {
+      const newPalette = option.dataset.palette as Palette;
+      palette = newPalette;
+      applyPalette(newPalette);
+      savePalette(newPalette);
+      closeMenu();
+      if (button) {
+        button.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!button?.contains(e.target as Node) && !menu?.contains(e.target as Node)) {
+      closeMenu();
+      if (button) {
+        button.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+  
+  // Close menu on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.getAttribute('hidden') === null) {
+      closeMenu();
+      if (button) {
+        button.setAttribute('aria-expanded', 'false');
+        button.focus();
+      }
+    }
+  });
+</script>
+
+<style>
+  .palette-control {
+    position: relative;
+    flex: 0 0 86px;
+    width: 86px;
+    height: 44px;
+  }
+  
+  .palette-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    padding: 0.45rem 0.75rem;
+    height: 44px;
+    width: 86px;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    white-space: nowrap;
+    border-radius: 999px;
+  }
+  
+  .palette-toggle:is(:hover, :focus-visible) {
+    color: var(--accent-text);
+    border-color: var(--accent);
+  }
+  
+  .palette-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 200px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    overflow: hidden;
+  }
+  
+  .palette-menu-header {
+    padding: 0.65rem 1rem;
+    background: var(--subtle);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent-text);
+  }
+  
+  .palette-option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+  
+  .palette-option:first-of-type {
+    border-top: 0;
+  }
+  
+  .palette-option:hover {
+    background: var(--tint);
+  }
+  
+  .palette-option[aria-pressed='true'] {
+    background: var(--tint);
+    border-top-color: var(--line);
+  }
+  
+  .palette-option[aria-pressed='true'] .palette-name {
+    color: var(--accent-text);
+  }
+  
+  .palette-name {
+    font-size: 0.85rem;
+    font-weight: 550;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+  
+  .palette-desc {
+    font-size: 0.7rem;
+    font-family: var(--mono);
+    color: var(--muted);
+  }
+  
+  @media (max-width: 760px) {
+    .palette-menu {
+      right: -1rem;
+    }
+  }
+</style>

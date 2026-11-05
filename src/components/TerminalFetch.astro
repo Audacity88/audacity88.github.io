@@ -1,0 +1,163 @@
+---
+// Terminal whoami-style info strip with live GitHub stats
+---
+
+<div class="terminal-fetch" id="terminal-fetch">
+  <div class="terminal-header">
+    <span class="terminal-prompt">~</span>
+    <span class="terminal-command">whoami</span>
+  </div>
+  <div class="terminal-body">
+    <div class="fetch-row">
+      <span class="fetch-label">user</span>
+      <span class="fetch-value">Dan Gilles</span>
+    </div>
+    <div class="fetch-row">
+      <span class="fetch-label">role</span>
+      <span class="fetch-value">AI engineer</span>
+    </div>
+    <div class="fetch-row">
+      <span class="fetch-label">building</span>
+      <span class="fetch-value"><a href="https://github.com/EyrieCommander/eyrie">Eyrie</a></span>
+    </div>
+    <div class="fetch-row">
+      <span class="fetch-label">contributing</span>
+      <span class="fetch-value"><a href="https://github.com/ZeroClaw/zeroclaw">ZeroClaw</a></span>
+    </div>
+    <div class="fetch-row fetch-stats">
+      <span class="fetch-label">github</span>
+      <span class="fetch-value" id="github-stats">
+        <span class="stat-loading">fetching stats...</span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const username = 'Audacity88';
+  const statsEl = document.getElementById('github-stats');
+  
+  async function fetchGitHubStats() {
+    try {
+      const response = await fetch(`https://api.github.com/users/${username}`, {
+        headers: { 'Accept': 'application/vnd.github.v3+json' }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Rate limited or API error');
+      }
+      
+      const data = await response.json();
+      
+      if (statsEl) {
+        statsEl.innerHTML = `
+          <span class="stat-item">${data.public_repos || 0} repos</span>
+          <span class="stat-sep">·</span>
+          <span class="stat-item">${data.followers || 0} followers</span>
+        `;
+      }
+    } catch (error) {
+      // Fallback to static values if rate-limited
+      if (statsEl) {
+        statsEl.innerHTML = `
+          <span class="stat-item">45+ repos</span>
+          <span class="stat-sep">·</span>
+          <span class="stat-item">active</span>
+        `;
+      }
+    }
+  }
+  
+  // Fetch on load
+  fetchGitHubStats();
+</script>
+
+<style>
+  .terminal-fetch {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  
+  .terminal-header {
+    background: var(--subtle);
+    border-bottom: 1px solid var(--line);
+    padding: 0.5rem 0.85rem;
+    color: var(--muted);
+  }
+  
+  .terminal-prompt {
+    color: var(--accent-text);
+    margin-right: 0.5rem;
+  }
+  
+  .terminal-command {
+    color: var(--text);
+  }
+  
+  .terminal-body {
+    padding: 0.85rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+  
+  .fetch-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1rem;
+  }
+  
+  .fetch-label {
+    color: var(--accent-text);
+    text-align: right;
+  }
+  
+  .fetch-value {
+    color: var(--text);
+  }
+  
+  .fetch-value a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+  
+  .fetch-value a:hover {
+    color: var(--accent-text);
+    border-bottom-color: var(--accent);
+  }
+  
+  .fetch-stats .fetch-value {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .stat-loading {
+    color: var(--muted);
+    font-style: italic;
+  }
+  
+  .stat-item {
+    color: var(--text);
+  }
+  
+  .stat-sep {
+    color: var(--muted);
+  }
+  
+  @media (max-width: 760px) {
+    .terminal-fetch {
+      font-size: 0.68rem;
+    }
+    
+    .fetch-row {
+      grid-template-columns: 80px 1fr;
+      gap: 0.75rem;
+    }
+  }
+</style>
