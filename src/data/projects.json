@@ -22,14 +22,14 @@
     "featured": true,
     "images": [
       {
-        "src": "/images/projects/eyrie-commander-finishing.png",
+        "src": "/images/projects/eyrie-commander-answer.png",
         "width": 1280,
         "height": 800,
-        "alt": "Eyrie commander chat finishing a Model Picker answer with model recommendations and reasoning.",
-        "caption": "Commander finishing a Model Picker answer in chat.",
+        "alt": "Eyrie commander chat showing a complete Model Picker answer with rendered markdown, model recommendations, and reasoning.",
+        "caption": "Commander with rendered Model Picker answer.",
         "sources": [
           {
-            "src": "/images/projects/eyrie-commander-finishing.png",
+            "src": "/images/projects/eyrie-commander-answer.png",
             "width": 1280
           }
         ]
@@ -61,14 +61,14 @@
         ]
       },
       {
-        "src": "/images/projects/eyrie-picker-result.png",
+        "src": "/images/projects/eyrie-picker-ranking.png",
         "width": 1280,
         "height": 800,
-        "alt": "Model Picker result card showing recommendation with model comparisons and reasoning.",
-        "caption": "Model Picker result card with recommendation.",
+        "alt": "Model Picker ranking view showing ranked model cards with evidence and scoring details.",
+        "caption": "Model Picker ranking with evidence cards.",
         "sources": [
           {
-            "src": "/images/projects/eyrie-picker-result.png",
+            "src": "/images/projects/eyrie-picker-ranking.png",
             "width": 1280
           }
         ]
