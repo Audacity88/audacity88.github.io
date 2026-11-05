@@ -61,14 +61,14 @@
         ]
       },
       {
-        "src": "/images/projects/eyrie-picker-ranking.jpg",
+        "src": "/images/projects/eyrie-picker-result.png",
         "width": 1280,
         "height": 800,
-        "alt": "Model Picker ranking view showing model comparison with evidence and scoring details.",
-        "caption": "Model Picker ranking and evidence view.",
+        "alt": "Model Picker result card showing recommendation with model comparisons and reasoning.",
+        "caption": "Model Picker result card with recommendation.",
         "sources": [
           {
-            "src": "/images/projects/eyrie-picker-ranking.jpg",
+            "src": "/images/projects/eyrie-picker-result.png",
             "width": 1280
           }
         ]
