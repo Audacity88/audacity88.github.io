@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Offers | Dan Gilles" description="Services and tools Dan Gilles can set up for you.">
+  <main id="main" class="container" tabindex="-1">
+    <section class="section" aria-labelledby="offers-title">
+      <p class="eyebrow">Offers</p>
+      <h1 id="offers-title">What I can set up for you.</h1>
+    </section>
+
+    <section class="section offers-list" aria-label="Available services">
+      <article class="offer-item">
+        <h2>AI phone-line setup</h2>
+        <p class="offer-price">$500 one-time</p>
+        <p>Setup and handover of an AI phone assistant on a dedicated number, configured around your call-handling needs, with instructions for changing its behavior. Not a SaaS subscription.</p>
+        <ul>
+          <li>Answers calls on a dedicated number</li>
+          <li>Configured to handle your specific call-handling workflow</li>
+          <li>Offers your services the way you want them offered</li>
+          <li>Screens unwanted calls</li>
+          <li>Takes messages and provides call summaries</li>
+          <li>Includes instructions for changing its behavior</li>
+        </ul>
+        <p class="offer-note">Third-party phone, calling, hosting and AI usage costs are separate. Calendar booking and texting are subject to verified integration scope.</p>
+        <p>Good for founders, consultants, and small teams who miss calls or lose time to sales pitches.</p>
+        <p class="offer-proof">Proof: Dan runs this line himself. Demo: call <a href="tel:+18722594604">+1 (872) 259-4604</a> and say hi.</p>
+        <p class="offer-cta">Get started: <a href="mailto:dan@dangilles.dev">dan@dangilles.dev</a> (or call the demo number)</p>
+      </article>
+
+      <article class="offer-item">
+        <h2>Grok Bot assistant setup</h2>
+        <p class="offer-price">Price on request</p>
+        <p>One session to set up a personal AI assistant with accounts, routines, and approvals. A recent engagement was about five hours hands-on.</p>
+        <p class="offer-cta">Get in touch: <a href="mailto:dan@dangilles.dev">dan@dangilles.dev</a></p>
+      </article>
+
+      <article class="offer-item coming-soon">
+        <h2>Self-building bot fleet <span class="coming-soon-badge">Coming soon</span></h2>
+        <p>A self-building bot fleet for one goal. Hebrew tutor as the first demo, with kids' and adults' versions.</p>
+        <p class="offer-note">Not for sale yet.</p>
+      </article>
+    </section>
+
+    <section class="section contact-cta" aria-labelledby="offers-contact-title">
+      <h2 id="offers-contact-title">Ready to get started?</h2>
+      <p>Questions or ready to set something up?</p>
+      <a class="contact-email" href="mailto:dan@dangilles.dev">dan@dangilles.dev <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .offers-list {
+    max-width: 48rem;
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .offer-item {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .offer-item:first-child {
+    padding-top: 0;
+  }
+
+  .offer-item:last-child {
+    border-bottom: none;
+  }
+
+  .offer-item h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .offer-price {
+    font-size: 1.1rem;
+    font-weight: 550;
+    color: var(--accent-text);
+    margin-bottom: 1rem;
+  }
+
+  .offer-item p {
+    margin: 0.75rem 0;
+    line-height: 1.6;
+  }
+
+  .offer-item ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .offer-item li {
+    margin: 0.4rem 0;
+  }
+
+  .offer-proof {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-top: 1.25rem;
+  }
+
+  .offer-cta {
+    margin-top: 1.25rem;
+    font-weight: 500;
+  }
+
+  .offer-note {
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 1rem;
+  }
+
+  .coming-soon {
+    opacity: 0.75;
+  }
+
+  .coming-soon-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 0.25rem 0.6rem;
+    background: var(--subtle);
+    border-radius: 3px;
+  }
+
+  .contact-cta {
+    max-width: 44rem;
+    text-align: left;
+  }
+
+  .contact-cta h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-cta p {
+    margin-bottom: 1.25rem;
+    color: var(--muted);
+  }
+
+  .contact-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.35rem;
+    font-weight: 550;
+    text-decoration: none;
+    color: var(--accent-text);
+    transition: transform 0.15s;
+  }
+
+  .contact-email:hover {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .offers-list {
+      max-width: 100%;
+    }
+
+    .offer-item h2 {
+      font-size: 1.35rem;
+    }
+
+    .offer-price {
+      font-size: 1rem;
+    }
+
+    .contact-email {
+      font-size: 1.15rem;
+    }
+  }
+</style>
