@@ -22,116 +22,94 @@
     "featured": true,
     "images": [
       {
-        "src": "/images/projects/eyrie-mission-control-1440.webp",
-        "width": 1440,
-        "height": 900,
-        "alt": "Eyrie mission control with zero active projects, no running agents, an empty timeline, and a commander setup panel.",
-        "caption": "Mission control, first run. No projects or agents running.",
+        "src": "/images/projects/eyrie-commander-finishing.png",
+        "width": 1280,
+        "height": 800,
+        "alt": "Eyrie commander chat finishing a Model Picker answer with model recommendations and reasoning.",
+        "caption": "Commander finishing a Model Picker answer in chat.",
         "sources": [
           {
-            "src": "/images/projects/eyrie-mission-control-360.webp",
-            "width": 360
-          },
+            "src": "/images/projects/eyrie-commander-finishing.png",
+            "width": 1280
+          }
+        ]
+      },
+      {
+        "src": "/images/projects/eyrie-mission-populated.jpg",
+        "width": 1440,
+        "height": 900,
+        "alt": "Eyrie Mission Control dashboard showing populated project activity with active agents and timeline.",
+        "caption": "Populated Mission Control with project activity.",
+        "sources": [
           {
-            "src": "/images/projects/eyrie-mission-control-720.webp",
-            "width": 720
-          },
-          {
-            "src": "/images/projects/eyrie-mission-control-960.webp",
-            "width": 960
-          },
-          {
-            "src": "/images/projects/eyrie-mission-control-1440.webp",
+            "src": "/images/projects/eyrie-mission-populated.jpg",
             "width": 1440
           }
         ]
       },
       {
-        "src": "/images/projects/eyrie-home-1440.webp",
-        "width": 1440,
-        "height": 900,
-        "alt": "Eyrie setup page with commander, frameworks, and projects steps, plus an empty API key field.",
-        "caption": "Home, first run. Commander setup awaits an API key.",
+        "src": "/images/projects/eyrie-agents-hierarchy.png",
+        "width": 1920,
+        "height": 1200,
+        "alt": "Eyrie agents hierarchy page showing commander, captains, and talon roster with a running captain and picker reply.",
+        "caption": "Agents hierarchy with running captain and picker reply.",
         "sources": [
           {
-            "src": "/images/projects/eyrie-home-360.webp",
-            "width": 360
-          },
-          {
-            "src": "/images/projects/eyrie-home-720.webp",
-            "width": 720
-          },
-          {
-            "src": "/images/projects/eyrie-home-960.webp",
-            "width": 960
-          },
-          {
-            "src": "/images/projects/eyrie-home-1440.webp",
-            "width": 1440
+            "src": "/images/projects/eyrie-agents-hierarchy.png",
+            "width": 1920
           }
         ]
       },
       {
-        "src": "/images/projects/eyrie-frameworks-1440.webp",
-        "width": 1440,
-        "height": 900,
-        "alt": "Eyrie framework catalog showing ZeroClaw, OpenClaw, Hermes Agent, PicoClaw, and Codex App Server install cards.",
-        "caption": "Framework catalog, first run. Frameworks are not installed.",
+        "src": "/images/projects/eyrie-picker-ranking.jpg",
+        "width": 1280,
+        "height": 800,
+        "alt": "Model Picker ranking view showing model comparison with evidence and scoring details.",
+        "caption": "Model Picker ranking and evidence view.",
         "sources": [
           {
-            "src": "/images/projects/eyrie-frameworks-360.webp",
-            "width": 360
-          },
-          {
-            "src": "/images/projects/eyrie-frameworks-720.webp",
-            "width": 720
-          },
-          {
-            "src": "/images/projects/eyrie-frameworks-960.webp",
-            "width": 960
-          },
-          {
-            "src": "/images/projects/eyrie-frameworks-1440.webp",
-            "width": 1440
+            "src": "/images/projects/eyrie-picker-ranking.jpg",
+            "width": 1280
           }
         ]
       },
       {
-        "src": "/images/projects/eyrie-personas-1440.webp",
-        "width": 1440,
-        "height": 900,
-        "alt": "Eyrie persona catalog with cards including Life Coach, Executive Strategist, and Marketing Lead, with none installed.",
-        "caption": "Persona catalog, first run. No personas installed.",
+        "src": "/images/projects/eyrie-command-room.png",
+        "width": 2880,
+        "height": 1800,
+        "alt": "Eyrie command room with mesh diagram, approval boundary visualization, and project controls.",
+        "caption": "Command room with mesh diagram and approval boundary.",
         "sources": [
           {
-            "src": "/images/projects/eyrie-personas-360.webp",
-            "width": 360
-          },
+            "src": "/images/projects/eyrie-command-room.png",
+            "width": 2880
+          }
+        ]
+      },
+      {
+        "src": "/images/projects/eyrie-frameworks-populated.png",
+        "width": 2880,
+        "height": 1800,
+        "alt": "Eyrie frameworks page showing ZeroClaw, OpenClaw, Hermes, PicoClaw, and Codex with installation and comparison details.",
+        "caption": "Frameworks catalog showing available agent runtimes.",
+        "sources": [
           {
-            "src": "/images/projects/eyrie-personas-720.webp",
-            "width": 720
-          },
-          {
-            "src": "/images/projects/eyrie-personas-960.webp",
-            "width": 960
-          },
-          {
-            "src": "/images/projects/eyrie-personas-1440.webp",
-            "width": 1440
+            "src": "/images/projects/eyrie-frameworks-populated.png",
+            "width": 2880
           }
         ]
       }
     ],
     "verification": "Build, go test, go vet, and 7 web tests pass.",
-    "verificationNote": "Eyrie checked the build, go test, go vet, and 7 web tests on October 29, 2026. The screenshots show the empty first-run state, not active agent workflows. Local only; no public demo.",
-    "notes": "Evidence: portfolio-brief/v2/verified-projects.md, supplied by Eyrie. Genuine first-run captures resized and converted to WebP without content changes.",
+    "verificationNote": "Eyrie checked the build, go test, go vet, and 7 web tests on October 29, 2026. The screenshots show the populated UI from isolated demo runs. Active agent workflows remain unverified. Local only; no public demo.",
+    "notes": "Evidence: portfolio-brief/v2/verified-projects.md, supplied by Eyrie. UI captures from isolated demo runs, resized for web without content changes.",
     "order": 1,
     "verificationDate": "2026-10-29",
     "caseStudy": {
       "problem": "Agents in ZeroClaw, OpenClaw, and other frameworks expose different interfaces. Eyrie's goal is to manage their projects, sessions, and lifecycle from a shared local control room, with a hierarchy of commanders, captains, and specialist talons.",
       "built": "I built the Go command-line application and React dashboard for agent discovery, lifecycle controls, project hierarchies, and streaming chat. Framework adapters translate a shared agent interface into each framework's gateway calls.",
       "architecture": "The CLI and dashboard share the adapter and discovery core. The Go executable embeds the built React application. SSE carries live updates; adapters use framework-specific HTTP or WebSocket connections. Configuration and project stores use local files, with SQLite used for ZeroClaw session access.",
-      "limitations": "The approved captures show an empty first run. Live agent lifecycle, LLM chat, terminal sessions, and provisioning were not verified. Eyrie is an early local-only alpha with no authentication; it is not a hosted multi-user service.",
+      "limitations": "The UI captures show populated demo states. Live agent lifecycle, LLM chat reliability, terminal sessions, and provisioning workflows remain unverified. Eyrie is an early local-only alpha with no authentication; it is not a hosted multi-user service.",
       "sourceNotes": [
         "portfolio-brief/v2/verified-projects.md, item 1; approved checks and first-run captures.",
         "/Users/dan/portfolio-triage/repos/eyrie/README.md, introduction, architecture, framework capabilities, and alpha limitations.",
