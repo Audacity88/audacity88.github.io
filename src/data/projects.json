@@ -35,15 +35,15 @@
         ]
       },
       {
-        "src": "/images/projects/eyrie-mission-populated.jpg",
-        "width": 1440,
-        "height": 900,
-        "alt": "Eyrie Mission Control dashboard showing populated project activity with active agents and timeline.",
-        "caption": "Populated Mission Control with project activity.",
+        "src": "/images/projects/eyrie-mission-control.png",
+        "width": 2880,
+        "height": 1800,
+        "alt": "Eyrie Mission Control dashboard with commander chat, zero active projects, and empty timeline on first run.",
+        "caption": "Mission Control dashboard, first run.",
         "sources": [
           {
-            "src": "/images/projects/eyrie-mission-populated.jpg",
-            "width": 1440
+            "src": "/images/projects/eyrie-mission-control.png",
+            "width": 2880
           }
         ]
       },
