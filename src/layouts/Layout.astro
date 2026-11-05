@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
 import '../styles/print.css';
-import ThemeToggle from '../components/ThemeToggle.astro';
+import PaletteMenu from '../components/PaletteMenu.astro';
+import CommandPalette from '../components/CommandPalette.astro';
 interface Props {
   title?: string;
   description?: string;
@@ -48,8 +49,19 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
     <title>{title}</title>
     <script is:inline>
       try {
-        const theme = localStorage.getItem('portfolio-theme');
-        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+        let palette = localStorage.getItem('portfolio-palette');
+        if (!palette) {
+          // Migrate legacy portfolio-theme to portfolio-palette
+          const legacyTheme = localStorage.getItem('portfolio-theme');
+          if (legacyTheme === 'light' || legacyTheme === 'dark') {
+            palette = legacyTheme;
+            localStorage.setItem('portfolio-palette', palette);
+            localStorage.removeItem('portfolio-theme');
+          }
+        }
+        if (palette && ['light', 'dark', 'mono', 'ocean'].includes(palette)) {
+          document.documentElement.dataset.palette = palette;
+        }
       } catch { /* System preferences work when storage is unavailable. */ }
     </script>
   </head>
@@ -65,13 +77,15 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
         <a href={`${base}offers/`} aria-current={Astro.url.pathname === `${base}offers/` ? 'page' : undefined}>Offers</a>
         <a href={`${base}#contact`}>Contact</a>
       </nav>
-      <ThemeToggle />
+      <PaletteMenu />
     </header>
+    <CommandPalette />
     <slot />
     <footer class="site-footer container">
       <a class="footer-name" href={base}>Dan Gilles<span aria-hidden="true">.</span></a>
       <span>Built with Astro. No tracking.</span>
       <a href={`${base}art/`}>Art</a>
+      <span class="command-hint" id="command-hint">Press <kbd>:</kbd> for commands</span>
       <a href="#main">Back to top <span aria-hidden="true">↑</span></a>
     </footer>
   </body>

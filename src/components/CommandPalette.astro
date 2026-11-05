@@ -1,0 +1,352 @@
+---
+// Command palette triggered with ":" key
+---
+
+<div class="command-palette" id="command-palette" hidden>
+  <div class="command-overlay" id="command-overlay" role="dialog" aria-modal="true" aria-label="Command palette"></div>
+  <div class="command-container">
+    <div class="command-input-wrapper">
+      <span class="command-prompt">:</span>
+      <input
+        type="text"
+        class="command-input"
+        id="command-input"
+        placeholder="theme, projects, contact, or esc to close"
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </div>
+    <div class="command-results" id="command-results"></div>
+  </div>
+</div>
+
+<script>
+  interface Command {
+    name: string;
+    description: string;
+    action: () => void;
+  }
+  
+  const palette = document.getElementById('command-palette');
+  const overlay = document.getElementById('command-overlay');
+  const input = document.getElementById('command-input') as HTMLInputElement;
+  const results = document.getElementById('command-results');
+  
+  const base = import.meta.env.BASE_URL;
+  
+  const commands: Command[] = [
+    {
+      name: 'theme',
+      description: 'Change color palette',
+      action: () => {
+        document.getElementById('palette-toggle')?.click();
+        closePalette();
+      },
+    },
+    {
+      name: 'projects',
+      description: 'Jump to projects section',
+      action: () => {
+        window.location.href = `${base}#projects`;
+        closePalette();
+      },
+    },
+    {
+      name: 'experience',
+      description: 'Jump to experience section',
+      action: () => {
+        window.location.href = `${base}#experience`;
+        closePalette();
+      },
+    },
+    {
+      name: 'contact',
+      description: 'Jump to contact section',
+      action: () => {
+        window.location.href = `${base}#contact`;
+        closePalette();
+      },
+    },
+    {
+      name: 'resume',
+      description: 'View resume',
+      action: () => {
+        window.location.href = `${base}resume/`;
+        closePalette();
+      },
+    },
+    {
+      name: 'offers',
+      description: 'View offers page',
+      action: () => {
+        window.location.href = `${base}offers/`;
+        closePalette();
+      },
+    },
+    {
+      name: 'github',
+      description: 'Open GitHub profile',
+      action: () => {
+        window.open('https://github.com/Audacity88', '_blank');
+        closePalette();
+      },
+    },
+  ];
+  
+  function openPalette() {
+    palette?.removeAttribute('hidden');
+    renderResults(commands);
+    input?.focus();
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closePalette() {
+    palette?.setAttribute('hidden', '');
+    if (input) input.value = '';
+    if (results) results.innerHTML = '';
+    document.body.style.overflow = '';
+    if (previousFocus) {
+      previousFocus.focus();
+      previousFocus = null;
+    }
+  }
+  
+  function filterCommands(query: string): Command[] {
+    const q = query.toLowerCase().trim();
+    if (!q) return commands;
+    return commands.filter(
+      (cmd) =>
+        cmd.name.toLowerCase().includes(q) ||
+        cmd.description.toLowerCase().includes(q)
+    );
+  }
+  
+  function renderResults(filteredCommands: Command[]) {
+    if (!results) return;
+    
+    if (filteredCommands.length === 0) {
+      results.innerHTML = '<div class="command-empty">No matching commands</div>';
+      return;
+    }
+    
+    results.innerHTML = filteredCommands
+      .map(
+        (cmd, index) => `
+        <button
+          type="button"
+          class="command-item"
+          data-index="${index}"
+        >
+          <span class="command-name">${cmd.name}</span>
+          <span class="command-description">${cmd.description}</span>
+        </button>
+      `
+      )
+      .join('');
+    
+    // Attach click handlers
+    results.querySelectorAll('.command-item').forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        filteredCommands[index].action();
+      });
+    });
+  }
+  
+  let previousFocus: HTMLElement | null = null;
+  
+  // Open with ":" key
+  document.addEventListener('keydown', (e) => {
+    // Close with Escape (handle before input guard)
+    if (e.key === 'Escape' && palette?.getAttribute('hidden') === null) {
+      e.preventDefault();
+      closePalette();
+      return;
+    }
+    
+    // Don't trigger if user is typing in an input
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+      return;
+    }
+    
+    // Open with ":"
+    if (e.key === ':' && palette?.getAttribute('hidden') !== null) {
+      e.preventDefault();
+      previousFocus = document.activeElement as HTMLElement;
+      openPalette();
+    }
+  });
+  
+  // Filter on input
+  input?.addEventListener('input', (e) => {
+    const query = (e.target as HTMLInputElement).value;
+    const filtered = filterCommands(query);
+    renderResults(filtered);
+  });
+  
+  // Close on overlay click
+  overlay?.addEventListener('click', closePalette);
+  
+  // Handle Enter to execute first result
+  input?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const firstResult = results?.querySelector('.command-item') as HTMLButtonElement;
+      firstResult?.click();
+    }
+  });
+  
+  // Trap focus within palette
+  document.addEventListener('keydown', (e) => {
+    if (palette?.getAttribute('hidden') === null && e.key === 'Tab') {
+      e.preventDefault();
+      input?.focus();
+    }
+  });
+</script>
+
+<style>
+  .command-palette {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15vh;
+  }
+  
+  .command-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 200ms ease;
+  }
+  
+  .command-container {
+    position: relative;
+    width: min(600px, calc(100% - 2rem));
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: slideIn 250ms ease both;
+  }
+  
+  .command-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--subtle);
+  }
+  
+  .command-prompt {
+    color: var(--accent-text);
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  
+  .command-input {
+    flex: 1;
+    background: transparent;
+    border: 0;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    outline: none;
+  }
+  
+  .command-input::placeholder {
+    color: var(--muted);
+    opacity: 0.6;
+  }
+  
+  .command-results {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .command-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0.9rem 1.25rem;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 160ms ease;
+  }
+  
+  .command-item:first-child {
+    border-top: 0;
+  }
+  
+  .command-item:hover {
+    background: var(--tint);
+  }
+  
+  .command-name {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  
+  .command-description {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  
+  .command-empty {
+    padding: 2rem 1.25rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  @media (max-width: 760px) {
+    .command-palette {
+      padding-top: 10vh;
+    }
+    
+    .command-input-wrapper {
+      padding: 0.85rem 1rem;
+    }
+    
+    .command-input {
+      font-size: 0.85rem;
+    }
+    
+    .command-item {
+      padding: 0.75rem 1rem;
+    }
+  }
+</style>
