@@ -3,7 +3,7 @@
 ---
 
 <div class="command-palette" id="command-palette" hidden>
-  <div class="command-overlay" id="command-overlay"></div>
+  <div class="command-overlay" id="command-overlay" role="dialog" aria-modal="true" aria-label="Command palette"></div>
   <div class="command-container">
     <div class="command-input-wrapper">
       <span class="command-prompt">:</span>
@@ -47,7 +47,7 @@
       name: 'projects',
       description: 'Jump to projects section',
       action: () => {
-        window.location.hash = '#projects';
+        window.location.href = `${base}#projects`;
         closePalette();
       },
     },
@@ -55,7 +55,7 @@
       name: 'experience',
       description: 'Jump to experience section',
       action: () => {
-        window.location.hash = '#experience';
+        window.location.href = `${base}#experience`;
         closePalette();
       },
     },
@@ -63,7 +63,7 @@
       name: 'contact',
       description: 'Jump to contact section',
       action: () => {
-        window.location.hash = '#contact';
+        window.location.href = `${base}#contact`;
         closePalette();
       },
     },
@@ -95,6 +95,7 @@
   
   function openPalette() {
     palette?.removeAttribute('hidden');
+    renderResults(commands);
     input?.focus();
     document.body.style.overflow = 'hidden';
   }
@@ -104,6 +105,10 @@
     if (input) input.value = '';
     if (results) results.innerHTML = '';
     document.body.style.overflow = '';
+    if (previousFocus) {
+      previousFocus.focus();
+      previousFocus = null;
+    }
   }
   
   function filterCommands(query: string): Command[] {
@@ -147,8 +152,17 @@
     });
   }
   
+  let previousFocus: HTMLElement | null = null;
+  
   // Open with ":" key
   document.addEventListener('keydown', (e) => {
+    // Close with Escape (handle before input guard)
+    if (e.key === 'Escape' && palette?.getAttribute('hidden') === null) {
+      e.preventDefault();
+      closePalette();
+      return;
+    }
+    
     // Don't trigger if user is typing in an input
     if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
       return;
@@ -157,13 +171,8 @@
     // Open with ":"
     if (e.key === ':' && palette?.getAttribute('hidden') !== null) {
       e.preventDefault();
+      previousFocus = document.activeElement as HTMLElement;
       openPalette();
-    }
-    
-    // Close with Escape
-    if (e.key === 'Escape' && palette?.getAttribute('hidden') === null) {
-      e.preventDefault();
-      closePalette();
     }
   });
   
@@ -186,10 +195,11 @@
     }
   });
   
-  // Show all commands on open
-  palette?.addEventListener('transitionend', () => {
-    if (palette.getAttribute('hidden') === null) {
-      renderResults(commands);
+  // Trap focus within palette
+  document.addEventListener('keydown', (e) => {
+    if (palette?.getAttribute('hidden') === null && e.key === 'Tab') {
+      e.preventDefault();
+      input?.focus();
     }
   });
 </script>

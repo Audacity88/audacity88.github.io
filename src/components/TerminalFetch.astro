@@ -27,7 +27,9 @@
     <div class="fetch-row fetch-stats">
       <span class="fetch-label">github</span>
       <span class="fetch-value" id="github-stats">
-        <span class="stat-loading">fetching stats...</span>
+        <span class="stat-item">45+ repos</span>
+        <span class="stat-sep">·</span>
+        <span class="stat-item">50+ followers</span>
       </span>
     </div>
   </div>
@@ -57,14 +59,8 @@
         `;
       }
     } catch (error) {
-      // Fallback to static values if rate-limited
-      if (statsEl) {
-        statsEl.innerHTML = `
-          <span class="stat-item">45+ repos</span>
-          <span class="stat-sep">·</span>
-          <span class="stat-item">active</span>
-        `;
-      }
+      // Keep fallback values if fetch fails (already in HTML)
+      // Don't replace with "active" - keep the static follower count
     }
   }
   

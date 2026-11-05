@@ -49,7 +49,16 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
     <title>{title}</title>
     <script is:inline>
       try {
-        const palette = localStorage.getItem('portfolio-palette');
+        let palette = localStorage.getItem('portfolio-palette');
+        if (!palette) {
+          // Migrate legacy portfolio-theme to portfolio-palette
+          const legacyTheme = localStorage.getItem('portfolio-theme');
+          if (legacyTheme === 'light' || legacyTheme === 'dark') {
+            palette = legacyTheme;
+            localStorage.setItem('portfolio-palette', palette);
+            localStorage.removeItem('portfolio-theme');
+          }
+        }
         if (palette && ['light', 'dark', 'mono', 'ocean'].includes(palette)) {
           document.documentElement.dataset.palette = palette;
         }
