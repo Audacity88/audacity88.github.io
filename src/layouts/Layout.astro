@@ -22,7 +22,7 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-base={base}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -97,7 +97,7 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
           }
           
           // Skip on deep links (non-home routes)
-          var base = '{base}';
+          var base = document.documentElement.getAttribute('data-base') || '/';
           var path = window.location.pathname;
           var normalizedPath = path.endsWith('/') ? path : path + '/';
           var normalizedBase = base.endsWith('/') ? base : base + '/';
