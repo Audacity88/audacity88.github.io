@@ -17,8 +17,15 @@ const demo = project.inCardDemo;
           src={demo.url}
           title={`${project.title} demo`}
           loading="lazy"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
           class="demo-iframe"
         ></iframe>
+        <div class="iframe-fallback" hidden>
+          <p>Demo failed to load. Visit the live site:</p>
+          <a href={demo.url} target="_blank" rel="noreferrer" class="button secondary">
+            Open {project.title} <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
     )}
 
@@ -157,6 +164,51 @@ const demo = project.inCardDemo;
   </div>
 )}
 
+{demo && demo.type === 'iframe' && (
+  <script>
+    function initIframeFallback() {
+      const containers = document.querySelectorAll('.demo-iframe-container');
+      
+      containers.forEach((container) => {
+        const iframe = container.querySelector('iframe');
+        const fallback = container.querySelector('.iframe-fallback');
+        
+        if (!iframe || !fallback) return;
+        
+        let loadTimeout: number;
+        let hasLoaded = false;
+        
+        iframe.addEventListener('load', () => {
+          hasLoaded = true;
+          clearTimeout(loadTimeout);
+        });
+        
+        iframe.addEventListener('error', () => {
+          if (!hasLoaded) {
+            fallback.removeAttribute('hidden');
+          }
+        });
+        
+        loadTimeout = window.setTimeout(() => {
+          if (!hasLoaded) {
+            try {
+              iframe.contentWindow?.document;
+            } catch (e) {
+              fallback.removeAttribute('hidden');
+            }
+          }
+        }, 10000);
+      });
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initIframeFallback);
+    } else {
+      initIframeFallback();
+    }
+  </script>
+)}
+
 <style>
   .project-demo {
     width: 100%;
@@ -178,6 +230,47 @@ const demo = project.inCardDemo;
     height: 100%;
     border: 0;
     display: block;
+  }
+
+  .iframe-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+    background: var(--surface);
+    text-align: center;
+  }
+
+  .iframe-fallback p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+  .iframe-fallback .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 160ms ease;
+  }
+
+  .iframe-fallback .button:hover {
+    background: var(--tint);
+    border-color: var(--accent);
+    color: var(--accent-text);
   }
 
   .demo-simulacrum {
