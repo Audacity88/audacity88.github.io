@@ -88,10 +88,11 @@
     handleDismiss(e);
   }
   
-  function handleScroll() {
-    // Dismiss on first scroll
+  function handleWheelOrTouch() {
+    // Dismiss on first wheel/touch gesture
     dismissEnter();
-    window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('wheel', handleWheelOrTouch);
+    window.removeEventListener('touchmove', handleWheelOrTouch);
   }
   
   // Initialize
@@ -103,8 +104,9 @@
     // Broadcast open event for shell bus integration
     window.dispatchEvent(new CustomEvent('portfolio-shell:enter-open'));
     
-    // Listen for scroll to dismiss
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Listen for wheel/touch gestures to dismiss (scroll event won't fire while overflow is hidden)
+    window.addEventListener('wheel', handleWheelOrTouch, { passive: true });
+    window.addEventListener('touchmove', handleWheelOrTouch, { passive: true });
     
     // Listen for user interaction to dismiss
     const overlay = softEnter?.querySelector('.soft-enter-overlay');
