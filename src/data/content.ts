@@ -35,6 +35,22 @@ const projectSchema = z.object({
   github: httpsUrl.nullable(),
   demo: httpsUrl.nullable(),
   demoLabel: z.string().min(1).optional(),
+  inCardDemo: z.union([
+    z.object({
+      type: z.literal('iframe'),
+      url: httpsUrl,
+    }),
+    z.object({
+      type: z.literal('simulacrum'),
+      variant: z.enum(['witness-lexington', 'model-picker', 'chatgenius']),
+    }),
+    z.object({
+      type: z.literal('stub'),
+      note: z.string().optional(),
+      badge: z.string().optional(),
+      skills: z.array(z.string()).optional(),
+    }),
+  ]).optional(),
   status: z.enum(['pending-verification', 'verified', 'demo-down']),
   statusLabel: z.string().min(1).optional(),
   featured: z.boolean(),

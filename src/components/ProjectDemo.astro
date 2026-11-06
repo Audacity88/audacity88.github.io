@@ -1,0 +1,661 @@
+---
+import type { Project } from '../data/content';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const demo = project.inCardDemo;
+---
+
+{demo && (
+  <div class="project-demo" data-demo-type={demo.type} data-project={project.id}>
+    {demo.type === 'iframe' && (
+      <div class="demo-iframe-container">
+        <iframe
+          src={demo.url}
+          title={`${project.title} demo`}
+          loading="lazy"
+          class="demo-iframe"
+        ></iframe>
+      </div>
+    )}
+
+    {demo.type === 'simulacrum' && demo.variant === 'witness-lexington' && (
+      <div class="demo-simulacrum witness-lexington-sim">
+        <div class="sim-viewport">
+          <div class="sim-3d-scene"></div>
+          <div class="sim-overlay">
+            <h3 class="sim-title">Witness Lexington</h3>
+            <p class="sim-subtitle">April 19, 1775</p>
+            <div class="sim-controls">
+              <button type="button" class="sim-button sim-button-primary" disabled>Begin the opening</button>
+              <button type="button" class="sim-button" disabled>Mute music</button>
+            </div>
+          </div>
+        </div>
+        <p class="sim-note">Interactive simulacrum. Real game requires local build.</p>
+      </div>
+    )}
+
+    {demo.type === 'simulacrum' && demo.variant === 'model-picker' && (
+      <div class="demo-simulacrum model-picker-sim">
+        <div class="sim-header">
+          <span class="sim-logo">MP</span>
+          <span class="sim-version">v1.0</span>
+        </div>
+        <div class="sim-content">
+          <p class="sim-prompt">I want to <input type="text" value="build a feature from my spec" class="sim-input" readonly />, using <select class="sim-select" disabled><option>anything</option></select>, and my priority is <select class="sim-select" disabled><option>balanced</option></select>.</p>
+          <button type="button" class="sim-button sim-button-primary" disabled>Pick a model</button>
+          <div class="sim-results">
+            <div class="sim-card">
+              <div class="sim-card-header">
+                <span class="sim-rank">#1</span>
+                <span class="sim-model-name">claude-opus-4</span>
+                <span class="sim-score">92</span>
+              </div>
+              <p class="sim-reasoning">Strong reasoning, balanced cost/quality</p>
+            </div>
+            <div class="sim-card">
+              <div class="sim-card-header">
+                <span class="sim-rank">#2</span>
+                <span class="sim-model-name">gpt-5-preview</span>
+                <span class="sim-score">88</span>
+              </div>
+              <p class="sim-reasoning">Excellent code generation, higher cost</p>
+            </div>
+            <div class="sim-card">
+              <div class="sim-card-header">
+                <span class="sim-rank">#3</span>
+                <span class="sim-model-name">gemini-pro</span>
+                <span class="sim-score">85</span>
+              </div>
+              <p class="sim-reasoning">Good balance, large context window</p>
+            </div>
+          </div>
+        </div>
+        <p class="sim-note">Interactive simulacrum. Real app runs locally.</p>
+      </div>
+    )}
+
+    {demo.type === 'simulacrum' && demo.variant === 'chatgenius' && (
+      <div class="demo-simulacrum chatgenius-sim">
+        <div class="chat-sidebar">
+          <div class="chat-workspace">Workspace</div>
+          <div class="chat-channels">
+            <div class="chat-section-header">Channels</div>
+            <div class="chat-channel active"># general</div>
+            <div class="chat-channel"># random</div>
+            <div class="chat-channel"># support</div>
+          </div>
+          <div class="chat-dms">
+            <div class="chat-section-header">Direct Messages</div>
+            <div class="chat-dm"><span class="presence-dot"></span> Alice</div>
+            <div class="chat-dm"><span class="presence-dot offline"></span> Bob</div>
+          </div>
+        </div>
+        <div class="chat-main">
+          <div class="chat-header"># general</div>
+          <div class="chat-messages">
+            <div class="chat-message">
+              <div class="chat-avatar">A</div>
+              <div class="chat-content">
+                <div class="chat-meta"><strong>Alice</strong> <span>10:42 AM</span></div>
+                <p>Hey team! How's the new feature coming along?</p>
+              </div>
+            </div>
+            <div class="chat-message">
+              <div class="chat-avatar">B</div>
+              <div class="chat-content">
+                <div class="chat-meta"><strong>Bob</strong> <span>10:45 AM</span></div>
+                <p>Making good progress! Should have a demo by EOD.</p>
+              </div>
+            </div>
+            <div class="chat-message ai-message">
+              <div class="chat-avatar">AI</div>
+              <div class="chat-content">
+                <div class="chat-meta"><strong>Assistant</strong> <span>10:46 AM</span></div>
+                <p>I can help with documentation if needed!</p>
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <input type="text" placeholder="Message #general" class="chat-input" disabled />
+          </div>
+        </div>
+        <p class="sim-note">Simulacrum showing UI. Live chat is not verified.</p>
+      </div>
+    )}
+
+    {demo.type === 'stub' && (
+      <div class="demo-stub">
+        <div class="stub-icon">{project.title.charAt(0)}</div>
+        <h4>{project.title}</h4>
+        <p class="stub-oneliner">{project.oneLiner}</p>
+        
+        {demo.badge && (
+          <div class="stub-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            {demo.badge}
+          </div>
+        )}
+        
+        {demo.skills && (
+          <div class="stub-skills">
+            {demo.skills.map((skill) => (
+              <div class="stub-skill"><span>▸</span> {skill}</div>
+            ))}
+          </div>
+        )}
+        
+        {demo.note && <p class="stub-note">{demo.note}</p>}
+      </div>
+    )}
+  </div>
+)}
+
+<style>
+  .project-demo {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: var(--bg);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .demo-iframe-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .demo-iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  .demo-simulacrum {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .sim-note {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+
+  .witness-lexington-sim {
+    background: linear-gradient(135deg, #1a1f35 0%, #2d3548 100%);
+    color: #e5e7eb;
+  }
+
+  .sim-viewport {
+    flex: 1;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #4a5568 0%, #2d3748 50%, #1a202c 100%);
+  }
+
+  .sim-3d-scene {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 30% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
+      radial-gradient(circle at 70% 60%, rgba(59, 130, 246, 0.1) 0%, transparent 40%);
+  }
+
+  .sim-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .sim-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    margin: 0;
+  }
+
+  .sim-subtitle {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    margin: 0;
+  }
+
+  .sim-controls {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .sim-button {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #e5e7eb;
+    font-size: 0.75rem;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .sim-button-primary {
+    background: rgba(139, 92, 246, 0.3);
+    border-color: rgba(139, 92, 246, 0.5);
+  }
+
+  .model-picker-sim {
+    background: var(--surface);
+    gap: 1rem;
+  }
+
+  .sim-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sim-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .sim-version {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .sim-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .sim-prompt {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .sim-input,
+  .sim-select {
+    display: inline;
+    padding: 0.15rem 0.35rem;
+    background: var(--tint);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent-text);
+  }
+
+  .sim-input {
+    width: auto;
+    min-width: 140px;
+  }
+
+  .sim-results {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .sim-card {
+    padding: 0.65rem;
+    background: var(--tint);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+
+  .sim-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .sim-rank {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-text);
+  }
+
+  .sim-model-name {
+    flex: 1;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .sim-score {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .sim-reasoning {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .chatgenius-sim {
+    padding: 0;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 0;
+    background: var(--bg);
+  }
+
+  .chat-sidebar {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 0.75rem;
+    background: var(--subtle);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+  }
+
+  .chat-workspace {
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.35rem 0;
+    color: var(--text);
+  }
+
+  .chat-section-header {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 0.35rem 0;
+    margin-top: 0.5rem;
+  }
+
+  .chat-channel,
+  .chat-dm {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .chat-channel:hover,
+  .chat-dm:hover {
+    background: var(--tint);
+    color: var(--text);
+  }
+
+  .chat-channel.active {
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+  }
+
+  .chat-dm {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .presence-dot {
+    width: 6px;
+    height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+  }
+
+  .presence-dot.offline {
+    background: var(--muted);
+  }
+
+  .chat-main {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+  }
+
+  .chat-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--line);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text);
+  }
+
+  .chat-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .chat-message {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .chat-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background: var(--accent);
+    color: var(--on-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .ai-message .chat-avatar {
+    background: var(--muted);
+    color: var(--bg);
+  }
+
+  .chat-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .chat-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .chat-meta strong {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+
+  .chat-meta span {
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+
+  .chat-content p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .chat-input-area {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .chat-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: var(--text);
+  }
+
+  .chatgenius-sim .sim-note {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .demo-stub {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .stub-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .demo-stub h4 {
+    font-size: 1.1rem;
+    margin: 0;
+    color: var(--text);
+  }
+
+  .stub-oneliner {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .stub-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #10b981;
+  }
+
+  .stub-badge svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .stub-skills {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    text-align: left;
+  }
+
+  .stub-skill {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .stub-skill span {
+    color: var(--accent);
+    margin-right: 0.35rem;
+  }
+
+  .stub-note {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-style: italic;
+    margin: 0.5rem 0 0 0;
+  }
+
+  @media (max-width: 760px) {
+    .chatgenius-sim {
+      grid-template-columns: 140px 1fr;
+    }
+
+    .chat-sidebar {
+      padding: 0.5rem;
+      gap: 0.5rem;
+    }
+
+    .sim-viewport {
+      min-height: 200px;
+    }
+
+    .demo-stub {
+      padding: 1rem;
+    }
+  }
+</style>
