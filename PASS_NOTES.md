@@ -691,3 +691,25 @@ No server, browser, download, or Lighthouse run was started. Print appearance an
 - Minimal diff approach
 - Existing visual language preserved
 
+
+### Fix: Ada blocker (Nov 6, 2026 06:03 UTC)
+
+**Blocker fixed**: ProjectCard only mounted ProjectMedia when `project.featured` was true. Non-featured cards with inCardDemo (swift-ship, Witness Lexington, Model Picker, ChatGenius) received static thumbs instead of interactive previews.
+
+**Changes**:
+- Added `hasMediaSection` variable: `project.featured || project.inCardDemo`
+- Updated thumb logic: only render thumb if NOT hasMediaSection
+- Updated media section gate: render if hasMediaSection AND images.length > 0
+- Result: any card with inCardDemo gets interactive ProjectMedia, regardless of featured status
+
+**Additional fixes (Ada nits)**:
+- Added iframe `sandbox` attribute with safe permissions for swift-ship
+- Added iframe load-fail fallback with 10s timeout
+- Fallback shows link to open demo in new tab if iframe fails
+- Error handling checks iframe load events and content access
+
+**Build validation**:
+- Build: 0 errors, 0 warnings, 0 hints
+- Pages: 14 built successfully
+- Links: 534 checked and valid
+
