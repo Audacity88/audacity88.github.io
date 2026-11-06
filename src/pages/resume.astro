@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.astro';
+import RepoPulse from '../components/RepoPulse.astro';
 import { openSource } from '../data/content';
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
@@ -26,6 +27,26 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       <h2 id="summary-title" class="sr-only">Summary</h2>
       <p>AI-native full-stack engineer who builds directly with the people who use the software. I build agent infrastructure, including Eyrie and Commander, and contribute as a code owner to ZeroClaw. Coding agents write much of my code. I specify the problem, review every change, test it live, and decide what ships.</p>
       <a class="text-link" href={openSource.mergedList}>{openSource.count.label}</a>
+    </section>
+
+    <section class="resume-opensource" aria-labelledby="opensource-title">
+      <h2 id="opensource-title" class="eyebrow">What I work on</h2>
+      <div class="opensource-repos">
+        <div class="repo-item">
+          <div class="repo-header">
+            <a href="https://github.com/EyrieCommander/eyrie" class="repo-link" target="_blank" rel="noopener noreferrer">Eyrie</a>
+            <span class="repo-desc">Local agent control room</span>
+          </div>
+          <RepoPulse repoId="eyrie" />
+        </div>
+        <div class="repo-item">
+          <div class="repo-header">
+            <a href="https://github.com/zeroclaw-labs/zeroclaw" class="repo-link" target="_blank" rel="noopener noreferrer">ZeroClaw</a>
+            <span class="repo-desc">Code owner contributions</span>
+          </div>
+          <RepoPulse repoId="zeroclaw" />
+        </div>
+      </div>
     </section>
 
     <section class="resume-section" aria-labelledby="resume-experience-title">
@@ -81,6 +102,14 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   .resume-summary { padding-block: 2rem; max-width: 78ch; }
   .resume-summary p { color: var(--muted); }
   .resume-summary .text-link { margin-top: .5rem; }
+  .resume-opensource { padding-block: 1.5rem; }
+  .resume-opensource .eyebrow { margin-bottom: 1rem; }
+  .opensource-repos { display: grid; gap: 1.25rem; }
+  .repo-item { padding: 1rem; border-radius: 0.5rem; background: var(--surface-raised); border: 1px solid var(--line); }
+  .repo-header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; }
+  .repo-link { font-weight: 550; color: var(--text); text-decoration: none; }
+  .repo-link:hover { text-decoration: underline; }
+  .repo-desc { color: var(--muted); font-size: 0.875rem; }
   .resume-section { border-top: 1px solid var(--line); padding-top: 1.75rem; margin-top: 1.75rem; }
   .resume-section h2 { font-size: 1.65rem; letter-spacing: -.025em; margin-bottom: 1.5rem; }
   .resume-section :global(.timeline > li:first-child) { border-top: 0; padding-top: 0; }
@@ -91,6 +120,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   @media (max-width: 760px) {
     .resume { padding-block: 2.5rem 3rem; }
     .resume-contact { flex-direction: column; gap: 0; }
+    .repo-item { padding: 0.875rem; }
   }
   @media print {
     .resume { max-width: none; padding: 0; font-family: Arial, Helvetica, sans-serif; }
@@ -102,6 +132,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     .resume-contact a { min-height: 0; }
     .resume-summary { padding: 10pt 0 0; max-width: none; }
     .resume-summary .text-link { margin-top: 4pt; }
+    .resume-opensource { display: none; }
     .resume-section { padding-top: 6pt; margin-top: 7pt; border-color: #aaa; }
     .resume-section h2 { font-size: 13pt; margin-bottom: 5pt; }
     .resume-section :global(.timeline > li) { display: block; padding-block: 4pt; }

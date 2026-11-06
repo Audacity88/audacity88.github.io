@@ -8,7 +8,8 @@
     "generate:og": "node scripts/generate-og-card.mjs",
     "test": "node --test tests/*.test.mjs",
     "check:links": "node scripts/check-links.mjs",
-    "build": "astro check && astro build && npm run check:links",
+    "fetch:pulse": "node scripts/fetch-repo-pulse.mjs",
+    "build": "npm run fetch:pulse && astro check && astro build && npm run check:links",
     "preview": "astro preview",
     "project:verify": "node scripts/verify-project.mjs"
   },
