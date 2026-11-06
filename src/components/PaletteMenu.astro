@@ -39,7 +39,11 @@
 </div>
 
 <script>
-  type Palette = 'system' | 'light' | 'dark' | 'mono' | 'ocean';
+  import {
+    type Palette,
+    updatePalette,
+    setPaletteOpen,
+  } from '../lib/portfolio-shell';
   
   const button = document.querySelector<HTMLButtonElement>('#palette-toggle');
   const label = document.querySelector<HTMLElement>('#palette-label');
@@ -54,7 +58,6 @@
     ocean: 'Ocean',
   };
   
-  // Restore saved palette
   const initialPalette = document.documentElement.dataset.palette;
   let palette: Palette = (initialPalette && Object.keys(paletteNames).includes(initialPalette))
     ? initialPalette as Palette
@@ -71,7 +74,6 @@
       label.textContent = paletteNames[p];
     }
     
-    // Update active state
     options.forEach((opt) => {
       if (opt.dataset.palette === p) {
         opt.setAttribute('aria-pressed', 'true');
@@ -97,17 +99,20 @@
     const isOpen = menu?.getAttribute('hidden') === null;
     if (isOpen) {
       menu?.setAttribute('hidden', '');
+      setPaletteOpen(false);
     } else {
       menu?.removeAttribute('hidden');
+      setPaletteOpen(true);
     }
   }
   
   function closeMenu() {
     menu?.setAttribute('hidden', '');
+    setPaletteOpen(false);
   }
   
-  // Initialize
   applyPalette(palette);
+  updatePalette(palette);
   
   if (button) {
     button.hidden = false;
@@ -128,6 +133,7 @@
       palette = newPalette;
       applyPalette(newPalette);
       savePalette(newPalette);
+      updatePalette(newPalette);
       closeMenu();
       if (button) {
         button.setAttribute('aria-expanded', 'false');
@@ -135,7 +141,6 @@
     });
   });
   
-  // Close menu when clicking outside
   document.addEventListener('click', (e) => {
     if (!button?.contains(e.target as Node) && !menu?.contains(e.target as Node)) {
       closeMenu();
@@ -145,7 +150,6 @@
     }
   });
   
-  // Close menu on Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menu?.getAttribute('hidden') === null) {
       closeMenu();

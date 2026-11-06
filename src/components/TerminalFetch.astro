@@ -3,11 +3,11 @@
 ---
 
 <div class="terminal-fetch" id="terminal-fetch">
-  <div class="terminal-header">
+  <div class="terminal-header" id="terminal-header">
     <span class="terminal-prompt">~</span>
-    <span class="terminal-command">whoami</span>
+    <span class="terminal-command" id="terminal-command">whoami</span>
   </div>
-  <div class="terminal-body">
+  <div class="terminal-body" id="terminal-body">
     <div class="fetch-row">
       <span class="fetch-label">user</span>
       <span class="fetch-value">Dan Gilles</span>
@@ -36,8 +36,12 @@
 </div>
 
 <script>
+  import { onShellStateChange } from '../lib/portfolio-shell';
+  
   const username = 'Audacity88';
   const statsEl = document.getElementById('github-stats');
+  const terminalFetch = document.getElementById('terminal-fetch');
+  const terminalCommand = document.getElementById('terminal-command');
   
   async function fetchGitHubStats() {
     try {
@@ -59,12 +63,30 @@
         `;
       }
     } catch (error) {
-      // Keep fallback values if fetch fails (already in HTML)
-      // Don't replace with "active" - keep the static follower count
+      // Keep fallback values
     }
   }
   
-  // Fetch on load
+  function flashAccent() {
+    terminalFetch?.classList.add('accent-flash');
+    setTimeout(() => {
+      terminalFetch?.classList.remove('accent-flash');
+    }, 400);
+  }
+  
+  onShellStateChange((changes) => {
+    if (changes.palette !== undefined) {
+      flashAccent();
+    }
+    
+    if (changes.lastCommand !== undefined && changes.lastCommand) {
+      if (terminalCommand) {
+        terminalCommand.textContent = changes.lastCommand;
+      }
+      flashAccent();
+    }
+  });
+  
   fetchGitHubStats();
 </script>
 
@@ -77,6 +99,19 @@
     font-size: 0.75rem;
     overflow: hidden;
     margin-bottom: 2rem;
+    transition: border-color 400ms ease;
+  }
+  
+  .terminal-fetch.accent-flash {
+    border-color: var(--accent);
+  }
+  
+  .terminal-fetch.accent-flash .terminal-header {
+    background: var(--tint);
+  }
+  
+  .terminal-fetch.accent-flash .terminal-prompt {
+    color: var(--accent-text);
   }
   
   .terminal-header {

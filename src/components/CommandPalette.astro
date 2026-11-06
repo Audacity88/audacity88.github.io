@@ -21,6 +21,12 @@
 </div>
 
 <script>
+  import {
+    setLastCommand,
+    setCommandPaletteOpen,
+    onShellStateChange,
+  } from '../lib/portfolio-shell';
+  
   interface Command {
     name: string;
     description: string;
@@ -31,6 +37,7 @@
   const overlay = document.getElementById('command-overlay');
   const input = document.getElementById('command-input') as HTMLInputElement;
   const results = document.getElementById('command-results');
+  const container = document.querySelector('.command-container') as HTMLElement;
   
   const base = import.meta.env.BASE_URL;
   
@@ -39,6 +46,7 @@
       name: 'theme',
       description: 'Change color palette',
       action: () => {
+        setLastCommand(':theme');
         document.getElementById('palette-toggle')?.click();
         closePalette();
       },
@@ -47,6 +55,7 @@
       name: 'projects',
       description: 'Jump to projects section',
       action: () => {
+        setLastCommand(':projects');
         window.location.href = `${base}#projects`;
         closePalette();
       },
@@ -55,6 +64,7 @@
       name: 'experience',
       description: 'Jump to experience section',
       action: () => {
+        setLastCommand(':experience');
         window.location.href = `${base}#experience`;
         closePalette();
       },
@@ -63,6 +73,7 @@
       name: 'contact',
       description: 'Jump to contact section',
       action: () => {
+        setLastCommand(':contact');
         window.location.href = `${base}#contact`;
         closePalette();
       },
@@ -71,6 +82,7 @@
       name: 'resume',
       description: 'View resume',
       action: () => {
+        setLastCommand(':resume');
         window.location.href = `${base}resume/`;
         closePalette();
       },
@@ -79,6 +91,7 @@
       name: 'offers',
       description: 'View offers page',
       action: () => {
+        setLastCommand(':offers');
         window.location.href = `${base}offers/`;
         closePalette();
       },
@@ -87,6 +100,7 @@
       name: 'github',
       description: 'Open GitHub profile',
       action: () => {
+        setLastCommand(':github');
         window.open('https://github.com/Audacity88', '_blank');
         closePalette();
       },
@@ -98,6 +112,7 @@
     renderResults(commands);
     input?.focus();
     document.body.style.overflow = 'hidden';
+    setCommandPaletteOpen(true);
   }
   
   function closePalette() {
@@ -105,6 +120,7 @@
     if (input) input.value = '';
     if (results) results.innerHTML = '';
     document.body.style.overflow = '';
+    setCommandPaletteOpen(false);
     if (previousFocus) {
       previousFocus.focus();
       previousFocus = null;
@@ -144,7 +160,6 @@
       )
       .join('');
     
-    // Attach click handlers
     results.querySelectorAll('.command-item').forEach((btn, index) => {
       btn.addEventListener('click', () => {
         filteredCommands[index].action();
@@ -154,21 +169,17 @@
   
   let previousFocus: HTMLElement | null = null;
   
-  // Open with ":" key
   document.addEventListener('keydown', (e) => {
-    // Close with Escape (handle before input guard)
     if (e.key === 'Escape' && palette?.getAttribute('hidden') === null) {
       e.preventDefault();
       closePalette();
       return;
     }
     
-    // Don't trigger if user is typing in an input
     if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
       return;
     }
     
-    // Open with ":"
     if (e.key === ':' && palette?.getAttribute('hidden') !== null) {
       e.preventDefault();
       previousFocus = document.activeElement as HTMLElement;
@@ -176,17 +187,14 @@
     }
   });
   
-  // Filter on input
   input?.addEventListener('input', (e) => {
     const query = (e.target as HTMLInputElement).value;
     const filtered = filterCommands(query);
     renderResults(filtered);
   });
   
-  // Close on overlay click
   overlay?.addEventListener('click', closePalette);
   
-  // Handle Enter to execute first result
   input?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -195,11 +203,19 @@
     }
   });
   
-  // Trap focus within palette
   document.addEventListener('keydown', (e) => {
     if (palette?.getAttribute('hidden') === null && e.key === 'Tab') {
       e.preventDefault();
       input?.focus();
+    }
+  });
+  
+  onShellStateChange((changes) => {
+    if (changes.palette !== undefined && container) {
+      container.classList.add('accent-flash');
+      setTimeout(() => {
+        container.classList.remove('accent-flash');
+      }, 400);
     }
   });
 </script>
@@ -232,6 +248,15 @@
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     animation: slideIn 250ms ease both;
+    transition: border-color 400ms ease;
+  }
+  
+  .command-container.accent-flash {
+    border-color: var(--accent);
+  }
+  
+  .command-container.accent-flash .command-input-wrapper {
+    background: var(--tint);
   }
   
   .command-input-wrapper {
