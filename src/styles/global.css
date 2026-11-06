@@ -25,6 +25,8 @@
     --shadow: 0 14px 36px -24px #1c284340;
     --mono: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
     --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --motion-tempo: 1;
+    --motion-paused: 0;
   }
   :root[data-palette='light'] {
     color-scheme: light;
@@ -137,6 +139,8 @@
   .hero { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 3rem; padding-block: 5rem 4rem; align-items: center; }
   .hero-scroll { grid-column: 1 / -1; display: inline-flex; justify-self: start; align-items: center; gap: 1rem; color: var(--muted); font-family: var(--mono); font-size: .7rem; text-decoration: none; padding-block: .5rem; min-height: 44px; margin-top: .5rem; }
   .hero-scroll:is(:hover, :focus-visible) { text-decoration: underline; }
+  .wordmark { transition: color 400ms ease; }
+  .wordmark.accent-flash { color: var(--accent-text); }
   .section { padding-block: 6rem; border-top: 1px solid var(--line); }
   .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 3rem; margin-bottom: 3rem; }
   .section-intro { max-width: 325px; color: var(--muted); font-size: .95rem; }
@@ -176,13 +180,15 @@
   .button:hover { text-decoration: none; box-shadow: var(--shadow); transform: translateY(-2px); }
   .button.secondary:is(:hover, :focus-visible) { border-color: var(--accent); }
   .hero-note { margin-top: -1rem; }
-  .signal-art { margin: -2.5rem -1rem 1.75rem; color: var(--accent); }
+  .signal-art { margin: -2.5rem -1rem 1.75rem; color: var(--accent); transition: color 400ms ease; }
   .signal-art svg { width: 100%; height: auto; }
-  .signal-grid { stroke: var(--line); stroke-width: .7; opacity: .5; }
-  .signal-orbits { stroke: currentColor; stroke-width: 1; }
-  .signal-center { fill: var(--accent); }
-  .signal-node { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
+  .signal-grid { stroke: var(--line); stroke-width: .7; opacity: .5; transition: stroke 400ms ease, opacity 400ms ease; }
+  .signal-orbits { stroke: currentColor; stroke-width: 1; transition: stroke 400ms ease; }
+  .signal-center { fill: var(--accent); transition: fill 400ms ease; }
+  .signal-node { fill: var(--bg); stroke: var(--accent); stroke-width: 2; transition: fill 400ms ease, stroke 400ms ease; }
   .signal-electrons { display: none; }
+  .signal-art.accent-flash .signal-orbits { stroke-width: 1.4; }
+  .signal-art.accent-flash .signal-grid { opacity: .7; }
   .hero-note .eyebrow { margin-bottom: .75rem; }
   .hero-note > p:not(.eyebrow) { font-size: 1.15rem; line-height: 1.5; letter-spacing: -.025em; margin-bottom: 1.75rem; }
   .focus-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: .75rem; border-top: 1px solid var(--line); }
@@ -288,21 +294,19 @@
   a, button, .project-card { transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }
   .site-header nav a::after { transition: transform 160ms ease; }
   @media (prefers-reduced-motion: no-preference) {
-    .hero-intro { animation: arrive 600ms ease both; }
-    .hero-note { animation: arrive 700ms 100ms ease both; }
+    .hero-intro { animation: arrive calc(600ms / var(--motion-tempo)) ease both; }
+    .hero-note { animation: arrive calc(700ms / var(--motion-tempo)) calc(100ms / var(--motion-tempo)) ease both; }
     @keyframes arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    /* Atom: each electron orbits its own ring. x and y are separate sine-eased
-       oscillations a quarter period apart, which traces the ellipse. Static
-       electrons are shown instead when motion is reduced. */
     .signal-static { display: none; }
-    .signal-electrons { display: inline; }
-    .electron-x, .electron-y { animation: var(--axis) calc(var(--t) / 2) cubic-bezier(.37, 0, .63, 1) infinite alternate both; }
+    .signal-electrons { display: inline; transition: opacity 300ms ease, transform 300ms ease; }
+    .signal-electrons.motion-paused { opacity: 0.25; transform: scale(0.95); }
+    .electron-x, .electron-y { animation: var(--axis) calc(var(--t) / 2 / var(--motion-tempo)) cubic-bezier(.37, 0, .63, 1) infinite alternate both; animation-play-state: var(--motion-paused, running); }
     .electron-x { --axis: electron-x; animation-delay: var(--dx); }
     .electron-y { --axis: electron-y; animation-delay: var(--dy); }
     .e1 { --t: 7s; --rx: 110px; --ry: 42px; --dx: -3.5s; --dy: -1.75s; }
     .e2 { --t: 11s; --rx: 110px; --ry: 42px; --dx: 0s; --dy: -8.25s; }
     .e3 { --t: 9s; --rx: 42px; --ry: 100px; --dx: -6.75s; --dy: 0s; }
-    .signal-center { transform-box: fill-box; transform-origin: center; animation: nucleus-pulse 3.2s ease-in-out infinite alternate; }
+    .signal-center { transform-box: fill-box; transform-origin: center; animation: nucleus-pulse calc(3.2s / var(--motion-tempo)) ease-in-out infinite alternate; animation-play-state: var(--motion-paused, running); }
     @keyframes electron-x { from { transform: translateX(calc(var(--rx) * -1)); } to { transform: translateX(var(--rx)); } }
     @keyframes electron-y { from { transform: translateY(calc(var(--ry) * -1)); } to { transform: translateY(var(--ry)); } }
     @keyframes nucleus-pulse { from { transform: scale(1); } to { transform: scale(1.12); } }

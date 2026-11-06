@@ -1,0 +1,138 @@
+---
+// Section status chip that tracks scroll position
+---
+
+<div class="section-status" id="section-status" hidden>
+  <span class="section-status-text" id="section-status-text">01 / projects</span>
+</div>
+
+<script>
+  import { setActiveSection } from '../lib/portfolio-shell';
+  
+  interface Section {
+    id: string;
+    number: string;
+    label: string;
+  }
+  
+  const sections: Section[] = [
+    { id: 'projects', number: '01', label: 'selected work' },
+    { id: 'open-source', number: '02', label: 'open source' },
+    { id: 'experience', number: '03', label: 'experience' },
+    { id: 'how-i-work', number: '04', label: 'workflow' },
+    { id: 'about', number: '05', label: 'about' },
+    { id: 'contact', number: '06', label: 'contact' },
+  ];
+  
+  let currentSection: string | null = null;
+  
+  function init() {
+    const statusChip = document.getElementById('section-status');
+    const statusText = document.getElementById('section-status-text');
+    
+    if (!statusChip || !statusText) return;
+    
+    function updateSectionStatus(sectionId: string) {
+      if (!statusText || !statusChip) return;
+      
+      const section = sections.find(s => s.id === sectionId);
+      if (section) {
+        statusText.textContent = `${section.number} / ${section.label}`;
+        currentSection = sectionId;
+        setActiveSection(sectionId);
+        
+        if (statusChip.hasAttribute('hidden')) {
+          statusChip.removeAttribute('hidden');
+        }
+      }
+    }
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let bestEntry = null as IntersectionObserverEntry | null;
+        let bestRatio = 0;
+        
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
+            bestRatio = entry.intersectionRatio;
+            bestEntry = entry;
+          }
+        });
+        
+        if (bestEntry) {
+          const target = bestEntry.target as HTMLElement;
+          const sectionId = target.id;
+          if (sectionId && currentSection !== sectionId) {
+            updateSectionStatus(sectionId);
+          }
+        }
+      },
+      {
+        threshold: [0, 0.2, 0.4, 0.6, 0.8, 1.0],
+        rootMargin: '-20% 0px -40% 0px',
+      }
+    );
+    
+    sections.forEach((section) => {
+      const element = document.getElementById(section.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>
+
+<style>
+  .section-status {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 50;
+    padding: 0.55rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    box-shadow: var(--shadow);
+    pointer-events: none;
+    animation: slideUp 300ms ease both;
+  }
+  
+  .section-status-text {
+    color: var(--accent-text);
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 760px) {
+    .section-status {
+      bottom: 1.25rem;
+      right: 1.25rem;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.65rem;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .section-status {
+      animation: none;
+    }
+  }
+</style>

@@ -3,11 +3,11 @@
 ---
 
 <div class="terminal-fetch" id="terminal-fetch">
-  <div class="terminal-header">
+  <div class="terminal-header" id="terminal-header">
     <span class="terminal-prompt">~</span>
-    <span class="terminal-command">whoami</span>
+    <span class="terminal-command" id="terminal-command">whoami</span>
   </div>
-  <div class="terminal-body">
+  <div class="terminal-body" id="terminal-body">
     <div class="fetch-row">
       <span class="fetch-label">user</span>
       <span class="fetch-value">Dan Gilles</span>
@@ -36,36 +36,69 @@
 </div>
 
 <script>
-  const username = 'Audacity88';
-  const statsEl = document.getElementById('github-stats');
+  import { onShellStateChange } from '../lib/portfolio-shell';
   
-  async function fetchGitHubStats() {
-    try {
-      const response = await fetch(`https://api.github.com/users/${username}`, {
-        headers: { 'Accept': 'application/vnd.github.v3+json' }
-      });
-      
-      if (!response.ok) {
-        throw new Error('Rate limited or API error');
+  const username = 'Audacity88';
+  
+  function init() {
+    const statsEl = document.getElementById('github-stats');
+    const terminalFetch = document.getElementById('terminal-fetch');
+    const terminalCommand = document.getElementById('terminal-command');
+    
+    async function fetchGitHubStats() {
+      try {
+        const response = await fetch(`https://api.github.com/users/${username}`, {
+          headers: { 'Accept': 'application/vnd.github.v3+json' }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Rate limited or API error');
+        }
+        
+        const data = await response.json();
+        
+        if (statsEl) {
+          statsEl.innerHTML = `
+            <span class="stat-item">${data.public_repos || 0} repos</span>
+            <span class="stat-sep">·</span>
+            <span class="stat-item">${data.followers || 0} followers</span>
+          `;
+        }
+      } catch (error) {
+        // Keep fallback values
       }
-      
-      const data = await response.json();
-      
-      if (statsEl) {
-        statsEl.innerHTML = `
-          <span class="stat-item">${data.public_repos || 0} repos</span>
-          <span class="stat-sep">·</span>
-          <span class="stat-item">${data.followers || 0} followers</span>
-        `;
-      }
-    } catch (error) {
-      // Keep fallback values if fetch fails (already in HTML)
-      // Don't replace with "active" - keep the static follower count
     }
+    
+    function flashAccent() {
+      if (terminalFetch) {
+        terminalFetch.classList.add('accent-flash');
+        setTimeout(() => {
+          terminalFetch.classList.remove('accent-flash');
+        }, 400);
+      }
+    }
+    
+    onShellStateChange((changes) => {
+      if (changes.palette !== undefined) {
+        flashAccent();
+      }
+      
+      if (changes.lastCommand !== undefined && changes.lastCommand) {
+        if (terminalCommand) {
+          terminalCommand.textContent = `$ ${changes.lastCommand}`;
+        }
+        flashAccent();
+      }
+    });
+    
+    fetchGitHubStats();
   }
   
-  // Fetch on load
-  fetchGitHubStats();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>
 
 <style>
@@ -77,6 +110,19 @@
     font-size: 0.75rem;
     overflow: hidden;
     margin-bottom: 2rem;
+    transition: border-color 400ms ease;
+  }
+  
+  .terminal-fetch.accent-flash {
+    border-color: var(--accent);
+  }
+  
+  .terminal-fetch.accent-flash .terminal-header {
+    background: var(--tint);
+  }
+  
+  .terminal-fetch.accent-flash .terminal-prompt {
+    color: var(--accent-text);
   }
   
   .terminal-header {
@@ -84,11 +130,13 @@
     border-bottom: 1px solid var(--line);
     padding: 0.5rem 0.85rem;
     color: var(--muted);
+    transition: background-color 400ms ease;
   }
   
   .terminal-prompt {
     color: var(--accent-text);
     margin-right: 0.5rem;
+    transition: color 400ms ease;
   }
   
   .terminal-command {

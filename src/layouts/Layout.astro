@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '../styles/print.css';
 import PaletteMenu from '../components/PaletteMenu.astro';
 import CommandPalette from '../components/CommandPalette.astro';
+import SectionStatus from '../components/SectionStatus.astro';
 interface Props {
   title?: string;
   description?: string;
@@ -80,6 +81,7 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
       <PaletteMenu />
     </header>
     <CommandPalette />
+    <SectionStatus />
     <slot />
     <footer class="site-footer container">
       <a class="footer-name" href={base}>Dan Gilles<span aria-hidden="true">.</span></a>
@@ -88,5 +90,52 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
       <span class="command-hint" id="command-hint">Press <kbd>:</kbd> for commands</span>
       <a href="#main">Back to top <span aria-hidden="true">↑</span></a>
     </footer>
+    <script>
+      import { onShellStateChange } from '../lib/portfolio-shell';
+      
+      function init() {
+        const wordmark = document.querySelector('.wordmark');
+        const navLinks = document.querySelectorAll('.site-header nav a');
+        
+        const sectionToNav: Record<string, string> = {
+          'projects': 'projects',
+          'open-source': 'open-source',
+          'experience': 'experience',
+          'how-i-work': 'how-i-work',
+          'about': 'about',
+          'contact': 'contact',
+        };
+        
+        onShellStateChange((changes) => {
+          if (changes.palette !== undefined && wordmark) {
+            wordmark.classList.add('accent-flash');
+            setTimeout(() => {
+              wordmark.classList.remove('accent-flash');
+            }, 400);
+          }
+          
+          if (changes.activeSection !== undefined && changes.activeSection !== null) {
+            const targetId = sectionToNav[changes.activeSection];
+            navLinks.forEach((link) => {
+              const href = (link as HTMLAnchorElement).getAttribute('href') || '';
+              const hashMatch = href.match(/#([^?]+)/);
+              const linkSectionId = hashMatch ? hashMatch[1] : null;
+              
+              if (linkSectionId === targetId) {
+                link.setAttribute('aria-current', 'location');
+              } else if (href.includes('#')) {
+                link.removeAttribute('aria-current');
+              }
+            });
+          }
+        });
+      }
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    </script>
   </body>
 </html>
