@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/print.css';
 import PaletteMenu from '../components/PaletteMenu.astro';
+import DesktopToggle from '../components/DesktopToggle.astro';
 import CommandPalette from '../components/CommandPalette.astro';
 import SectionStatus from '../components/SectionStatus.astro';
 import DesktopShell from '../components/DesktopShell.astro';
@@ -79,6 +80,7 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
         <a href={`${base}offers/`} aria-current={Astro.url.pathname === `${base}offers/` ? 'page' : undefined}>Offers</a>
         <a href={`${base}#contact`}>Contact</a>
       </nav>
+      <DesktopToggle />
       <PaletteMenu />
     </header>
     <CommandPalette />

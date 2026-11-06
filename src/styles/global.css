@@ -163,6 +163,7 @@
   /* Reserve space before the script reveals the control, including without JS. */
   .theme-control,
   .palette-control { flex: 0 0 86px; width: 86px; height: 44px; }
+  .desktop-toggle-control { flex: 0 0 98px; width: 98px; height: 44px; }
   .theme-toggle,
   .palette-toggle { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; background: var(--surface); border: 1px solid var(--line); color: var(--muted); padding: .45rem .75rem; height: 44px; width: 86px; font-family: var(--mono); font-size: .68rem; white-space: nowrap; border-radius: 999px; }
   .theme-toggle:is(:hover, :focus-visible),
