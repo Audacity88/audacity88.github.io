@@ -2,7 +2,7 @@
 // Soft enter: optional skippable boot beat on first visit
 ---
 
-<div class="soft-enter" id="soft-enter" hidden>
+<div class="soft-enter" id="soft-enter">
   <div class="soft-enter-overlay">
     <div class="soft-enter-statusline">
       <span class="statusline-text">dangilles.dev &middot; ready</span>
@@ -69,6 +69,9 @@
       // sessionStorage unavailable
     }
     
+    // Remove body class to reveal content
+    document.body.classList.remove('soft-enter-active');
+    
     // Remove from DOM after animation
     setTimeout(() => {
       softEnter.setAttribute('hidden', '');
@@ -95,10 +98,10 @@
     window.removeEventListener('touchmove', handleWheelOrTouch);
   }
   
-  // Initialize
+  // Initialize - run immediately to prevent FOUC
   if (shouldShowEnter()) {
-    // Show the overlay
-    softEnter?.removeAttribute('hidden');
+    // Add body class to hide main content (ensures overlay is first paint)
+    document.body.classList.add('soft-enter-active');
     document.body.style.overflow = 'hidden';
     
     // Broadcast open event for shell bus integration
@@ -112,6 +115,9 @@
     const overlay = softEnter?.querySelector('.soft-enter-overlay');
     overlay?.addEventListener('click', handleDismiss);
     document.addEventListener('keydown', handleKeydown, { once: true });
+  } else {
+    // Hide overlay immediately if shouldn't show
+    softEnter?.setAttribute('hidden', '');
   }
 </script>
 

@@ -50,6 +50,20 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <link rel="manifest" href={`${base}site.webmanifest`} />
     <title>{title}</title>
+    <style>
+      /* Critical CSS: Hide page content when SoftEnter is active to prevent FOUC */
+      body.soft-enter-active .site-header,
+      body.soft-enter-active .site-footer,
+      body.soft-enter-active main {
+        visibility: hidden;
+      }
+      /* Hide SoftEnter by default if prefers-reduced-motion (CSS-level guard) */
+      @media (prefers-reduced-motion: reduce) {
+        .soft-enter {
+          display: none !important;
+        }
+      }
+    </style>
     <script is:inline>
       try {
         let palette = localStorage.getItem('portfolio-palette');
