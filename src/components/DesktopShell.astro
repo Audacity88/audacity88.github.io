@@ -885,12 +885,13 @@ import DesktopWindow from './DesktopWindow.astro';
   }
   
   .desktop-windows {
-    position: relative;
-    flex: 1;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
     pointer-events: none;
   }
   
-  .desktop-windows > * {
+  .desktop-windows :global(.desktop-window) {
     pointer-events: auto;
   }
   
