@@ -17,6 +17,10 @@
     ],
     "github": "https://github.com/EyrieCommander/eyrie",
     "demo": null,
+    "inCardDemo": {
+      "type": "stub",
+      "note": "Local only. No public demo available."
+    },
     "status": "verified",
     "statusLabel": "Build & tests checked",
     "featured": true,
@@ -187,6 +191,10 @@
     "github": "https://github.com/Audacity88/swift-ship",
     "demo": "https://swift-ship-pi.vercel.app",
     "demoLabel": "Live sign-in page",
+    "inCardDemo": {
+      "type": "iframe",
+      "url": "https://swift-ship-pi.vercel.app"
+    },
     "status": "verified",
     "statusLabel": "Build checked",
     "featured": false,
@@ -302,6 +310,10 @@
     ],
     "github": "https://github.com/Audacity88/witness-lexington",
     "demo": null,
+    "inCardDemo": {
+      "type": "simulacrum",
+      "variant": "witness-lexington"
+    },
     "status": "verified",
     "statusLabel": "Build & tests checked",
     "featured": false,
@@ -362,6 +374,10 @@
     ],
     "github": null,
     "demo": null,
+    "inCardDemo": {
+      "type": "simulacrum",
+      "variant": "model-picker"
+    },
     "status": "verified",
     "statusLabel": "Build & tests checked",
     "featured": false,
@@ -421,6 +437,10 @@
     ],
     "github": "https://github.com/EyrieCommander/codex-video-vision",
     "demo": null,
+    "inCardDemo": {
+      "type": "stub",
+      "badge": "108 tests passed"
+    },
     "status": "verified",
     "statusLabel": "Tests checked",
     "featured": false,
@@ -480,6 +500,17 @@
     ],
     "github": "https://github.com/EyrieCommander/codex-skills",
     "demo": null,
+    "inCardDemo": {
+      "type": "stub",
+      "skills": [
+        "Source intake & analysis",
+        "Writing & documentation",
+        "Media review workflows",
+        "Maintenance automation",
+        "Task history recovery",
+        "Workspace path resolution"
+      ]
+    },
     "status": "pending-verification",
     "featured": false,
     "images": [
@@ -539,6 +570,10 @@
     ],
     "github": "https://github.com/Audacity88/gauntlet-ai",
     "demo": null,
+    "inCardDemo": {
+      "type": "simulacrum",
+      "variant": "chatgenius"
+    },
     "status": "verified",
     "statusLabel": "Frontend tests checked",
     "featured": false,
@@ -599,6 +634,10 @@
     ],
     "github": "https://github.com/Audacity88/Tono4",
     "demo": null,
+    "inCardDemo": {
+      "type": "stub",
+      "note": "Simulator build not verified. No device screenshots available."
+    },
     "status": "pending-verification",
     "featured": false,
     "images": [],

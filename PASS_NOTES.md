@@ -642,3 +642,74 @@ Validation on Mac-mini.local in /Users/natalie/Development/portfolio:
 - `npm test` passed all 12 tests with no skips against the rebuilt output. Confirmed all eight built case studies include the print-only hiding rule and retain both return links in the markup. `git diff --check` passed.
 
 No server, browser, download, or Lighthouse run was started. Print appearance and pagination were not checked in a browser. This pass does not reverify project behavior, accessibility conformance, performance, remote CI, or hosting. The prohibited checkout was not opened or used. Nothing was committed, pushed, deployed, or changed on GitHub or Pages.
+
+## Pass: In-card interactive demos (Nov 6, 2026)
+
+### Changes
+- Added `inCardDemo` configuration to `projects.json` supporting three types:
+  - `iframe`: embedded hosted demos (swift-ship)
+  - `simulacrum`: in-card mockups (Witness Lexington, Model Picker, ChatGenius)
+  - `stub`: project info cards (Eyrie, codex-video-vision, codex-skills, Tono4)
+- Created `ProjectDemo.astro` component with all demo variants
+- Updated `ProjectMedia.astro` to support interactive preview activation
+  - Idle state shows static screenshot
+  - "Run Demo" button appears on hover (always visible on mobile/reduced-motion)
+  - Activated demos run inside card preview pane
+  - "Close" button returns to screenshot
+- Updated schema in `content.ts` to validate `inCardDemo` types
+- Preserved shareable desktop (#desktop) functionality - unchanged
+
+### Demo implementation per project
+- swift-ship: iframe to https://swift-ship-pi.vercel.app
+- Witness Lexington: 3D scene simulacrum with title overlay and disabled buttons
+- Model Picker: mocked ranking UI with 3 sample results
+- ChatGenius: Slack-like chat interface with sidebar, channels, and messages
+- Eyrie, codex-video-vision, codex-skills, Tono4: stub cards with icons and project info
+
+### Build validation
+- Build: 0 errors, 0 warnings, 0 hints
+- Pages: 14 built successfully
+- Links: 534 checked and valid
+- Desktop shell files unchanged (DesktopShell.astro, portfolio-shell.ts)
+
+### Accessibility & UX
+- Keyboard navigation supported with focus indicators
+- Screen reader announcements for activate/close actions
+- Mobile: buttons always visible (not hover-dependent)
+- Reduced motion: static button visibility
+- Demos stay on same page, no navigation or desktop windows
+
+### Remaining work
+- Cyclops click-test required for activation flow
+- Ada (Coding) spec-check required
+- PR #18 remains open - do not merge without approval
+
+### Constraints respected
+- No DesktopShell expansion
+- No L4 project-windows modifications
+- Static site (GitHub Pages compatible)
+- Minimal diff approach
+- Existing visual language preserved
+
+
+### Fix: Ada blocker (Nov 6, 2026 06:03 UTC)
+
+**Blocker fixed**: ProjectCard only mounted ProjectMedia when `project.featured` was true. Non-featured cards with inCardDemo (swift-ship, Witness Lexington, Model Picker, ChatGenius) received static thumbs instead of interactive previews.
+
+**Changes**:
+- Added `hasMediaSection` variable: `project.featured || project.inCardDemo`
+- Updated thumb logic: only render thumb if NOT hasMediaSection
+- Updated media section gate: render if hasMediaSection AND images.length > 0
+- Result: any card with inCardDemo gets interactive ProjectMedia, regardless of featured status
+
+**Additional fixes (Ada nits)**:
+- Added iframe `sandbox` attribute with safe permissions for swift-ship
+- Added iframe load-fail fallback with 10s timeout
+- Fallback shows link to open demo in new tab if iframe fails
+- Error handling checks iframe load events and content access
+
+**Build validation**:
+- Build: 0 errors, 0 warnings, 0 hints
+- Pages: 14 built successfully
+- Links: 534 checked and valid
+
