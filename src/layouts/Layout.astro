@@ -22,7 +22,7 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en" data-base={base}>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -50,80 +50,6 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <link rel="manifest" href={`${base}site.webmanifest`} />
     <title>{title}</title>
-    <style>
-      /* Critical CSS: Hide ALL page chrome when SoftEnter gate is active to prevent FOUC */
-      html.soft-enter-gate .site-header,
-      html.soft-enter-gate .site-footer,
-      html.soft-enter-gate main,
-      html.soft-enter-gate .command-palette,
-      html.soft-enter-gate .section-status,
-      html.soft-enter-gate .desktop-shell {
-        visibility: hidden;
-      }
-      /* Show SoftEnter only when gate is active (wins over scoped styles) */
-      html.soft-enter-gate .soft-enter {
-        display: flex !important;
-      }
-      /* Force hide if prefers-reduced-motion (CSS-level guard) */
-      @media (prefers-reduced-motion: reduce) {
-        html.soft-enter-gate .soft-enter {
-          display: none !important;
-        }
-        html.soft-enter-gate .site-header,
-        html.soft-enter-gate .site-footer,
-        html.soft-enter-gate main,
-        html.soft-enter-gate .command-palette,
-        html.soft-enter-gate .section-status,
-        html.soft-enter-gate .desktop-shell {
-          visibility: visible !important;
-        }
-      }
-    </style>
-    <script is:inline>
-      // Blocking inline gate: decide show vs skip BEFORE first paint
-      (function() {
-        var STORAGE_KEY = 'portfolio-enter-seen';
-        
-        function shouldShowEnter() {
-          // Skip if prefers-reduced-motion
-          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            return false;
-          }
-          
-          // Skip if query params present
-          var params = new URLSearchParams(window.location.search);
-          if (params.has('still') || params.has('skip-enter')) {
-            return false;
-          }
-          
-          // Skip on deep links (non-home routes)
-          var base = document.documentElement.getAttribute('data-base') || '/';
-          var path = window.location.pathname;
-          var normalizedPath = path.endsWith('/') ? path : path + '/';
-          var normalizedBase = base.endsWith('/') ? base : base + '/';
-          
-          if (normalizedPath !== normalizedBase) {
-            return false;
-          }
-          
-          // Skip if already seen in this session
-          try {
-            if (sessionStorage.getItem(STORAGE_KEY)) {
-              return false;
-            }
-          } catch (e) {
-            // sessionStorage unavailable, show enter anyway
-          }
-          
-          return true;
-        }
-        
-        // Set gate class on HTML element (exists in head, before body paints)
-        if (shouldShowEnter()) {
-          document.documentElement.classList.add('soft-enter-gate');
-        }
-      })();
-    </script>
     <script is:inline>
       try {
         let palette = localStorage.getItem('portfolio-palette');
