@@ -39,55 +39,66 @@
   import { onShellStateChange } from '../lib/portfolio-shell';
   
   const username = 'Audacity88';
-  const statsEl = document.getElementById('github-stats');
-  const terminalFetch = document.getElementById('terminal-fetch');
-  const terminalCommand = document.getElementById('terminal-command');
   
-  async function fetchGitHubStats() {
-    try {
-      const response = await fetch(`https://api.github.com/users/${username}`, {
-        headers: { 'Accept': 'application/vnd.github.v3+json' }
-      });
-      
-      if (!response.ok) {
-        throw new Error('Rate limited or API error');
+  function init() {
+    const statsEl = document.getElementById('github-stats');
+    const terminalFetch = document.getElementById('terminal-fetch');
+    const terminalCommand = document.getElementById('terminal-command');
+    
+    async function fetchGitHubStats() {
+      try {
+        const response = await fetch(`https://api.github.com/users/${username}`, {
+          headers: { 'Accept': 'application/vnd.github.v3+json' }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Rate limited or API error');
+        }
+        
+        const data = await response.json();
+        
+        if (statsEl) {
+          statsEl.innerHTML = `
+            <span class="stat-item">${data.public_repos || 0} repos</span>
+            <span class="stat-sep">·</span>
+            <span class="stat-item">${data.followers || 0} followers</span>
+          `;
+        }
+      } catch (error) {
+        // Keep fallback values
       }
-      
-      const data = await response.json();
-      
-      if (statsEl) {
-        statsEl.innerHTML = `
-          <span class="stat-item">${data.public_repos || 0} repos</span>
-          <span class="stat-sep">·</span>
-          <span class="stat-item">${data.followers || 0} followers</span>
-        `;
-      }
-    } catch (error) {
-      // Keep fallback values
-    }
-  }
-  
-  function flashAccent() {
-    terminalFetch?.classList.add('accent-flash');
-    setTimeout(() => {
-      terminalFetch?.classList.remove('accent-flash');
-    }, 400);
-  }
-  
-  onShellStateChange((changes) => {
-    if (changes.palette !== undefined) {
-      flashAccent();
     }
     
-    if (changes.lastCommand !== undefined && changes.lastCommand) {
-      if (terminalCommand) {
-        terminalCommand.textContent = changes.lastCommand;
+    function flashAccent() {
+      if (terminalFetch) {
+        terminalFetch.classList.add('accent-flash');
+        setTimeout(() => {
+          terminalFetch.classList.remove('accent-flash');
+        }, 400);
       }
-      flashAccent();
     }
-  });
+    
+    onShellStateChange((changes) => {
+      if (changes.palette !== undefined) {
+        flashAccent();
+      }
+      
+      if (changes.lastCommand !== undefined && changes.lastCommand) {
+        if (terminalCommand) {
+          terminalCommand.textContent = `$ ${changes.lastCommand}`;
+        }
+        flashAccent();
+      }
+    });
+    
+    fetchGitHubStats();
+  }
   
-  fetchGitHubStats();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>
 
 <style>
@@ -119,11 +130,13 @@
     border-bottom: 1px solid var(--line);
     padding: 0.5rem 0.85rem;
     color: var(--muted);
+    transition: background-color 400ms ease;
   }
   
   .terminal-prompt {
     color: var(--accent-text);
     margin-right: 0.5rem;
+    transition: color 400ms ease;
   }
   
   .terminal-command {

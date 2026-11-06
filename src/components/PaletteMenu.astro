@@ -45,11 +45,6 @@
     setPaletteOpen,
   } from '../lib/portfolio-shell';
   
-  const button = document.querySelector<HTMLButtonElement>('#palette-toggle');
-  const label = document.querySelector<HTMLElement>('#palette-label');
-  const menu = document.querySelector<HTMLElement>('#palette-menu');
-  const options = document.querySelectorAll<HTMLButtonElement>('.palette-option');
-  
   const paletteNames: Record<Palette, string> = {
     system: 'Auto',
     light: 'Day',
@@ -58,63 +53,70 @@
     ocean: 'Ocean',
   };
   
-  const initialPalette = document.documentElement.dataset.palette;
-  let palette: Palette = (initialPalette && Object.keys(paletteNames).includes(initialPalette))
-    ? initialPalette as Palette
-    : 'system';
-  
-  function applyPalette(p: Palette) {
-    if (p === 'system') {
-      delete document.documentElement.dataset.palette;
-    } else {
-      document.documentElement.dataset.palette = p;
-    }
+  function init() {
+    const button = document.querySelector<HTMLButtonElement>('#palette-toggle');
+    const label = document.querySelector<HTMLElement>('#palette-label');
+    const menu = document.querySelector<HTMLElement>('#palette-menu');
+    const options = document.querySelectorAll<HTMLButtonElement>('.palette-option');
     
-    if (label) {
-      label.textContent = paletteNames[p];
-    }
+    if (!button || !label || !menu) return;
     
-    options.forEach((opt) => {
-      if (opt.dataset.palette === p) {
-        opt.setAttribute('aria-pressed', 'true');
-      } else {
-        opt.removeAttribute('aria-pressed');
-      }
-    });
-  }
-  
-  function savePalette(p: Palette) {
-    try {
+    const initialPalette = document.documentElement.dataset.palette;
+    let palette: Palette = (initialPalette && Object.keys(paletteNames).includes(initialPalette))
+      ? initialPalette as Palette
+      : 'system';
+    
+    function applyPalette(p: Palette) {
       if (p === 'system') {
-        localStorage.removeItem('portfolio-palette');
+        delete document.documentElement.dataset.palette;
       } else {
-        localStorage.setItem('portfolio-palette', p);
+        document.documentElement.dataset.palette = p;
       }
-    } catch {
-      // Storage unavailable
+      
+      if (label) {
+        label.textContent = paletteNames[p];
+      }
+      
+      options.forEach((opt) => {
+        if (opt.dataset.palette === p) {
+          opt.setAttribute('aria-pressed', 'true');
+        } else {
+          opt.removeAttribute('aria-pressed');
+        }
+      });
     }
-  }
-  
-  function toggleMenu() {
-    const isOpen = menu?.getAttribute('hidden') === null;
-    if (isOpen) {
+    
+    function savePalette(p: Palette) {
+      try {
+        if (p === 'system') {
+          localStorage.removeItem('portfolio-palette');
+        } else {
+          localStorage.setItem('portfolio-palette', p);
+        }
+      } catch {
+        // Storage unavailable
+      }
+    }
+    
+    function toggleMenu() {
+      const isOpen = menu?.getAttribute('hidden') === null;
+      if (isOpen) {
+        menu?.setAttribute('hidden', '');
+        setPaletteOpen(false);
+      } else {
+        menu?.removeAttribute('hidden');
+        setPaletteOpen(true);
+      }
+    }
+    
+    function closeMenu() {
       menu?.setAttribute('hidden', '');
       setPaletteOpen(false);
-    } else {
-      menu?.removeAttribute('hidden');
-      setPaletteOpen(true);
     }
-  }
-  
-  function closeMenu() {
-    menu?.setAttribute('hidden', '');
-    setPaletteOpen(false);
-  }
-  
-  applyPalette(palette);
-  updatePalette(palette);
-  
-  if (button) {
+    
+    applyPalette(palette);
+    updatePalette(palette);
+    
     button.hidden = false;
     button.setAttribute('aria-label', 'Choose color palette');
     button.setAttribute('aria-expanded', 'false');
@@ -125,40 +127,40 @@
       toggleMenu();
       button.setAttribute('aria-expanded', menu?.getAttribute('hidden') === null ? 'true' : 'false');
     });
-  }
-  
-  options.forEach((option) => {
-    option.addEventListener('click', () => {
-      const newPalette = option.dataset.palette as Palette;
-      palette = newPalette;
-      applyPalette(newPalette);
-      savePalette(newPalette);
-      updatePalette(newPalette);
-      closeMenu();
-      if (button) {
+    
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        const newPalette = option.dataset.palette as Palette;
+        palette = newPalette;
+        applyPalette(newPalette);
+        savePalette(newPalette);
+        updatePalette(newPalette);
+        closeMenu();
+        button.setAttribute('aria-expanded', 'false');
+      });
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!button?.contains(e.target as Node) && !menu?.contains(e.target as Node)) {
+        closeMenu();
         button.setAttribute('aria-expanded', 'false');
       }
     });
-  });
-  
-  document.addEventListener('click', (e) => {
-    if (!button?.contains(e.target as Node) && !menu?.contains(e.target as Node)) {
-      closeMenu();
-      if (button) {
-        button.setAttribute('aria-expanded', 'false');
-      }
-    }
-  });
-  
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menu?.getAttribute('hidden') === null) {
-      closeMenu();
-      if (button) {
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu?.getAttribute('hidden') === null) {
+        closeMenu();
         button.setAttribute('aria-expanded', 'false');
         button.focus();
       }
-    }
-  });
+    });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>
 
 <style>

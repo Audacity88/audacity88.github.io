@@ -33,191 +33,203 @@
     action: () => void;
   }
   
-  const palette = document.getElementById('command-palette');
-  const overlay = document.getElementById('command-overlay');
-  const input = document.getElementById('command-input') as HTMLInputElement;
-  const results = document.getElementById('command-results');
-  const container = document.querySelector('.command-container') as HTMLElement;
-  
-  const base = import.meta.env.BASE_URL;
-  
-  const commands: Command[] = [
-    {
-      name: 'theme',
-      description: 'Change color palette',
-      action: () => {
-        setLastCommand(':theme');
-        document.getElementById('palette-toggle')?.click();
-        closePalette();
-      },
-    },
-    {
-      name: 'projects',
-      description: 'Jump to projects section',
-      action: () => {
-        setLastCommand(':projects');
-        window.location.href = `${base}#projects`;
-        closePalette();
-      },
-    },
-    {
-      name: 'experience',
-      description: 'Jump to experience section',
-      action: () => {
-        setLastCommand(':experience');
-        window.location.href = `${base}#experience`;
-        closePalette();
-      },
-    },
-    {
-      name: 'contact',
-      description: 'Jump to contact section',
-      action: () => {
-        setLastCommand(':contact');
-        window.location.href = `${base}#contact`;
-        closePalette();
-      },
-    },
-    {
-      name: 'resume',
-      description: 'View resume',
-      action: () => {
-        setLastCommand(':resume');
-        window.location.href = `${base}resume/`;
-        closePalette();
-      },
-    },
-    {
-      name: 'offers',
-      description: 'View offers page',
-      action: () => {
-        setLastCommand(':offers');
-        window.location.href = `${base}offers/`;
-        closePalette();
-      },
-    },
-    {
-      name: 'github',
-      description: 'Open GitHub profile',
-      action: () => {
-        setLastCommand(':github');
-        window.open('https://github.com/Audacity88', '_blank');
-        closePalette();
-      },
-    },
-  ];
-  
-  function openPalette() {
-    palette?.removeAttribute('hidden');
-    renderResults(commands);
-    input?.focus();
-    document.body.style.overflow = 'hidden';
-    setCommandPaletteOpen(true);
-  }
-  
-  function closePalette() {
-    palette?.setAttribute('hidden', '');
-    if (input) input.value = '';
-    if (results) results.innerHTML = '';
-    document.body.style.overflow = '';
-    setCommandPaletteOpen(false);
-    if (previousFocus) {
-      previousFocus.focus();
-      previousFocus = null;
-    }
-  }
-  
-  function filterCommands(query: string): Command[] {
-    const q = query.toLowerCase().trim();
-    if (!q) return commands;
-    return commands.filter(
-      (cmd) =>
-        cmd.name.toLowerCase().includes(q) ||
-        cmd.description.toLowerCase().includes(q)
-    );
-  }
-  
-  function renderResults(filteredCommands: Command[]) {
-    if (!results) return;
+  function init() {
+    const palette = document.getElementById('command-palette');
+    const overlay = document.getElementById('command-overlay');
+    const input = document.getElementById('command-input') as HTMLInputElement;
+    const results = document.getElementById('command-results');
+    const container = document.querySelector('.command-container') as HTMLElement;
     
-    if (filteredCommands.length === 0) {
-      results.innerHTML = '<div class="command-empty">No matching commands</div>';
-      return;
+    if (!palette || !overlay || !input || !results || !container) return;
+    
+    const base = import.meta.env.BASE_URL;
+    
+    let previousFocus: HTMLElement | null = null;
+    
+    const commands: Command[] = [
+      {
+        name: 'theme',
+        description: 'Change color palette',
+        action: () => {
+          setLastCommand(':theme');
+          document.getElementById('palette-toggle')?.click();
+          closePalette();
+        },
+      },
+      {
+        name: 'projects',
+        description: 'Jump to projects section',
+        action: () => {
+          setLastCommand(':projects');
+          window.location.href = `${base}#projects`;
+          closePalette();
+        },
+      },
+      {
+        name: 'experience',
+        description: 'Jump to experience section',
+        action: () => {
+          setLastCommand(':experience');
+          window.location.href = `${base}#experience`;
+          closePalette();
+        },
+      },
+      {
+        name: 'contact',
+        description: 'Jump to contact section',
+        action: () => {
+          setLastCommand(':contact');
+          window.location.href = `${base}#contact`;
+          closePalette();
+        },
+      },
+      {
+        name: 'resume',
+        description: 'View resume',
+        action: () => {
+          setLastCommand(':resume');
+          window.location.href = `${base}resume/`;
+          closePalette();
+        },
+      },
+      {
+        name: 'offers',
+        description: 'View offers page',
+        action: () => {
+          setLastCommand(':offers');
+          window.location.href = `${base}offers/`;
+          closePalette();
+        },
+      },
+      {
+        name: 'github',
+        description: 'Open GitHub profile',
+        action: () => {
+          setLastCommand(':github');
+          window.open('https://github.com/Audacity88', '_blank');
+          closePalette();
+        },
+      },
+    ];
+    
+    function openPalette() {
+      if (!palette || !input) return;
+      palette.removeAttribute('hidden');
+      renderResults(commands);
+      input.focus();
+      document.body.style.overflow = 'hidden';
+      setCommandPaletteOpen(true);
     }
     
-    results.innerHTML = filteredCommands
-      .map(
-        (cmd, index) => `
-        <button
-          type="button"
-          class="command-item"
-          data-index="${index}"
-        >
-          <span class="command-name">${cmd.name}</span>
-          <span class="command-description">${cmd.description}</span>
-        </button>
-      `
-      )
-      .join('');
+    function closePalette() {
+      if (!palette || !input || !results) return;
+      palette.setAttribute('hidden', '');
+      input.value = '';
+      results.innerHTML = '';
+      document.body.style.overflow = '';
+      setCommandPaletteOpen(false);
+      if (previousFocus) {
+        previousFocus.focus();
+        previousFocus = null;
+      }
+    }
     
-    results.querySelectorAll('.command-item').forEach((btn, index) => {
-      btn.addEventListener('click', () => {
-        filteredCommands[index].action();
+    function filterCommands(query: string): Command[] {
+      const q = query.toLowerCase().trim();
+      if (!q) return commands;
+      return commands.filter(
+        (cmd) =>
+          cmd.name.toLowerCase().includes(q) ||
+          cmd.description.toLowerCase().includes(q)
+      );
+    }
+    
+    function renderResults(filteredCommands: Command[]) {
+      if (!results) return;
+      
+      if (filteredCommands.length === 0) {
+        results.innerHTML = '<div class="command-empty">No matching commands</div>';
+        return;
+      }
+      
+      results.innerHTML = filteredCommands
+        .map(
+          (cmd, index) => `
+          <button
+            type="button"
+            class="command-item"
+            data-index="${index}"
+          >
+            <span class="command-name">${cmd.name}</span>
+            <span class="command-description">${cmd.description}</span>
+          </button>
+        `
+        )
+        .join('');
+      
+      results.querySelectorAll('.command-item').forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+          filteredCommands[index].action();
+        });
       });
+    }
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && palette.getAttribute('hidden') === null) {
+        e.preventDefault();
+        closePalette();
+        return;
+      }
+      
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+      
+      if (e.key === ':' && palette.getAttribute('hidden') !== null) {
+        e.preventDefault();
+        previousFocus = document.activeElement as HTMLElement;
+        openPalette();
+      }
+    });
+    
+    input.addEventListener('input', (e) => {
+      const query = (e.target as HTMLInputElement).value;
+      const filtered = filterCommands(query);
+      renderResults(filtered);
+    });
+    
+    overlay.addEventListener('click', closePalette);
+    
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const firstResult = results.querySelector('.command-item') as HTMLButtonElement;
+        firstResult?.click();
+      }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+      if (palette.getAttribute('hidden') === null && e.key === 'Tab') {
+        e.preventDefault();
+        input.focus();
+      }
+    });
+    
+    onShellStateChange((changes) => {
+      if (changes.palette !== undefined) {
+        container.classList.add('accent-flash');
+        setTimeout(() => {
+          container.classList.remove('accent-flash');
+        }, 400);
+      }
     });
   }
   
-  let previousFocus: HTMLElement | null = null;
-  
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && palette?.getAttribute('hidden') === null) {
-      e.preventDefault();
-      closePalette();
-      return;
-    }
-    
-    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
-      return;
-    }
-    
-    if (e.key === ':' && palette?.getAttribute('hidden') !== null) {
-      e.preventDefault();
-      previousFocus = document.activeElement as HTMLElement;
-      openPalette();
-    }
-  });
-  
-  input?.addEventListener('input', (e) => {
-    const query = (e.target as HTMLInputElement).value;
-    const filtered = filterCommands(query);
-    renderResults(filtered);
-  });
-  
-  overlay?.addEventListener('click', closePalette);
-  
-  input?.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const firstResult = results?.querySelector('.command-item') as HTMLButtonElement;
-      firstResult?.click();
-    }
-  });
-  
-  document.addEventListener('keydown', (e) => {
-    if (palette?.getAttribute('hidden') === null && e.key === 'Tab') {
-      e.preventDefault();
-      input?.focus();
-    }
-  });
-  
-  onShellStateChange((changes) => {
-    if (changes.palette !== undefined && container) {
-      container.classList.add('accent-flash');
-      setTimeout(() => {
-        container.classList.remove('accent-flash');
-      }, 400);
-    }
-  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>
 
 <style>
@@ -262,8 +274,8 @@
   .command-input-wrapper {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 1.25rem;
+    gap: 0.65rem;
+    padding: 1.1rem 1.5rem;
     border-bottom: 1px solid var(--line);
     background: var(--subtle);
   }
@@ -300,7 +312,7 @@
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    padding: 0.9rem 1.25rem;
+    padding: 1rem 1.5rem;
     background: transparent;
     border: 0;
     border-top: 1px solid transparent;

@@ -298,8 +298,8 @@
     .hero-note { animation: arrive calc(700ms / var(--motion-tempo)) calc(100ms / var(--motion-tempo)) ease both; }
     @keyframes arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .signal-static { display: none; }
-    .signal-electrons { display: inline; transition: opacity 300ms ease; }
-    .signal-electrons.motion-paused { opacity: 0.35; }
+    .signal-electrons { display: inline; transition: opacity 300ms ease, transform 300ms ease; }
+    .signal-electrons.motion-paused { opacity: 0.25; transform: scale(0.95); }
     .electron-x, .electron-y { animation: var(--axis) calc(var(--t) / 2 / var(--motion-tempo)) cubic-bezier(.37, 0, .63, 1) infinite alternate both; animation-play-state: var(--motion-paused, running); }
     .electron-x { --axis: electron-x; animation-delay: var(--dx); }
     .electron-y { --axis: electron-y; animation-delay: var(--dy); }

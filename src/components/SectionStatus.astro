@@ -9,9 +9,6 @@
 <script>
   import { setActiveSection } from '../lib/portfolio-shell';
   
-  const statusChip = document.getElementById('section-status');
-  const statusText = document.getElementById('section-status-text');
-  
   interface Section {
     id: string;
     number: string;
@@ -29,42 +26,57 @@
   
   let currentSection: string | null = null;
   
-  function updateSectionStatus(sectionId: string) {
-    const section = sections.find(s => s.id === sectionId);
-    if (section && statusText) {
-      statusText.textContent = `${section.number} / ${section.label}`;
-      currentSection = sectionId;
-      setActiveSection(sectionId);
+  function init() {
+    const statusChip = document.getElementById('section-status');
+    const statusText = document.getElementById('section-status-text');
+    
+    if (!statusChip || !statusText) return;
+    
+    function updateSectionStatus(sectionId: string) {
+      if (!statusText || !statusChip) return;
       
-      if (statusChip?.hasAttribute('hidden')) {
-        statusChip.removeAttribute('hidden');
+      const section = sections.find(s => s.id === sectionId);
+      if (section) {
+        statusText.textContent = `${section.number} / ${section.label}`;
+        currentSection = sectionId;
+        setActiveSection(sectionId);
+        
+        if (statusChip.hasAttribute('hidden')) {
+          statusChip.removeAttribute('hidden');
+        }
       }
     }
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+            const sectionId = entry.target.id;
+            if (sectionId && currentSection !== sectionId) {
+              updateSectionStatus(sectionId);
+            }
+          }
+        });
+      },
+      {
+        threshold: [0.3],
+        rootMargin: '-15% 0px -50% 0px',
+      }
+    );
+    
+    sections.forEach((section) => {
+      const element = document.getElementById(section.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
   }
   
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-          const sectionId = entry.target.id;
-          if (sectionId && currentSection !== sectionId) {
-            updateSectionStatus(sectionId);
-          }
-        }
-      });
-    },
-    {
-      threshold: [0.5],
-      rootMargin: '-20% 0px -60% 0px',
-    }
-  );
-  
-  sections.forEach((section) => {
-    const element = document.getElementById(section.id);
-    if (element) {
-      observer.observe(element);
-    }
-  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>
 
 <style>

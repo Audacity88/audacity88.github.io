@@ -126,25 +126,33 @@ const base = import.meta.env.BASE_URL;
 <script>
   import { onShellStateChange } from '../lib/portfolio-shell';
   
-  const signalElectrons = document.getElementById('signal-electrons');
-  const signalArt = document.querySelector('.signal-art');
-  
-  onShellStateChange((changes) => {
-    if (changes.motionPaused !== undefined) {
-      if (changes.motionPaused) {
-        document.documentElement.style.setProperty('--motion-paused', 'paused');
-        signalElectrons?.classList.add('motion-paused');
-      } else {
-        document.documentElement.style.setProperty('--motion-paused', 'running');
-        signalElectrons?.classList.remove('motion-paused');
-      }
-    }
+  function init() {
+    const signalElectrons = document.getElementById('signal-electrons');
+    const signalArt = document.querySelector('.signal-art');
     
-    if (changes.palette !== undefined && signalArt) {
-      signalArt.classList.add('accent-flash');
-      setTimeout(() => {
-        signalArt.classList.remove('accent-flash');
-      }, 400);
-    }
-  });
+    onShellStateChange((changes) => {
+      if (changes.motionPaused !== undefined) {
+        if (changes.motionPaused) {
+          document.documentElement.style.setProperty('--motion-paused', 'paused');
+          signalElectrons?.classList.add('motion-paused');
+        } else {
+          document.documentElement.style.setProperty('--motion-paused', 'running');
+          signalElectrons?.classList.remove('motion-paused');
+        }
+      }
+      
+      if (changes.palette !== undefined && signalArt) {
+        signalArt.classList.add('accent-flash');
+        setTimeout(() => {
+          signalArt.classList.remove('accent-flash');
+        }, 400);
+      }
+    });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>

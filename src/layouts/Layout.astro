@@ -93,16 +93,46 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
     <script>
       import { onShellStateChange } from '../lib/portfolio-shell';
       
-      const wordmark = document.querySelector('.wordmark');
+      function init() {
+        const wordmark = document.querySelector('.wordmark');
+        const navLinks = document.querySelectorAll('.site-header nav a');
+        
+        const sectionToNav: Record<string, string> = {
+          'projects': '#projects',
+          'open-source': '#open-source',
+          'experience': '#experience',
+          'contact': '#contact',
+        };
+        
+        onShellStateChange((changes) => {
+          if (changes.palette !== undefined && wordmark) {
+            wordmark.classList.add('accent-flash');
+            setTimeout(() => {
+              wordmark.classList.remove('accent-flash');
+            }, 400);
+          }
+          
+          if (changes.activeSection !== undefined && changes.activeSection) {
+            const targetHash = sectionToNav[changes.activeSection];
+            if (targetHash) {
+              navLinks.forEach((link) => {
+                const href = (link as HTMLAnchorElement).getAttribute('href') || '';
+                if (href.endsWith(targetHash)) {
+                  link.setAttribute('aria-current', 'location');
+                } else if (href.includes('#')) {
+                  link.removeAttribute('aria-current');
+                }
+              });
+            }
+          }
+        });
+      }
       
-      onShellStateChange((changes) => {
-        if (changes.palette !== undefined && wordmark) {
-          wordmark.classList.add('accent-flash');
-          setTimeout(() => {
-            wordmark.classList.remove('accent-flash');
-          }, 400);
-        }
-      });
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
     </script>
   </body>
 </html>
