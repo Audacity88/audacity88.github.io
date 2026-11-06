@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-11-06T05:50:38.597Z",
+  "repos": [
+    {
+      "id": "eyrie",
+      "label": "Eyrie",
+      "owner": "EyrieCommander",
+      "name": "eyrie",
+      "url": "https://github.com/EyrieCommander/eyrie",
+      "stars": 5,
+      "forks": 2,
+      "pushedAt": "2026-10-08T20:23:47Z",
+      "defaultBranch": "main"
+    },
+    {
+      "id": "zeroclaw",
+      "label": "ZeroClaw",
+      "owner": "zeroclaw-labs",
+      "name": "zeroclaw",
+      "url": "https://github.com/zeroclaw-labs/zeroclaw",
+      "stars": 33143,
+      "forks": 5000,
+      "pushedAt": "2026-11-06T05:44:58Z",
+      "defaultBranch": "master",
+      "ci": {
+        "conclusion": "success",
+        "url": "https://github.com/zeroclaw-labs/zeroclaw/actions/runs/42166908106"
+      }
+    },
+    {
+      "id": "swift-ship",
+      "label": "swift-ship",
+      "owner": "Audacity88",
+      "name": "swift-ship",
+      "url": "https://github.com/Audacity88/swift-ship",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-11-05T21:52:11Z",
+      "defaultBranch": "main",
+      "ci": {
+        "conclusion": "success",
+        "url": "https://github.com/Audacity88/swift-ship/actions/runs/42116509362"
+      }
+    },
+    {
+      "id": "witness-lexington",
+      "label": "Witness Lexington",
+      "owner": "Audacity88",
+      "name": "witness-lexington",
+      "url": "https://github.com/Audacity88/witness-lexington",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-11-05T04:24:35Z",
+      "defaultBranch": "main"
+    },
+    {
+      "id": "gauntlet-ai",
+      "label": "ChatGenius",
+      "owner": "Audacity88",
+      "name": "gauntlet-ai",
+      "url": "https://github.com/Audacity88/gauntlet-ai",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-11-05T23:15:57Z",
+      "defaultBranch": "main",
+      "ci": {
+        "conclusion": "success",
+        "url": "https://github.com/Audacity88/gauntlet-ai/actions/runs/42128290010"
+      }
+    },
+    {
+      "id": "tono4",
+      "label": "Tono4",
+      "owner": "Audacity88",
+      "name": "Tono4",
+      "url": "https://github.com/Audacity88/Tono4",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2025-03-11T21:30:58Z",
+      "defaultBranch": "master"
+    },
+    {
+      "id": "codex-video-vision",
+      "label": "codex-video-vision",
+      "owner": "EyrieCommander",
+      "name": "codex-video-vision",
+      "url": "https://github.com/EyrieCommander/codex-video-vision",
+      "stars": 1,
+      "forks": 0,
+      "pushedAt": "2026-10-29T19:00:21Z",
+      "defaultBranch": "main",
+      "ci": {
+        "conclusion": "success",
+        "url": "https://github.com/EyrieCommander/codex-video-vision/actions/runs/30685201244"
+      }
+    },
+    {
+      "id": "codex-skills",
+      "label": "codex-skills",
+      "owner": "EyrieCommander",
+      "name": "codex-skills",
+      "url": "https://github.com/EyrieCommander/codex-skills",
+      "stars": 3,
+      "forks": 0,
+      "pushedAt": "2026-09-07T19:16:34Z",
+      "defaultBranch": "master"
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+---
+/**
+ * Repo pulse pills - show freshness for public repos.
+ * Displays: pushed age, stars, optional CI status.
+ * Fails gracefully if data is missing or stale.
+ */
+
+interface Props {
+  repoId: string;
+}
+
+const { repoId } = Astro.props;
+
+let pulse: {
+  generatedAt: string;
+  repos: Array<{
+    id: string;
+    label: string;
+    url: string;
+    stars: number;
+    pushedAt: string;
+    ci?: { conclusion: string; url: string };
+  }>;
+} | null = null;
+
+try {
+  pulse = await import('../data/repo-pulse.json').then((m) => m.default);
+} catch {
+  // Fail silently - pulse data not available
+}
+
+const repo = pulse?.repos.find((r) => r.id === repoId);
+
+if (!repo) {
+  // No data for this repo - don't render anything
+  return null;
+}
+
+// Calculate relative time since push
+function getRelativeTime(isoDate: string): string {
+  const now = new Date();
+  const then = new Date(isoDate);
+  const diffMs = now.getTime() - then.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  
+  if (diffDays === 0) return 'today';
+  if (diffDays === 1) return '1d ago';
+  if (diffDays < 7) return `${diffDays}d ago`;
+  if (diffDays < 30) {
+    const weeks = Math.floor(diffDays / 7);
+    return weeks === 1 ? '1w ago' : `${weeks}w ago`;
+  }
+  const months = Math.floor(diffDays / 30);
+  return months === 1 ? '1mo ago' : `${months}mo ago`;
+}
+
+const pushedAge = getRelativeTime(repo.pushedAt);
+const ciClass = repo.ci?.conclusion === 'success' ? 'ci-success' 
+  : repo.ci?.conclusion === 'failure' ? 'ci-failure' 
+  : 'ci-pending';
+---
+
+<div class="repo-pulse">
+  <span class="pulse-pill pushed">pushed {pushedAge}</span>
+  {repo.stars > 0 && <span class="pulse-pill stars">★ {repo.stars}</span>}
+  {repo.ci && (
+    <a 
+      href={repo.ci.url} 
+      class={`pulse-pill ci ${ciClass}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`CI status: ${repo.ci.conclusion}`}
+    >
+      {repo.ci.conclusion === 'success' ? '✓' : repo.ci.conclusion === 'failure' ? '✗' : '○'} CI
+    </a>
+  )}
+</div>
+
+<style>
+  .repo-pulse {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .pulse-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    white-space: nowrap;
+    background: var(--surface-raised);
+    color: var(--muted);
+    border: 1px solid var(--line);
+  }
+
+  .pulse-pill.pushed {
+    color: var(--text);
+  }
+
+  .pulse-pill.stars {
+    color: var(--accent-text);
+  }
+
+  .pulse-pill.ci {
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+  }
+
+  .pulse-pill.ci:hover {
+    background: var(--surface-hover);
+  }
+
+  .pulse-pill.ci.ci-success {
+    color: #22c55e;
+    border-color: #22c55e40;
+  }
+
+  .pulse-pill.ci.ci-failure {
+    color: #ef4444;
+    border-color: #ef444440;
+  }
+
+  .pulse-pill.ci.ci-pending {
+    color: var(--accent-text);
+    border-color: var(--accent);
+  }
+
+  @media print {
+    .repo-pulse {
+      display: none;
+    }
+  }
+</style>
