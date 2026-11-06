@@ -1,6 +1,7 @@
 ---
-// L4a: Living desktop shell chrome — wallpaper, dock, status strip
+// L4a+b: Living desktop shell — wallpaper, dock, status strip + window manager
 // Enter via :desktop command; exit via Esc, :cv, or dock CV control
+import DesktopWindow from './DesktopWindow.astro';
 ---
 
 <div class="desktop-shell" id="desktop-shell" hidden data-desktop-active="false">
@@ -25,23 +26,25 @@
     
     <div class="dock-divider"></div>
     
-    <button type="button" class="dock-icon" data-app="about" aria-label="About (coming in L4b)">
+    <button type="button" class="dock-icon" data-app="about" aria-label="Open About">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <circle cx="12" cy="12" r="10"/>
         <path d="M12 16v-4M12 8h.01"/>
       </svg>
       <span class="dock-label">About</span>
+      <span class="dock-pip" hidden></span>
     </button>
     
-    <button type="button" class="dock-icon" data-app="work" aria-label="Work (coming in L4b)">
+    <button type="button" class="dock-icon" data-app="work" aria-label="Open Work">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <rect x="2" y="7" width="20" height="14" rx="2"/>
         <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
       </svg>
       <span class="dock-label">Work</span>
+      <span class="dock-pip" hidden></span>
     </button>
     
-    <button type="button" class="dock-icon" data-app="offers" aria-label="Offers (coming in L4b)">
+    <button type="button" class="dock-icon" data-app="offers" aria-label="Open Offers">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
         <polyline points="14 2 14 8 20 8"/>
@@ -50,9 +53,10 @@
         <line x1="10" y1="9" x2="8" y2="9"/>
       </svg>
       <span class="dock-label">Offers</span>
+      <span class="dock-pip" hidden></span>
     </button>
     
-    <button type="button" class="dock-icon" data-app="resume" aria-label="Resume (coming in L4b)">
+    <button type="button" class="dock-icon" data-app="resume" aria-label="Open Resume">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
         <polyline points="14 2 14 8 20 8"/>
@@ -60,28 +64,143 @@
         <line x1="9" y1="15" x2="15" y2="15"/>
       </svg>
       <span class="dock-label">Resume</span>
+      <span class="dock-pip" hidden></span>
     </button>
     
-    <button type="button" class="dock-icon" data-app="terminal" aria-label="Terminal (coming in L4b)">
+    <button type="button" class="dock-icon" data-app="terminal" aria-label="Open Terminal">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <polyline points="4 17 10 11 4 5"/>
         <line x1="12" y1="19" x2="20" y2="19"/>
       </svg>
       <span class="dock-label">Terminal</span>
+      <span class="dock-pip" hidden></span>
     </button>
     
-    <button type="button" class="dock-icon" data-app="settings" aria-label="Settings (coming in L4b)">
+    <button type="button" class="dock-icon" data-app="settings" aria-label="Open Settings">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <circle cx="12" cy="12" r="3"/>
         <path d="M12 1v6m0 6v6m9.66-10.66-4.24 4.24M10.5 13.5l-4.24 4.24M23 12h-6m-6 0H1m20.66 9.66-4.24-4.24M10.5 10.5l-4.24-4.24"/>
       </svg>
       <span class="dock-label">Settings</span>
+      <span class="dock-pip" hidden></span>
     </button>
+  </div>
+  
+  <div class="desktop-windows" id="desktop-windows">
+    <DesktopWindow id="about" title="About">
+      <div class="window-about">
+        <p class="eyebrow"><span class="accent-mark" aria-hidden="true"></span>AI engineer / Dan Gilles</p>
+        <h2>I build AI agents and <span>developer tools.</span></h2>
+        <p class="about-pitch">From an ambiguous brief to a working pilot.</p>
+        <p class="about-description">I work directly with the people who use the software. I also build agent infrastructure and contribute as a code owner to ZeroClaw, an open-source Rust agent runtime.</p>
+        <div class="about-links">
+          <a href="mailto:dan@dangilles.dev" class="button primary">Get in touch <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/Audacity88" target="_blank" rel="noreferrer" class="button secondary">GitHub <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="work" title="Work">
+      <div class="window-work">
+        <h3>Selected Projects</h3>
+        <p class="work-intro">Agent tooling, full-stack applications, and iOS experiments. Each project states what was checked and what remains unverified.</p>
+        <div class="work-list" id="work-list">
+          <p class="loading-message">Loading projects...</p>
+        </div>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="offers" title="Offers">
+      <div class="window-offers" id="offers-content">
+        <p class="loading-message">Loading offers...</p>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="resume" title="Resume">
+      <div class="window-resume">
+        <h3>Resume</h3>
+        <p>View or download my complete resume.</p>
+        <div class="resume-actions">
+          <a href="/resume/" target="_blank" rel="noreferrer" class="button primary">View Resume <span aria-hidden="true">↗</span></a>
+          <a href="/resume.pdf" target="_blank" rel="noreferrer" class="button secondary">Download PDF <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="terminal" title="Terminal">
+      <div class="window-terminal">
+        <div class="terminal-output">
+          <div class="terminal-line"><span class="terminal-prompt">~</span> whoami</div>
+          <div class="terminal-result">
+            <div class="terminal-row"><span class="terminal-label">user</span><span>Dan Gilles</span></div>
+            <div class="terminal-row"><span class="terminal-label">role</span><span>AI engineer</span></div>
+            <div class="terminal-row"><span class="terminal-label">building</span><span><a href="https://github.com/EyrieCommander/eyrie" target="_blank">Eyrie</a></span></div>
+            <div class="terminal-row"><span class="terminal-label">contributing</span><span><a href="https://github.com/ZeroClaw/zeroclaw" target="_blank">ZeroClaw</a></span></div>
+          </div>
+          <div class="terminal-line"><span class="terminal-prompt">~</span> <span class="terminal-cursor">_</span></div>
+        </div>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="settings" title="Settings">
+      <div class="window-settings">
+        <h3>Appearance</h3>
+        <p class="settings-description">Choose your preferred color palette.</p>
+        <div class="palette-grid" id="palette-grid">
+          <button type="button" class="palette-card" data-palette="system">
+            <div class="palette-preview palette-preview-system"></div>
+            <div class="palette-info">
+              <span class="palette-card-name">Auto</span>
+              <span class="palette-card-desc">System preference</span>
+            </div>
+          </button>
+          <button type="button" class="palette-card" data-palette="light">
+            <div class="palette-preview palette-preview-light"></div>
+            <div class="palette-info">
+              <span class="palette-card-name">Day</span>
+              <span class="palette-card-desc">Light neutral</span>
+            </div>
+          </button>
+          <button type="button" class="palette-card" data-palette="dark">
+            <div class="palette-preview palette-preview-dark"></div>
+            <div class="palette-info">
+              <span class="palette-card-name">Night</span>
+              <span class="palette-card-desc">Dark neutral</span>
+            </div>
+          </button>
+          <button type="button" class="palette-card" data-palette="mono">
+            <div class="palette-preview palette-preview-mono"></div>
+            <div class="palette-info">
+              <span class="palette-card-name">Mono</span>
+              <span class="palette-card-desc">High contrast</span>
+            </div>
+          </button>
+          <button type="button" class="palette-card" data-palette="ocean">
+            <div class="palette-preview palette-preview-ocean"></div>
+            <div class="palette-info">
+              <span class="palette-card-name">Ocean</span>
+              <span class="palette-card-desc">Blue depths</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </DesktopWindow>
   </div>
 </div>
 
 <script>
   type DesktopMode = 'off' | 'on';
+  type WindowState = {
+    id: string;
+    element: HTMLElement;
+    isOpen: boolean;
+    isMinimized: boolean;
+    isMaximized: boolean;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
   
   const shell = document.getElementById('desktop-shell');
   const statusTime = document.getElementById('status-time');
@@ -91,6 +210,11 @@
   
   let lastScrollPosition = 0;
   let timeUpdateInterval: number | null = null;
+  let highestZIndex = 1;
+  let dragState: { window: HTMLElement; startX: number; startY: number; offsetX: number; offsetY: number } | null = null;
+  
+  const windows = new Map<string, WindowState>();
+  const appIds = ['about', 'work', 'offers', 'resume', 'terminal', 'settings'];
   
   const paletteDisplayNames: Record<string, string> = {
     light: 'Day',
@@ -239,14 +363,314 @@
   // Handle Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && shell?.dataset.desktopActive === 'true') {
-      // Only exit if command palette is not open
+      // Only handle escape if command palette is not open
       const commandPalette = document.getElementById('command-palette');
       if (commandPalette?.getAttribute('hidden') !== null) {
         e.preventDefault();
-        exitDesktop();
+        
+        // Check for focused window
+        let focusedWindowId: string | null = null;
+        let highestZ = 0;
+        windows.forEach((state) => {
+          if (state.isOpen && !state.isMinimized) {
+            const z = parseInt(state.element.style.zIndex || '0');
+            if (z > highestZ) {
+              highestZ = z;
+              focusedWindowId = state.id;
+            }
+          }
+        });
+        
+        if (focusedWindowId) {
+          closeWindow(focusedWindowId);
+        } else {
+          exitDesktop();
+        }
       }
     }
   });
+  
+  // Initialize windows
+  function initWindows() {
+    appIds.forEach((id, index) => {
+      const windowEl = document.getElementById(`window-${id}`);
+      if (!windowEl) return;
+      
+      const isMobile = window.matchMedia('(max-width: 760px)').matches;
+      const baseX = isMobile ? 0 : 100 + (index * 40);
+      const baseY = isMobile ? 0 : 80 + (index * 40);
+      
+      windows.set(id, {
+        id,
+        element: windowEl,
+        isOpen: false,
+        isMinimized: false,
+        isMaximized: false,
+        x: baseX,
+        y: baseY,
+        width: 600,
+        height: 500,
+      });
+      
+      setupWindowControls(windowEl, id);
+      setupWindowDrag(windowEl);
+    });
+  }
+  
+  // Open or focus a window
+  function openWindow(id: string) {
+    const state = windows.get(id);
+    if (!state) return;
+    
+    if (state.isOpen && !state.isMinimized) {
+      focusWindow(id);
+      return;
+    }
+    
+    state.isOpen = true;
+    state.isMinimized = false;
+    state.element.removeAttribute('hidden');
+    state.element.dataset.minimized = 'false';
+    
+    const isMobile = window.matchMedia('(max-width: 760px)').matches;
+    if (!isMobile) {
+      state.element.style.left = `${state.x}px`;
+      state.element.style.top = `${state.y}px`;
+      state.element.style.width = `${state.width}px`;
+      state.element.style.height = `${state.height}px`;
+    }
+    
+    focusWindow(id);
+    updateDockPip(id, true);
+    loadWindowContent(id);
+  }
+  
+  // Close a window
+  function closeWindow(id: string) {
+    const state = windows.get(id);
+    if (!state) return;
+    
+    state.isOpen = false;
+    state.element.setAttribute('hidden', '');
+    updateDockPip(id, false);
+  }
+  
+  // Minimize a window
+  function minimizeWindow(id: string) {
+    const state = windows.get(id);
+    if (!state) return;
+    
+    state.isMinimized = true;
+    state.element.dataset.minimized = 'true';
+  }
+  
+  // Restore a minimized window
+  function restoreWindow(id: string) {
+    const state = windows.get(id);
+    if (!state) return;
+    
+    if (state.isMinimized) {
+      state.isMinimized = false;
+      state.element.dataset.minimized = 'false';
+      focusWindow(id);
+    }
+  }
+  
+  // Focus a window
+  function focusWindow(id: string) {
+    const state = windows.get(id);
+    if (!state) return;
+    
+    highestZIndex++;
+    state.element.style.zIndex = String(highestZIndex);
+    
+    windows.forEach((s) => {
+      if (s.id !== id) {
+        s.element.style.opacity = '0.95';
+      } else {
+        s.element.style.opacity = '1';
+      }
+    });
+  }
+  
+  // Update dock pip indicator
+  function updateDockPip(id: string, show: boolean) {
+    const icon = document.querySelector(`.dock-icon[data-app="${id}"]`);
+    const pip = icon?.querySelector('.dock-pip');
+    if (pip) {
+      if (show) {
+        pip.removeAttribute('hidden');
+      } else {
+        pip.setAttribute('hidden', '');
+      }
+    }
+  }
+  
+  // Setup window controls
+  function setupWindowControls(windowEl: HTMLElement, id: string) {
+    const closeBtn = windowEl.querySelector('.window-close');
+    const minimizeBtn = windowEl.querySelector('.window-minimize');
+    const maximizeBtn = windowEl.querySelector('.window-maximize');
+    
+    closeBtn?.addEventListener('click', () => closeWindow(id));
+    minimizeBtn?.addEventListener('click', () => minimizeWindow(id));
+    maximizeBtn?.addEventListener('click', () => {
+      // Simple maximize toggle for now
+      const state = windows.get(id);
+      if (!state) return;
+      
+      if (!state.isMaximized) {
+        state.isMaximized = true;
+        windowEl.style.left = '10px';
+        windowEl.style.top = '60px';
+        windowEl.style.width = 'calc(100vw - 20px)';
+        windowEl.style.height = 'calc(100vh - 140px)';
+      } else {
+        state.isMaximized = false;
+        windowEl.style.left = `${state.x}px`;
+        windowEl.style.top = `${state.y}px`;
+        windowEl.style.width = `${state.width}px`;
+        windowEl.style.height = `${state.height}px`;
+      }
+    });
+    
+    windowEl.addEventListener('mousedown', () => focusWindow(id));
+  }
+  
+  // Setup window dragging
+  function setupWindowDrag(windowEl: HTMLElement) {
+    const titlebar = windowEl.querySelector('.window-titlebar') as HTMLElement;
+    if (!titlebar) return;
+    
+    const isMobile = window.matchMedia('(max-width: 760px)').matches;
+    if (isMobile) return;
+    
+    titlebar.addEventListener('mousedown', (e) => {
+      const rect = windowEl.getBoundingClientRect();
+      dragState = {
+        window: windowEl,
+        startX: e.clientX,
+        startY: e.clientY,
+        offsetX: e.clientX - rect.left,
+        offsetY: e.clientY - rect.top,
+      };
+      
+      windowEl.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+  }
+  
+  // Handle mouse move for dragging
+  document.addEventListener('mousemove', (e) => {
+    if (!dragState) return;
+    
+    const x = e.clientX - dragState.offsetX;
+    const y = e.clientY - dragState.offsetY;
+    
+    const maxX = window.innerWidth - 320;
+    const maxY = window.innerHeight - 100;
+    
+    const clampedX = Math.max(0, Math.min(x, maxX));
+    const clampedY = Math.max(0, Math.min(y, maxY));
+    
+    dragState.window.style.left = `${clampedX}px`;
+    dragState.window.style.top = `${clampedY}px`;
+    
+    const id = dragState.window.dataset.windowId;
+    const state = id ? windows.get(id) : null;
+    if (state) {
+      state.x = clampedX;
+      state.y = clampedY;
+    }
+  });
+  
+  // Handle mouse up to end drag
+  document.addEventListener('mouseup', () => {
+    if (dragState) {
+      dragState.window.style.cursor = '';
+      dragState = null;
+    }
+  });
+  
+  // Load window content dynamically
+  function loadWindowContent(id: string) {
+    if (id === 'work') {
+      loadWorkProjects();
+    } else if (id === 'offers') {
+      loadOffersContent();
+    } else if (id === 'settings') {
+      setupSettingsPalette();
+    }
+  }
+  
+  async function loadWorkProjects() {
+    const workList = document.getElementById('work-list');
+    if (!workList || workList.dataset.loaded) return;
+    
+    try {
+      const projectsSection = document.querySelector('#projects');
+      if (projectsSection) {
+        const cards = projectsSection.querySelectorAll('.project-card');
+        let html = '';
+        cards.forEach((card, i) => {
+          if (i < 4) {
+            const title = card.querySelector('h3')?.textContent?.trim() || '';
+            const oneliner = card.querySelector('.project-oneliner')?.textContent?.trim() || '';
+            const link = card.querySelector('.project-title-link')?.getAttribute('href') || '#';
+            html += `<div class="work-card">
+              <h4><a href="${link}" target="_blank">${title}</a></h4>
+              <p>${oneliner}</p>
+            </div>`;
+          }
+        });
+        workList.innerHTML = html || '<p>No projects available.</p>';
+        workList.dataset.loaded = 'true';
+      }
+    } catch (e) {
+      workList.innerHTML = '<p>Could not load projects.</p>';
+    }
+  }
+  
+  async function loadOffersContent() {
+    const offersContent = document.getElementById('offers-content');
+    if (!offersContent || offersContent.dataset.loaded) return;
+    
+    try {
+      offersContent.innerHTML = '<h3>Offers</h3><p>View my current offers and availability.</p><a href="/offers/" target="_blank" class="button primary">View Full Offers Page <span aria-hidden="true">↗</span></a>';
+      offersContent.dataset.loaded = 'true';
+    } catch (e) {
+      offersContent.innerHTML = '<p>Could not load offers.</p>';
+    }
+  }
+  
+  function setupSettingsPalette() {
+    const paletteCards = document.querySelectorAll('#palette-grid .palette-card');
+    const currentPalette = document.documentElement.dataset.palette || 'system';
+    
+    paletteCards.forEach((card) => {
+      const palette = (card as HTMLElement).dataset.palette;
+      if (palette === currentPalette) {
+        card.setAttribute('aria-pressed', 'true');
+      }
+      
+      card.addEventListener('click', () => {
+        if (!palette) return;
+        
+        if (palette === 'system') {
+          delete document.documentElement.dataset.palette;
+          localStorage.removeItem('portfolio-palette');
+        } else {
+          document.documentElement.dataset.palette = palette;
+          localStorage.setItem('portfolio-palette', palette);
+        }
+        
+        paletteCards.forEach((c) => c.removeAttribute('aria-pressed'));
+        card.setAttribute('aria-pressed', 'true');
+        updatePaletteName();
+        updateLastCommand('theme');
+      });
+    });
+  }
   
   // Handle dock icon clicks
   dockIcons.forEach((icon) => {
@@ -256,10 +680,16 @@
       if (app === 'cv') {
         exitDesktop();
         updateLastCommand('cv');
-      } else {
-        // L4b will wire these to open windows
-        // For now, show a toast or no-op
-        updateLastCommand(app || '');
+      } else if (app && appIds.includes(app)) {
+        const state = windows.get(app);
+        if (state?.isOpen && state.isMinimized) {
+          restoreWindow(app);
+        } else if (state?.isOpen) {
+          focusWindow(app);
+        } else {
+          openWindow(app);
+        }
+        updateLastCommand(app);
       }
     });
   });
@@ -272,6 +702,9 @@
     attributes: true,
     attributeFilter: ['data-palette'],
   });
+  
+  // Initialize windows
+  initWindows();
   
   // Initialize on load
   if (isDesktopRequested() && !shouldSkipDesktop()) {
@@ -438,6 +871,277 @@
     white-space: nowrap;
   }
   
+  .dock-pip {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 4px var(--accent);
+  }
+  
+  .desktop-windows {
+    position: relative;
+    flex: 1;
+    pointer-events: none;
+  }
+  
+  .desktop-windows > * {
+    pointer-events: auto;
+  }
+  
+  /* Window content styles */
+  .window-about {
+    max-width: 600px;
+  }
+  
+  .window-about .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  
+  .window-about .accent-mark {
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--tint);
+    border-radius: 50%;
+  }
+  
+  .window-about h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    letter-spacing: -0.05em;
+    margin-bottom: 1rem;
+  }
+  
+  .window-about h2 span {
+    color: var(--accent-text);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  
+  .about-pitch {
+    font-size: 1.05rem;
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+  }
+  
+  .about-description {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  .window-work h3,
+  .window-offers h3,
+  .window-resume h3,
+  .window-settings h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .work-intro,
+  .settings-description {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .work-list {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .work-card {
+    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  
+  .work-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .work-card h4 a {
+    text-decoration: none;
+    color: var(--text);
+  }
+  
+  .work-card h4 a:hover {
+    color: var(--accent-text);
+    text-decoration: underline;
+  }
+  
+  .work-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  
+  .loading-message {
+    color: var(--muted);
+    font-style: italic;
+  }
+  
+  .resume-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  
+  .window-terminal {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+  
+  .terminal-output {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .terminal-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .terminal-prompt {
+    color: var(--accent-text);
+    font-weight: 700;
+  }
+  
+  .terminal-cursor {
+    animation: blink 1s infinite;
+  }
+  
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+  
+  .terminal-result {
+    display: grid;
+    gap: 0.5rem;
+    margin-left: 1.5rem;
+  }
+  
+  .terminal-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1rem;
+  }
+  
+  .terminal-label {
+    color: var(--accent-text);
+    text-align: right;
+  }
+  
+  .terminal-row a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+  }
+  
+  .terminal-row a:hover {
+    color: var(--accent-text);
+    text-decoration-color: var(--accent);
+  }
+  
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+  
+  .palette-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+  
+  .palette-card:hover {
+    background: var(--tint);
+    border-color: var(--accent);
+  }
+  
+  .palette-card[aria-pressed="true"] {
+    background: var(--tint);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  
+  .palette-preview {
+    width: 100%;
+    height: 60px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  
+  .palette-preview-system {
+    background: linear-gradient(135deg, #f6f5f1 50%, #14171e 50%);
+  }
+  
+  .palette-preview-light {
+    background: #f6f5f1;
+  }
+  
+  .palette-preview-dark {
+    background: #14171e;
+  }
+  
+  .palette-preview-mono {
+    background: #0a0a0a;
+  }
+  
+  .palette-preview-ocean {
+    background: #0d1117;
+  }
+  
+  .palette-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  
+  .palette-card-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  
+  .palette-card-desc {
+    font-size: 0.7rem;
+    font-family: var(--mono);
+    color: var(--muted);
+  }
+  
   @media (prefers-reduced-motion: reduce) {
     .desktop-dock,
     .desktop-status {
@@ -497,6 +1201,10 @@
     
     .desktop-dock::-webkit-scrollbar {
       display: none;
+    }
+    
+    .palette-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
