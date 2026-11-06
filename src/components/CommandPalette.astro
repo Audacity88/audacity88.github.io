@@ -48,6 +48,32 @@
     
     const commands: Command[] = [
       {
+        name: 'desktop',
+        description: 'Enter desktop mode',
+        action: () => {
+          setLastCommand(':desktop');
+          const desktop = (window as any).portfolioDesktop;
+          if (desktop) {
+            desktop.enter();
+            desktop.updateCommand('desktop');
+          }
+          closePalette();
+        },
+      },
+      {
+        name: 'cv',
+        description: 'Return to CV',
+        action: () => {
+          setLastCommand(':cv');
+          const desktop = (window as any).portfolioDesktop;
+          if (desktop) {
+            desktop.exit();
+            desktop.updateCommand('cv');
+          }
+          closePalette();
+        },
+      },
+      {
         name: 'theme',
         description: 'Change color palette',
         action: () => {

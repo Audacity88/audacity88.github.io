@@ -1,0 +1,196 @@
+---
+// Desktop window component with title bar, chrome, and content area
+interface Props {
+  id: string;
+  title: string;
+  icon?: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<div class="desktop-window" id={`window-${id}`} data-window-id={id} hidden data-minimized="false">
+  <div class="window-titlebar" data-draggable="true">
+    <div class="window-title">
+      <span class="window-icon">{title.charAt(0)}</span>
+      <span class="window-title-text">{title}</span>
+    </div>
+    <div class="window-controls">
+      <button type="button" class="window-control window-minimize" aria-label={`Minimize ${title}`}>
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <line x1="2" y1="6" x2="10" y2="6"/>
+        </svg>
+      </button>
+      <button type="button" class="window-control window-maximize" aria-label={`Maximize ${title}`}>
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="2" y="2" width="8" height="8"/>
+        </svg>
+      </button>
+      <button type="button" class="window-control window-close" aria-label={`Close ${title}`}>
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <line x1="3" y1="3" x2="9" y2="9"/>
+          <line x1="9" y1="3" x2="3" y2="9"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="window-content" id={`window-content-${id}`}>
+    <slot />
+  </div>
+</div>
+
+<style>
+  .desktop-window {
+    position: absolute;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    min-width: 320px;
+    min-height: 240px;
+    max-width: min(90vw, 1000px);
+    max-height: min(85vh, 800px);
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    pointer-events: auto;
+  }
+  
+  .desktop-window:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 0 0 2px var(--accent);
+    z-index: 100;
+  }
+  
+  .desktop-window[data-minimized="true"] {
+    display: none;
+  }
+  
+  .window-titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--subtle);
+    border-bottom: 1px solid var(--line);
+    cursor: move;
+    user-select: none;
+  }
+  
+  .window-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .window-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  
+  .window-title-text {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .window-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .window-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  
+  .window-control:hover {
+    background: var(--tint);
+    color: var(--text);
+    border-color: var(--accent);
+  }
+  
+  .window-control:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  
+  .window-control svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .window-close:hover {
+    background: #ef4444;
+    color: white;
+    border-color: #dc2626;
+  }
+  
+  .window-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--bg);
+    padding: 1.5rem;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .desktop-window {
+      transition: none;
+    }
+  }
+  
+  /* Mobile: full-screen panels */
+  @media (max-width: 760px) {
+    .desktop-window {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+      max-height: none !important;
+      border-radius: 0;
+      transform: none !important;
+    }
+    
+    .window-titlebar {
+      cursor: default;
+    }
+    
+    .window-maximize {
+      display: none;
+    }
+  }
+</style>
