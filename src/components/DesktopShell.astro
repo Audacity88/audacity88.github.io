@@ -1,0 +1,502 @@
+---
+// L4a: Living desktop shell chrome — wallpaper, dock, status strip
+// Enter via :desktop command; exit via Esc, :cv, or dock CV control
+---
+
+<div class="desktop-shell" id="desktop-shell" hidden data-desktop-active="false">
+  <div class="desktop-wallpaper" id="desktop-wallpaper"></div>
+  
+  <div class="desktop-status" id="desktop-status">
+    <div class="status-group">
+      <span class="status-time" id="status-time"></span>
+      <span class="status-separator">·</span>
+      <span class="status-palette" id="status-palette"></span>
+    </div>
+    <div class="status-command" id="status-command"></div>
+  </div>
+  
+  <div class="desktop-dock" id="desktop-dock">
+    <button type="button" class="dock-icon" data-app="cv" aria-label="Return to CV">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      <span class="dock-label">CV</span>
+    </button>
+    
+    <div class="dock-divider"></div>
+    
+    <button type="button" class="dock-icon" data-app="about" aria-label="About (coming in L4b)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 16v-4M12 8h.01"/>
+      </svg>
+      <span class="dock-label">About</span>
+    </button>
+    
+    <button type="button" class="dock-icon" data-app="work" aria-label="Work (coming in L4b)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <rect x="2" y="7" width="20" height="14" rx="2"/>
+        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+      </svg>
+      <span class="dock-label">Work</span>
+    </button>
+    
+    <button type="button" class="dock-icon" data-app="offers" aria-label="Offers (coming in L4b)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <line x1="10" y1="9" x2="8" y2="9"/>
+      </svg>
+      <span class="dock-label">Offers</span>
+    </button>
+    
+    <button type="button" class="dock-icon" data-app="resume" aria-label="Resume (coming in L4b)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="12" y1="18" x2="12" y2="12"/>
+        <line x1="9" y1="15" x2="15" y2="15"/>
+      </svg>
+      <span class="dock-label">Resume</span>
+    </button>
+    
+    <button type="button" class="dock-icon" data-app="terminal" aria-label="Terminal (coming in L4b)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polyline points="4 17 10 11 4 5"/>
+        <line x1="12" y1="19" x2="20" y2="19"/>
+      </svg>
+      <span class="dock-label">Terminal</span>
+    </button>
+    
+    <button type="button" class="dock-icon" data-app="settings" aria-label="Settings (coming in L4b)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 1v6m0 6v6m9.66-10.66-4.24 4.24M10.5 13.5l-4.24 4.24M23 12h-6m-6 0H1m20.66 9.66-4.24-4.24M10.5 10.5l-4.24-4.24"/>
+      </svg>
+      <span class="dock-label">Settings</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  type DesktopMode = 'off' | 'on';
+  
+  const shell = document.getElementById('desktop-shell');
+  const statusTime = document.getElementById('status-time');
+  const statusPalette = document.getElementById('status-palette');
+  const statusCommand = document.getElementById('status-command');
+  const dockIcons = document.querySelectorAll<HTMLButtonElement>('.dock-icon');
+  
+  let lastScrollPosition = 0;
+  let timeUpdateInterval: number | null = null;
+  
+  const paletteDisplayNames: Record<string, string> = {
+    light: 'Day',
+    dark: 'Night',
+    mono: 'Mono',
+    ocean: 'Ocean',
+  };
+  
+  // Check if we should skip desktop mode (deep links, ?still, reduced motion)
+  function shouldSkipDesktop(): boolean {
+    const url = new URL(window.location.href);
+    const pathname = url.pathname;
+    
+    // Deep links should never force desktop
+    if (pathname.includes('/resume') || pathname.includes('/offers') || pathname.includes('/projects/')) {
+      return true;
+    }
+    
+    // ?still or reduced motion preference
+    if (url.searchParams.has('still') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return true;
+    }
+    
+    // Hash anchors (except #desktop)
+    if (url.hash && url.hash !== '#desktop') {
+      return true;
+    }
+    
+    return false;
+  }
+  
+  // Check if desktop mode is requested via URL
+  function isDesktopRequested(): boolean {
+    const url = new URL(window.location.href);
+    return url.searchParams.has('desktop') || url.hash === '#desktop';
+  }
+  
+  // Update URL to reflect desktop mode
+  function updateURL(mode: DesktopMode) {
+    const url = new URL(window.location.href);
+    
+    if (mode === 'on') {
+      // Add #desktop to preserve mode on reload
+      url.hash = 'desktop';
+    } else {
+      // Remove desktop marker
+      if (url.hash === '#desktop') {
+        url.hash = '';
+      }
+      url.searchParams.delete('desktop');
+    }
+    
+    // Replace state without triggering navigation
+    window.history.replaceState({}, '', url.toString());
+  }
+  
+  // Update status clock
+  function updateClock() {
+    if (!statusTime) return;
+    
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    statusTime.textContent = `${hours}:${minutes}`;
+  }
+  
+  // Update status palette name
+  function updatePaletteName() {
+    if (!statusPalette) return;
+    
+    const currentPalette = document.documentElement.dataset.palette;
+    const displayName = currentPalette ? paletteDisplayNames[currentPalette] || 'Auto' : 'Auto';
+    statusPalette.textContent = displayName;
+  }
+  
+  // Update last command in status
+  function updateLastCommand(command: string) {
+    if (!statusCommand) return;
+    statusCommand.textContent = command ? `:${command}` : '';
+  }
+  
+  // Enter desktop mode
+  function enterDesktop() {
+    if (!shell) return;
+    if (shouldSkipDesktop()) return;
+    
+    // Save scroll position
+    lastScrollPosition = window.scrollY;
+    
+    // Show desktop
+    shell.removeAttribute('hidden');
+    shell.dataset.desktopActive = 'true';
+    document.body.style.overflow = 'hidden';
+    
+    // Update URL
+    updateURL('on');
+    
+    // Start clock updates
+    updateClock();
+    updatePaletteName();
+    if (timeUpdateInterval === null) {
+      timeUpdateInterval = window.setInterval(updateClock, 1000);
+    }
+    
+    // Announce to screen readers
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.className = 'sr-only';
+    announcement.textContent = 'Desktop mode active. Press Escape or select CV to return.';
+    document.body.appendChild(announcement);
+    setTimeout(() => announcement.remove(), 1000);
+  }
+  
+  // Exit desktop mode
+  function exitDesktop() {
+    if (!shell) return;
+    
+    // Hide desktop
+    shell.setAttribute('hidden', '');
+    shell.dataset.desktopActive = 'false';
+    document.body.style.overflow = '';
+    
+    // Update URL
+    updateURL('off');
+    
+    // Stop clock updates
+    if (timeUpdateInterval !== null) {
+      clearInterval(timeUpdateInterval);
+      timeUpdateInterval = null;
+    }
+    
+    // Restore scroll position
+    window.scrollTo(0, lastScrollPosition);
+    
+    // Announce to screen readers
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.className = 'sr-only';
+    announcement.textContent = 'Returned to CV';
+    document.body.appendChild(announcement);
+    setTimeout(() => announcement.remove(), 1000);
+  }
+  
+  // Handle Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && shell?.dataset.desktopActive === 'true') {
+      // Only exit if command palette is not open
+      const commandPalette = document.getElementById('command-palette');
+      if (commandPalette?.getAttribute('hidden') !== null) {
+        e.preventDefault();
+        exitDesktop();
+      }
+    }
+  });
+  
+  // Handle dock icon clicks
+  dockIcons.forEach((icon) => {
+    icon.addEventListener('click', () => {
+      const app = icon.dataset.app;
+      
+      if (app === 'cv') {
+        exitDesktop();
+        updateLastCommand('cv');
+      } else {
+        // L4b will wire these to open windows
+        // For now, show a toast or no-op
+        updateLastCommand(app || '');
+      }
+    });
+  });
+  
+  // Listen for palette changes
+  const observer = new MutationObserver(() => {
+    updatePaletteName();
+  });
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-palette'],
+  });
+  
+  // Initialize on load
+  if (isDesktopRequested() && !shouldSkipDesktop()) {
+    // Wait for page to settle before entering
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        enterDesktop();
+      });
+    });
+  }
+  
+  // Export functions for CommandPalette integration
+  (window as any).portfolioDesktop = {
+    enter: enterDesktop,
+    exit: exitDesktop,
+    updateCommand: updateLastCommand,
+  };
+</script>
+
+<style>
+  .desktop-shell {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+  }
+  
+  .desktop-wallpaper {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      var(--tint) 0%,
+      var(--bg) 35%,
+      var(--bg) 65%,
+      var(--subtle) 100%
+    );
+    z-index: 0;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .desktop-wallpaper {
+      background: var(--bg);
+    }
+  }
+  
+  .desktop-status {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(0, 0, 0, 0.02);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    z-index: 10;
+  }
+  
+  [data-palette='dark'] .desktop-status,
+  [data-palette='mono'] .desktop-status,
+  [data-palette='ocean'] .desktop-status {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  .status-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .status-separator {
+    opacity: 0.4;
+  }
+  
+  .status-time {
+    font-variant-numeric: tabular-nums;
+  }
+  
+  .status-palette {
+    text-transform: lowercase;
+  }
+  
+  .status-command {
+    color: var(--accent-text);
+    font-weight: 600;
+  }
+  
+  .desktop-dock {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(12px);
+    z-index: 10;
+  }
+  
+  .dock-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--line);
+    margin: 0 0.25rem;
+  }
+  
+  .dock-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 0.65rem;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+    min-width: 60px;
+  }
+  
+  .dock-icon:hover {
+    background: var(--tint);
+    color: var(--text);
+  }
+  
+  .dock-icon:focus-visible {
+    background: var(--tint);
+    color: var(--accent-text);
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  
+  .dock-icon[data-app='cv'] {
+    color: var(--accent-text);
+  }
+  
+  .dock-icon[data-app='cv']:hover {
+    transform: translateX(-2px);
+  }
+  
+  .dock-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .dock-label {
+    font-size: 0.65rem;
+    font-family: var(--mono);
+    white-space: nowrap;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .desktop-dock,
+    .desktop-status {
+      backdrop-filter: none;
+    }
+    
+    .dock-icon:hover {
+      transform: none;
+    }
+  }
+  
+  /* Mobile: stack apps, simplify dock */
+  @media (max-width: 760px) {
+    .desktop-status {
+      padding: 0.5rem 1rem;
+      font-size: 0.65rem;
+    }
+    
+    .desktop-dock {
+      bottom: 0.75rem;
+      gap: 0.35rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 12px;
+    }
+    
+    .dock-icon {
+      padding: 0.4rem 0.5rem;
+      min-width: 52px;
+    }
+    
+    .dock-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .dock-label {
+      font-size: 0.6rem;
+    }
+    
+    .dock-divider {
+      height: 28px;
+      margin: 0 0.1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .status-command {
+      display: none;
+    }
+    
+    .desktop-dock {
+      max-width: calc(100% - 1.5rem);
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+    }
+    
+    .desktop-dock::-webkit-scrollbar {
+      display: none;
+    }
+  }
+</style>
