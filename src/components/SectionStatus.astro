@@ -16,7 +16,7 @@
   }
   
   const sections: Section[] = [
-    { id: 'projects', number: '01', label: 'projects' },
+    { id: 'projects', number: '01', label: 'selected work' },
     { id: 'open-source', number: '02', label: 'open source' },
     { id: 'experience', number: '03', label: 'experience' },
     { id: 'how-i-work', number: '04', label: 'workflow' },
@@ -49,18 +49,27 @@
     
     const observer = new IntersectionObserver(
       (entries) => {
+        let bestEntry = null as IntersectionObserverEntry | null;
+        let bestRatio = 0;
+        
         entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
-            const sectionId = entry.target.id;
-            if (sectionId && currentSection !== sectionId) {
-              updateSectionStatus(sectionId);
-            }
+          if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
+            bestRatio = entry.intersectionRatio;
+            bestEntry = entry;
           }
         });
+        
+        if (bestEntry) {
+          const target = bestEntry.target as HTMLElement;
+          const sectionId = target.id;
+          if (sectionId && currentSection !== sectionId) {
+            updateSectionStatus(sectionId);
+          }
+        }
       },
       {
-        threshold: [0.3],
-        rootMargin: '-15% 0px -50% 0px',
+        threshold: [0, 0.2, 0.4, 0.6, 0.8, 1.0],
+        rootMargin: '-20% 0px -40% 0px',
       }
     );
     
