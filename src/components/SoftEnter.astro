@@ -3,7 +3,7 @@
 // Show/skip decision made by blocking inline gate in Layout head
 ---
 
-<div class="soft-enter" id="soft-enter">
+<div class="soft-enter" id="soft-enter" hidden>
   <div class="soft-enter-overlay">
     <div class="soft-enter-statusline">
       <span class="statusline-text">dangilles.dev &middot; ready</span>
@@ -13,15 +13,15 @@
 </div>
 
 <script>
-  // Show/skip decision already made by blocking inline gate in Layout head
+  // Show/skip decision already made by blocking inline gate in Layout head (html.soft-enter-gate)
   // This script only handles dismiss logic and interaction
   
   const STORAGE_KEY = 'portfolio-enter-seen';
   const softEnter = document.getElementById('soft-enter');
   let dismissed = false;
   
-  // Check if gate decided to show (body has soft-enter-gate class)
-  const shouldShow = document.body.classList.contains('soft-enter-gate');
+  // Check if gate decided to show (html has soft-enter-gate class)
+  const shouldShow = document.documentElement.classList.contains('soft-enter-gate');
   
   function dismissEnter() {
     if (dismissed || !softEnter) return;
@@ -39,12 +39,14 @@
       // sessionStorage unavailable
     }
     
-    // Remove gate class to reveal content
-    document.body.classList.remove('soft-enter-gate');
+    // Remove gate class from html to reveal content
+    document.documentElement.classList.remove('soft-enter-gate');
     
-    // Remove from DOM after animation
+    // Clean up after animation completes
     setTimeout(() => {
       document.body.style.overflow = '';
+      // Re-apply hidden to prevent overlay from ever reappearing
+      softEnter.setAttribute('hidden', '');
     }, 400);
   }
   
@@ -69,6 +71,11 @@
   
   // Initialize only if gate decided to show
   if (shouldShow && softEnter) {
+    // Remove hidden attribute to let critical CSS control visibility
+    softEnter.removeAttribute('hidden');
+    // Lock body overflow
+    document.body.style.overflow = 'hidden';
+    
     // Broadcast open event for shell bus integration
     window.dispatchEvent(new CustomEvent('portfolio-shell:enter-open'));
     

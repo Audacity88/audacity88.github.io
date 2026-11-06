@@ -52,33 +52,29 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
     <title>{title}</title>
     <style>
       /* Critical CSS: Hide ALL page chrome when SoftEnter gate is active to prevent FOUC */
-      body.soft-enter-gate .site-header,
-      body.soft-enter-gate .site-footer,
-      body.soft-enter-gate main,
-      body.soft-enter-gate .command-palette,
-      body.soft-enter-gate .section-status,
-      body.soft-enter-gate .desktop-shell {
+      html.soft-enter-gate .site-header,
+      html.soft-enter-gate .site-footer,
+      html.soft-enter-gate main,
+      html.soft-enter-gate .command-palette,
+      html.soft-enter-gate .section-status,
+      html.soft-enter-gate .desktop-shell {
         visibility: hidden;
       }
-      /* Hide SoftEnter overlay by default; gate will unhide if needed */
-      .soft-enter {
-        display: none;
-      }
-      /* Show SoftEnter only when gate is active */
-      body.soft-enter-gate .soft-enter {
-        display: flex;
+      /* Show SoftEnter only when gate is active (wins over scoped styles) */
+      html.soft-enter-gate .soft-enter {
+        display: flex !important;
       }
       /* Force hide if prefers-reduced-motion (CSS-level guard) */
       @media (prefers-reduced-motion: reduce) {
-        body.soft-enter-gate .soft-enter {
+        html.soft-enter-gate .soft-enter {
           display: none !important;
         }
-        body.soft-enter-gate .site-header,
-        body.soft-enter-gate .site-footer,
-        body.soft-enter-gate main,
-        body.soft-enter-gate .command-palette,
-        body.soft-enter-gate .section-status,
-        body.soft-enter-gate .desktop-shell {
+        html.soft-enter-gate .site-header,
+        html.soft-enter-gate .site-footer,
+        html.soft-enter-gate main,
+        html.soft-enter-gate .command-palette,
+        html.soft-enter-gate .section-status,
+        html.soft-enter-gate .desktop-shell {
           visibility: visible !important;
         }
       }
@@ -122,11 +118,9 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
           return true;
         }
         
-        // Set gate class if should show (happens before body paints)
+        // Set gate class on HTML element (exists in head, before body paints)
         if (shouldShowEnter()) {
-          document.documentElement.className += ' soft-enter-init';
-          document.body.className += ' soft-enter-gate';
-          document.body.style.overflow = 'hidden';
+          document.documentElement.classList.add('soft-enter-gate');
         }
       })();
     </script>
