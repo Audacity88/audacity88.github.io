@@ -146,7 +146,40 @@ import DesktopWindow from './DesktopWindow.astro';
       <div class="window-settings">
         <h3>Appearance</h3>
         <p class="settings-description">Choose your preferred color palette.</p>
-        <div class="palette-grid" id="palette-grid">
+        
+        <div class="settings-section">
+          <h4>Wallpaper</h4>
+          <div class="wallpaper-grid" id="wallpaper-grid">
+            <button type="button" class="wallpaper-card" data-wallpaper="gradient">
+              <div class="wallpaper-preview wallpaper-preview-gradient"></div>
+              <span class="wallpaper-name">Gradient</span>
+            </button>
+            <button type="button" class="wallpaper-card" data-wallpaper="mountain">
+              <div class="wallpaper-preview wallpaper-preview-mountain"></div>
+              <span class="wallpaper-name">Mountain</span>
+            </button>
+            <button type="button" class="wallpaper-card" data-wallpaper="ocean">
+              <div class="wallpaper-preview wallpaper-preview-ocean"></div>
+              <span class="wallpaper-name">Ocean</span>
+            </button>
+            <button type="button" class="wallpaper-card" data-wallpaper="desert">
+              <div class="wallpaper-preview wallpaper-preview-desert"></div>
+              <span class="wallpaper-name">Desert</span>
+            </button>
+            <button type="button" class="wallpaper-card" data-wallpaper="night">
+              <div class="wallpaper-preview wallpaper-preview-night"></div>
+              <span class="wallpaper-name">Night</span>
+            </button>
+            <button type="button" class="wallpaper-card" data-wallpaper="minimal">
+              <div class="wallpaper-preview wallpaper-preview-minimal"></div>
+              <span class="wallpaper-name">Minimal</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="settings-section">
+          <h4>Color Palette</h4>
+          <div class="palette-grid" id="palette-grid">
           <button type="button" class="palette-card" data-palette="system">
             <div class="palette-preview palette-preview-system"></div>
             <div class="palette-info">
@@ -183,6 +216,200 @@ import DesktopWindow from './DesktopWindow.astro';
             </div>
           </button>
         </div>
+        </div>
+        
+        <div class="settings-section">
+          <h4>Desktop Sharing</h4>
+          <p class="settings-description">Copy a link to share your customized desktop layout.</p>
+          <button type="button" id="copy-desktop-link" class="button primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy Desktop Link
+          </button>
+          <div id="copy-feedback" class="copy-feedback" hidden></div>
+        </div>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="project-eyrie" title="Eyrie">
+      <div class="window-project">
+        <div class="project-stub">
+          <div class="project-stub-icon">E</div>
+          <h3>Eyrie</h3>
+          <p class="project-oneliner">A local control room for AI agents.</p>
+          <p class="project-description">Coordinate agents across ZeroClaw, OpenClaw, Hermes, PicoClaw, and Codex. A Go backend connects to a React dashboard over SSE and WebSockets.</p>
+          <div class="project-links">
+            <a href="https://github.com/EyrieCommander/eyrie" target="_blank" rel="noreferrer" class="button secondary">View on GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="project-note">Local only. No public demo available.</p>
+        </div>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="project-swift-ship" title="swift-ship">
+      <div class="window-project">
+        <iframe src="https://swift-ship-pi.vercel.app" class="project-iframe" title="swift-ship demo"></iframe>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="project-witness-lexington" title="Witness Lexington">
+      <div class="window-project">
+        <div class="project-simulacrum witness-lexington-sim">
+          <div class="sim-viewport">
+            <div class="sim-3d-scene"></div>
+            <div class="sim-overlay">
+              <h2 class="sim-title">Witness Lexington</h2>
+              <p class="sim-subtitle">April 19, 1775</p>
+              <div class="sim-controls">
+                <button type="button" class="sim-button sim-button-primary" disabled>Begin the opening</button>
+                <button type="button" class="sim-button" disabled>Mute music</button>
+              </div>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Audacity88/witness-lexington" target="_blank" rel="noreferrer" class="button secondary">View on GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="project-note">Interactive simulacrum. Real game requires local build.</p>
+        </div>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="project-model-picker" title="Model Picker">
+      <div class="window-project">
+        <div class="project-simulacrum model-picker-sim">
+          <div class="sim-header">
+            <span class="sim-logo">MP</span>
+            <span class="sim-version">v1.0</span>
+          </div>
+          <div class="sim-content">
+            <p class="sim-prompt">I want to <input type="text" value="build a feature from my spec" class="sim-input" readonly />, using <select class="sim-select" disabled><option>anything</option></select>, and my priority is <select class="sim-select" disabled><option>balanced</option></select>.</p>
+            <button type="button" class="sim-button sim-button-primary" disabled>Pick a model</button>
+            <div class="sim-results">
+              <div class="sim-card">
+                <div class="sim-card-header">
+                  <span class="sim-rank">#1</span>
+                  <span class="sim-model-name">claude-opus-4</span>
+                  <span class="sim-score">92</span>
+                </div>
+                <p class="sim-reasoning">Strong reasoning, balanced cost/quality</p>
+              </div>
+              <div class="sim-card">
+                <div class="sim-card-header">
+                  <span class="sim-rank">#2</span>
+                  <span class="sim-model-name">gpt-5-preview</span>
+                  <span class="sim-score">88</span>
+                </div>
+                <p class="sim-reasoning">Excellent code generation, higher cost</p>
+              </div>
+              <div class="sim-card">
+                <div class="sim-card-header">
+                  <span class="sim-rank">#3</span>
+                  <span class="sim-model-name">gemini-pro</span>
+                  <span class="sim-score">85</span>
+                </div>
+                <p class="sim-reasoning">Good balance, large context window</p>
+              </div>
+            </div>
+          </div>
+          <p class="project-note">Interactive simulacrum. Real app runs locally.</p>
+        </div>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="project-codex-video-vision" title="codex-video-vision">
+      <div class="window-project">
+        <div class="project-stub">
+          <div class="project-stub-icon">CV</div>
+          <h3>codex-video-vision</h3>
+          <p class="project-oneliner">Video tools for Codex. A credited port of an MIT-licensed project.</p>
+          <div class="test-results">
+            <div class="test-badge test-passed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              108 tests passed
+            </div>
+          </div>
+          <p class="project-description">A Codex video tool server using MCP, TypeScript, and ffmpeg. Provides timestamped frames and audio information for video inspection.</p>
+          <div class="project-links">
+            <a href="https://github.com/EyrieCommander/codex-video-vision" target="_blank" rel="noreferrer" class="button secondary">View on GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="project-codex-skills" title="codex-skills">
+      <div class="window-project">
+        <div class="project-stub">
+          <div class="project-stub-icon">CS</div>
+          <h3>codex-skills</h3>
+          <p class="project-oneliner">Reusable workflows for Codex.</p>
+          <div class="skills-list">
+            <div class="skill-item"><span class="skill-bullet">▸</span> Source intake & analysis</div>
+            <div class="skill-item"><span class="skill-bullet">▸</span> Writing & documentation</div>
+            <div class="skill-item"><span class="skill-bullet">▸</span> Media review workflows</div>
+            <div class="skill-item"><span class="skill-bullet">▸</span> Maintenance automation</div>
+            <div class="skill-item"><span class="skill-bullet">▸</span> Task history recovery</div>
+            <div class="skill-item"><span class="skill-bullet">▸</span> Workspace path resolution</div>
+          </div>
+          <p class="project-description">A collection of Codex skills written in Python and Markdown, with an installer and recovery toolkit.</p>
+          <div class="project-links">
+            <a href="https://github.com/EyrieCommander/codex-skills" target="_blank" rel="noreferrer" class="button secondary">View on GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </DesktopWindow>
+    
+    <DesktopWindow id="project-chatgenius" title="ChatGenius">
+      <div class="window-project">
+        <div class="project-simulacrum chatgenius-sim">
+          <div class="chat-sidebar">
+            <div class="chat-workspace">Workspace</div>
+            <div class="chat-channels">
+              <div class="chat-section-header">Channels</div>
+              <div class="chat-channel active"># general</div>
+              <div class="chat-channel"># random</div>
+              <div class="chat-channel"># support</div>
+            </div>
+            <div class="chat-dms">
+              <div class="chat-section-header">Direct Messages</div>
+              <div class="chat-dm"><span class="presence-dot"></span> Alice</div>
+              <div class="chat-dm"><span class="presence-dot offline"></span> Bob</div>
+            </div>
+          </div>
+          <div class="chat-main">
+            <div class="chat-header"># general</div>
+            <div class="chat-messages">
+              <div class="chat-message">
+                <div class="chat-avatar">A</div>
+                <div class="chat-content">
+                  <div class="chat-meta"><span class="chat-author">Alice</span> <span class="chat-time">10:23 AM</span></div>
+                  <div class="chat-text">Hey team! Has anyone tried the new AI reply feature?</div>
+                </div>
+              </div>
+              <div class="chat-message">
+                <div class="chat-avatar">B</div>
+                <div class="chat-content">
+                  <div class="chat-meta"><span class="chat-author">Bot</span> <span class="chat-badge">AI</span> <span class="chat-time">10:23 AM</span></div>
+                  <div class="chat-text">The AI reply feature uses message history and context to generate responses. Would you like me to demonstrate?</div>
+                </div>
+              </div>
+              <div class="chat-message">
+                <div class="chat-avatar">A</div>
+                <div class="chat-content">
+                  <div class="chat-meta"><span class="chat-author">Alice</span> <span class="chat-time">10:24 AM</span></div>
+                  <div class="chat-text">That's helpful, thanks!</div>
+                </div>
+              </div>
+            </div>
+            <div class="chat-input-wrapper">
+              <input type="text" class="chat-input" placeholder="Message #general" readonly />
+            </div>
+          </div>
+          <p class="project-note">Interactive simulacrum. Code only, no live demo.</p>
+        </div>
       </div>
     </DesktopWindow>
   </div>
@@ -215,6 +442,8 @@ import DesktopWindow from './DesktopWindow.astro';
   
   const windows = new Map<string, WindowState>();
   const appIds = ['about', 'work', 'offers', 'resume', 'terminal', 'settings'];
+  const projectIds = ['project-eyrie', 'project-swift-ship', 'project-witness-lexington', 'project-model-picker', 'project-codex-video-vision', 'project-codex-skills', 'project-chatgenius'];
+  const allWindowIds = [...appIds, ...projectIds];
   
   const paletteDisplayNames: Record<string, string> = {
     light: 'Day',
@@ -222,6 +451,9 @@ import DesktopWindow from './DesktopWindow.astro';
     mono: 'Mono',
     ocean: 'Ocean',
   };
+  
+  type Wallpaper = 'gradient' | 'mountain' | 'ocean' | 'desert' | 'night' | 'minimal';
+  let currentWallpaper: Wallpaper = 'gradient';
   
   // Check if we should skip desktop mode (deep links, ?still, reduced motion)
   function shouldSkipDesktop(): boolean {
@@ -238,8 +470,8 @@ import DesktopWindow from './DesktopWindow.astro';
       return true;
     }
     
-    // Hash anchors (except #desktop)
-    if (url.hash && url.hash !== '#desktop') {
+    // Hash anchors (except #desktop or #desktop=<payload>)
+    if (url.hash && url.hash !== '#desktop' && !url.hash.startsWith('#desktop=')) {
       return true;
     }
     
@@ -249,7 +481,20 @@ import DesktopWindow from './DesktopWindow.astro';
   // Check if desktop mode is requested via URL
   function isDesktopRequested(): boolean {
     const url = new URL(window.location.href);
-    return url.searchParams.has('desktop') || url.hash === '#desktop';
+    return url.searchParams.has('desktop') || url.hash === '#desktop' || url.hash.startsWith('#desktop=');
+  }
+  
+  // Extract shared desktop state from URL
+  function extractSharedState(): any | null {
+    const url = new URL(window.location.href);
+    const hash = url.hash;
+    
+    if (hash.startsWith('#desktop=')) {
+      const encoded = hash.substring('#desktop='.length);
+      return decodeDesktopState(encoded);
+    }
+    
+    return null;
   }
   
   // Update URL to reflect desktop mode
@@ -390,9 +635,19 @@ import DesktopWindow from './DesktopWindow.astro';
     }
   });
   
+  // Apply wallpaper
+  function applyWallpaper(wallpaper: Wallpaper) {
+    const wallpaperEl = document.getElementById('desktop-wallpaper');
+    if (!wallpaperEl) return;
+    
+    currentWallpaper = wallpaper;
+    wallpaperEl.className = 'desktop-wallpaper';
+    wallpaperEl.classList.add(`wallpaper-${wallpaper}`);
+  }
+  
   // Initialize windows
   function initWindows() {
-    appIds.forEach((id, index) => {
+    allWindowIds.forEach((id, index) => {
       const windowEl = document.getElementById(`window-${id}`);
       if (!windowEl) return;
       
@@ -607,28 +862,37 @@ import DesktopWindow from './DesktopWindow.astro';
     const workList = document.getElementById('work-list');
     if (!workList || workList.dataset.loaded) return;
     
-    try {
-      const projectsSection = document.querySelector('#projects');
-      if (projectsSection) {
-        const cards = projectsSection.querySelectorAll('.project-card');
-        let html = '';
-        cards.forEach((card, i) => {
-          if (i < 4) {
-            const title = card.querySelector('h3')?.textContent?.trim() || '';
-            const oneliner = card.querySelector('.project-oneliner')?.textContent?.trim() || '';
-            const link = card.querySelector('.project-title-link')?.getAttribute('href') || '#';
-            html += `<div class="work-card">
-              <h4><a href="${link}" target="_blank">${title}</a></h4>
-              <p>${oneliner}</p>
-            </div>`;
-          }
-        });
-        workList.innerHTML = html || '<p>No projects available.</p>';
-        workList.dataset.loaded = 'true';
-      }
-    } catch (e) {
-      workList.innerHTML = '<p>Could not load projects.</p>';
-    }
+    const projects = [
+      { id: 'project-eyrie', title: 'Eyrie', oneliner: 'A local control room for AI agents.' },
+      { id: 'project-swift-ship', title: 'swift-ship', oneliner: 'An AI customer support desk.' },
+      { id: 'project-witness-lexington', title: 'Witness Lexington', oneliner: 'A 3D history game set at Lexington, April 1775.' },
+      { id: 'project-model-picker', title: 'Model Picker', oneliner: 'Recommends AI models for a task.' },
+      { id: 'project-codex-video-vision', title: 'codex-video-vision', oneliner: 'Video tools for Codex.' },
+      { id: 'project-codex-skills', title: 'codex-skills', oneliner: 'Reusable workflows for Codex.' },
+      { id: 'project-chatgenius', title: 'ChatGenius', oneliner: 'Slack-like chat with AI replies.' },
+    ];
+    
+    let html = '';
+    projects.forEach((project) => {
+      html += `<div class="work-card" data-project="${project.id}">
+        <h4>${project.title}</h4>
+        <p>${project.oneliner}</p>
+        <button type="button" class="button-link open-project" data-project="${project.id}">Open →</button>
+      </div>`;
+    });
+    
+    workList.innerHTML = html;
+    workList.dataset.loaded = 'true';
+    
+    workList.querySelectorAll('.open-project').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const projectId = (btn as HTMLElement).dataset.project;
+        if (projectId) {
+          openWindow(projectId);
+          updateLastCommand(projectId.replace('project-', ''));
+        }
+      });
+    });
   }
   
   async function loadOffersContent() {
@@ -670,6 +934,170 @@ import DesktopWindow from './DesktopWindow.astro';
         updateLastCommand('theme');
       });
     });
+    
+    const wallpaperCards = document.querySelectorAll('#wallpaper-grid .wallpaper-card');
+    wallpaperCards.forEach((card) => {
+      const wallpaper = (card as HTMLElement).dataset.wallpaper as Wallpaper;
+      if (wallpaper === currentWallpaper) {
+        card.setAttribute('aria-pressed', 'true');
+      }
+      
+      card.addEventListener('click', () => {
+        if (!wallpaper) return;
+        
+        applyWallpaper(wallpaper);
+        wallpaperCards.forEach((c) => c.removeAttribute('aria-pressed'));
+        card.setAttribute('aria-pressed', 'true');
+        updateLastCommand('wallpaper');
+      });
+    });
+    
+    const copyLinkBtn = document.getElementById('copy-desktop-link');
+    const copyFeedback = document.getElementById('copy-feedback');
+    copyLinkBtn?.addEventListener('click', () => {
+      const desktopState = captureDesktopState();
+      const encoded = encodeDesktopState(desktopState);
+      const url = new URL(window.location.href);
+      url.hash = `desktop=${encoded}`;
+      
+      navigator.clipboard.writeText(url.toString()).then(() => {
+        if (copyFeedback) {
+          copyFeedback.textContent = 'Link copied!';
+          copyFeedback.removeAttribute('hidden');
+          setTimeout(() => {
+            copyFeedback.setAttribute('hidden', '');
+          }, 2000);
+        }
+        
+        window.history.replaceState({}, '', url.toString());
+      }).catch(() => {
+        if (copyFeedback) {
+          copyFeedback.textContent = 'Copy failed';
+          copyFeedback.removeAttribute('hidden');
+          setTimeout(() => {
+            copyFeedback.setAttribute('hidden', '');
+          }, 2000);
+        }
+      });
+    });
+  }
+  
+  function captureDesktopState() {
+    const dockOrder = Array.from(dockIcons).map(icon => (icon as HTMLElement).dataset.app || '');
+    const windowStates: Record<string, any> = {};
+    
+    windows.forEach((state, id) => {
+      if (state.isOpen) {
+        windowStates[id] = {
+          x: state.x,
+          y: state.y,
+          width: state.width,
+          height: state.height,
+          isOpen: state.isOpen,
+          isMinimized: state.isMinimized,
+          isMaximized: state.isMaximized,
+        };
+      }
+    });
+    
+    return {
+      wallpaper: currentWallpaper,
+      dockOrder,
+      windows: windowStates,
+    };
+  }
+  
+  function encodeDesktopState(state: any): string {
+    const compact = {
+      w: state.wallpaper,
+      d: state.dockOrder,
+      o: Object.entries(state.windows).map(([id, win]: [string, any]) => ({
+        i: id,
+        x: Math.round(win.x),
+        y: Math.round(win.y),
+        w: Math.round(win.width),
+        h: Math.round(win.height),
+        m: win.isMinimized ? 1 : 0,
+        M: win.isMaximized ? 1 : 0,
+      })),
+    };
+    
+    try {
+      const json = JSON.stringify(compact);
+      return btoa(json)
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, '');
+    } catch {
+      return '';
+    }
+  }
+  
+  function decodeDesktopState(encoded: string): any | null {
+    if (!encoded) return null;
+    
+    try {
+      const base64 = encoded
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+      const padded = base64 + '=='.substring(0, (4 - base64.length % 4) % 4);
+      const json = atob(padded);
+      const compact = JSON.parse(json);
+      
+      if (!compact.w || !Array.isArray(compact.d)) {
+        return null;
+      }
+      
+      const windowStates: Record<string, any> = {};
+      if (Array.isArray(compact.o)) {
+        compact.o.forEach((win: any) => {
+          if (win.i && typeof win.x === 'number' && typeof win.y === 'number') {
+            windowStates[win.i] = {
+              x: win.x,
+              y: win.y,
+              width: win.w || 600,
+              height: win.h || 500,
+              isOpen: true,
+              isMinimized: win.m === 1,
+              isMaximized: win.M === 1,
+            };
+          }
+        });
+      }
+      
+      return {
+        wallpaper: compact.w,
+        dockOrder: compact.d,
+        windows: windowStates,
+      };
+    } catch {
+      return null;
+    }
+  }
+  
+  function applyDesktopState(state: any) {
+    if (!state) return;
+    
+    if (state.wallpaper) {
+      applyWallpaper(state.wallpaper);
+    }
+    
+    if (state.windows) {
+      Object.entries(state.windows).forEach(([id, winState]: [string, any]) => {
+        const state = windows.get(id);
+        if (state && winState.isOpen) {
+          state.x = winState.x;
+          state.y = winState.y;
+          state.width = winState.width;
+          state.height = winState.height;
+          state.isMaximized = winState.isMaximized;
+          openWindow(id);
+          if (winState.isMinimized) {
+            minimizeWindow(id);
+          }
+        }
+      });
+    }
   }
   
   // Handle dock icon clicks
@@ -708,10 +1136,18 @@ import DesktopWindow from './DesktopWindow.astro';
   
   // Initialize on load
   if (isDesktopRequested() && !shouldSkipDesktop()) {
+    const sharedState = extractSharedState();
+    
     // Wait for page to settle before entering
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         enterDesktop();
+        
+        if (sharedState) {
+          setTimeout(() => {
+            applyDesktopState(sharedState);
+          }, 100);
+        }
       });
     });
   }
@@ -737,6 +1173,8 @@ import DesktopWindow from './DesktopWindow.astro';
   .desktop-wallpaper {
     position: absolute;
     inset: 0;
+    z-index: 0;
+    pointer-events: none;
     background: linear-gradient(
       135deg,
       var(--tint) 0%,
@@ -744,8 +1182,59 @@ import DesktopWindow from './DesktopWindow.astro';
       var(--bg) 65%,
       var(--subtle) 100%
     );
-    z-index: 0;
-    pointer-events: none;
+  }
+  
+  .desktop-wallpaper.wallpaper-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--tint) 0%,
+      var(--bg) 35%,
+      var(--bg) 65%,
+      var(--subtle) 100%
+    );
+  }
+  
+  .desktop-wallpaper.wallpaper-mountain {
+    background: linear-gradient(
+      180deg,
+      #87CEEB 0%,
+      #E0F6FF 30%,
+      #8B7355 70%,
+      #654321 100%
+    );
+  }
+  
+  .desktop-wallpaper.wallpaper-ocean {
+    background: linear-gradient(
+      180deg,
+      #001f3f 0%,
+      #003d7a 40%,
+      #0074D9 70%,
+      #7FDBFF 100%
+    );
+  }
+  
+  .desktop-wallpaper.wallpaper-desert {
+    background: linear-gradient(
+      180deg,
+      #FFE5B4 0%,
+      #FFD700 40%,
+      #DEB887 70%,
+      #D2691E 100%
+    );
+  }
+  
+  .desktop-wallpaper.wallpaper-night {
+    background: linear-gradient(
+      180deg,
+      #0a0a0f 0%,
+      #1a1a2e 50%,
+      #16213e 100%
+    );
+  }
+  
+  .desktop-wallpaper.wallpaper-minimal {
+    background: var(--bg);
   }
   
   @media (prefers-reduced-motion: reduce) {
@@ -1141,6 +1630,569 @@ import DesktopWindow from './DesktopWindow.astro';
   .palette-card-desc {
     font-size: 0.7rem;
     font-family: var(--mono);
+    color: var(--muted);
+  }
+  
+  .settings-section {
+    margin-bottom: 2rem;
+  }
+  
+  .settings-section h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .wallpaper-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+  }
+  
+  .wallpaper-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+  
+  .wallpaper-card:hover {
+    background: var(--tint);
+    border-color: var(--accent);
+  }
+  
+  .wallpaper-card[aria-pressed="true"] {
+    background: var(--tint);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  
+  .wallpaper-preview {
+    width: 100%;
+    height: 60px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  
+  .wallpaper-preview-gradient {
+    background: linear-gradient(135deg, var(--tint), var(--subtle));
+  }
+  
+  .wallpaper-preview-mountain {
+    background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 30%, #8B7355 70%, #654321 100%);
+  }
+  
+  .wallpaper-preview-ocean {
+    background: linear-gradient(180deg, #001f3f 0%, #003d7a 40%, #0074D9 70%, #7FDBFF 100%);
+  }
+  
+  .wallpaper-preview-desert {
+    background: linear-gradient(180deg, #FFE5B4 0%, #FFD700 40%, #DEB887 70%, #D2691E 100%);
+  }
+  
+  .wallpaper-preview-night {
+    background: linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+  }
+  
+  .wallpaper-preview-minimal {
+    background: var(--bg);
+  }
+  
+  .wallpaper-name {
+    font-size: 0.75rem;
+    font-family: var(--mono);
+    color: var(--text);
+  }
+  
+  .copy-feedback {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: var(--tint);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--accent-text);
+  }
+  
+  /* Project window styles */
+  .window-project {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .project-iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  
+  .project-stub,
+  .project-simulacrum {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+  }
+  
+  .project-stub {
+    align-items: center;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .project-stub-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: 2rem;
+    font-weight: 700;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+  }
+  
+  .project-stub h3 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .project-oneliner {
+    font-size: 1.05rem;
+    color: var(--accent-text);
+    margin-bottom: 1rem;
+  }
+  
+  .project-description {
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .project-note {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 1.5rem;
+  }
+  
+  .test-results {
+    margin: 1rem 0;
+  }
+  
+  .test-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--tint);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+  
+  .test-badge.test-passed {
+    border-color: #22c55e;
+    color: #22c55e;
+  }
+  
+  .test-badge svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .skills-list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    text-align: left;
+  }
+  
+  .skill-item {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  
+  .skill-bullet {
+    color: var(--accent-text);
+    margin-right: 0.5rem;
+  }
+  
+  .button-link {
+    background: transparent;
+    border: 0;
+    color: var(--accent-text);
+    font-size: 0.85rem;
+    font-family: var(--mono);
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 160ms ease;
+    padding: 0;
+    margin-top: 0.5rem;
+  }
+  
+  .button-link:hover {
+    text-decoration-color: var(--accent-text);
+  }
+  
+  /* Witness Lexington simulacrum */
+  .witness-lexington-sim {
+    height: 100%;
+    padding: 0;
+  }
+  
+  .sim-viewport {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 50%, #8B7355 100%);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .sim-3d-scene {
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(ellipse 200px 100px at 30% 70%, #654321 0%, transparent 50%),
+      radial-gradient(ellipse 150px 80px at 60% 75%, #7d5a3e 0%, transparent 50%),
+      radial-gradient(ellipse 100px 60px at 80% 72%, #5a4332 0%, transparent 50%);
+  }
+  
+  .sim-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+  }
+  
+  .sim-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sim-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    margin-bottom: 2rem;
+  }
+  
+  .sim-controls {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .sim-button {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: not-allowed;
+    backdrop-filter: blur(8px);
+  }
+  
+  .sim-button-primary {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  /* Model Picker simulacrum */
+  .model-picker-sim {
+    height: 100%;
+  }
+  
+  .sim-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    margin: -1.5rem -1.5rem 1.5rem;
+  }
+  
+  .sim-logo {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  
+  .sim-version {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  
+  .sim-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .sim-prompt {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  
+  .sim-input {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--accent);
+    color: var(--accent-text);
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0 0.25rem;
+    width: 200px;
+  }
+  
+  .sim-select {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--accent);
+    color: var(--accent-text);
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0 0.25rem;
+    cursor: not-allowed;
+  }
+  
+  .sim-results {
+    display: grid;
+    gap: 0.75rem;
+  }
+  
+  .sim-card {
+    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  
+  .sim-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .sim-rank {
+    font-weight: 700;
+    color: var(--accent-text);
+  }
+  
+  .sim-model-name {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    flex: 1;
+  }
+  
+  .sim-score {
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--accent-text);
+  }
+  
+  .sim-reasoning {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  
+  /* ChatGenius simulacrum */
+  .chatgenius-sim {
+    display: flex;
+    height: 100%;
+    margin: -1.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .chat-sidebar {
+    width: 240px;
+    background: var(--subtle);
+    border-right: 1px solid var(--line);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .chat-workspace {
+    font-weight: 700;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .chat-section-header {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  
+  .chat-channels,
+  .chat-dms {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .chat-channel,
+  .chat-dm {
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: default;
+    transition: background-color 160ms ease;
+  }
+  
+  .chat-channel.active {
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+  }
+  
+  .chat-dm {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .presence-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+  }
+  
+  .presence-dot.offline {
+    background: var(--muted);
+  }
+  
+  .chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+  }
+  
+  .chat-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    font-weight: 600;
+  }
+  
+  .chat-messages {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .chat-message {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .chat-avatar {
+    width: 36px;
+    height: 36px;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  
+  .chat-content {
+    flex: 1;
+  }
+  
+  .chat-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .chat-author {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  .chat-badge {
+    padding: 0.1rem 0.4rem;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+  
+  .chat-time {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  
+  .chat-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .chat-input-wrapper {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  
+  .chat-input {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--text);
+    font-family: inherit;
+  }
+  
+  .chat-input::placeholder {
     color: var(--muted);
   }
   
