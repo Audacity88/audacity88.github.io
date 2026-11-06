@@ -1,0 +1,227 @@
+---
+// Soft enter: optional skippable boot beat on first visit
+---
+
+<div class="soft-enter" id="soft-enter" hidden>
+  <div class="soft-enter-overlay">
+    <div class="soft-enter-statusline">
+      <span class="statusline-text">dangilles.dev · ready</span>
+      <span class="statusline-prompt">Enter ↩</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'portfolio-enter-seen';
+  const DISMISS_DURATION = 600; // minimum ms before auto-dismiss
+  
+  const softEnter = document.getElementById('soft-enter');
+  let canDismiss = false;
+  
+  function shouldShowEnter(): boolean {
+    // Skip if prefers-reduced-motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return false;
+    }
+    
+    // Skip if query params present
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('still') || params.has('skip-enter')) {
+      return false;
+    }
+    
+    // Skip on deep links (non-home routes)
+    const base = import.meta.env.BASE_URL;
+    const path = window.location.pathname;
+    
+    // Normalize paths for comparison
+    const normalizedPath = path.endsWith('/') ? path : `${path}/`;
+    const normalizedBase = base.endsWith('/') ? base : `${base}/`;
+    
+    if (normalizedPath !== normalizedBase) {
+      return false;
+    }
+    
+    // Skip if already seen in this session
+    try {
+      if (sessionStorage.getItem(STORAGE_KEY)) {
+        return false;
+      }
+    } catch {
+      // sessionStorage unavailable, show enter anyway
+    }
+    
+    return true;
+  }
+  
+  function dismissEnter() {
+    if (!canDismiss || !softEnter) return;
+    
+    softEnter.classList.add('dismissing');
+    
+    // Broadcast dismiss event for shell bus integration
+    window.dispatchEvent(new CustomEvent('portfolio-shell:enter-dismiss'));
+    
+    // Mark as seen
+    try {
+      sessionStorage.setItem(STORAGE_KEY, '1');
+    } catch {
+      // sessionStorage unavailable
+    }
+    
+    // Remove from DOM after animation
+    setTimeout(() => {
+      softEnter.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+    }, 400);
+  }
+  
+  function handleDismiss(e?: Event) {
+    if (e) {
+      e.preventDefault();
+    }
+    dismissEnter();
+  }
+  
+  function handleKeydown(e: KeyboardEvent) {
+    // Any key dismisses
+    handleDismiss(e);
+  }
+  
+  // Initialize
+  if (shouldShowEnter()) {
+    // Show the overlay
+    softEnter?.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    // Broadcast open event for shell bus integration
+    window.dispatchEvent(new CustomEvent('portfolio-shell:enter-open'));
+    
+    // Enable dismissal after minimum duration
+    window.setTimeout(() => {
+      canDismiss = true;
+      // Auto-dismiss after showing for the minimum duration
+      dismissEnter();
+    }, DISMISS_DURATION);
+    
+    // Listen for user interaction to dismiss early
+    const overlay = softEnter?.querySelector('.soft-enter-overlay');
+    overlay?.addEventListener('click', handleDismiss);
+    document.addEventListener('keydown', handleKeydown, { once: true });
+  }
+</script>
+
+<style>
+  .soft-enter {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .soft-enter-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    animation: enterFadeIn 400ms ease;
+  }
+  
+  .soft-enter-statusline {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    font-family: var(--mono);
+    animation: statuslineSlide 500ms ease both;
+    animation-delay: 100ms;
+  }
+  
+  .statusline-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.02em;
+  }
+  
+  .statusline-prompt {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    padding-left: 1.5rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .soft-enter.dismissing .soft-enter-overlay {
+    animation: enterFadeOut 400ms ease forwards;
+  }
+  
+  .soft-enter.dismissing .soft-enter-statusline {
+    animation: statuslineCollapse 400ms ease forwards;
+  }
+  
+  @keyframes enterFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes enterFadeOut {
+    to {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes statuslineSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes statuslineCollapse {
+    to {
+      opacity: 0;
+      transform: translateY(-30px) scale(0.95);
+    }
+  }
+  
+  @media (max-width: 760px) {
+    .soft-enter-statusline {
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+    }
+    
+    .statusline-prompt {
+      padding-left: 0;
+      padding-top: 0.75rem;
+      border-left: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .soft-enter-overlay,
+    .soft-enter-statusline,
+    .soft-enter.dismissing .soft-enter-overlay,
+    .soft-enter.dismissing .soft-enter-statusline {
+      animation: none;
+    }
+  }
+</style>
