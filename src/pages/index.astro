@@ -3,12 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.astro';
 import TerminalFetch from '../components/TerminalFetch.astro';
+import SoftEnter from '../components/SoftEnter.astro';
 import { projects, openSource } from '../data/content';
 
 const base = import.meta.env.BASE_URL;
 ---
 
 <Layout>
+  <SoftEnter />
   <main id="main" class="container" tabindex="-1">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-intro">
