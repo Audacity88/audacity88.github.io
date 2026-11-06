@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T05:50:38.597Z",
+  "generatedAt": "2026-11-06T05:55:23.852Z",
   "repos": [
     {
       "id": "eyrie",
@@ -24,7 +24,7 @@
       "defaultBranch": "master",
       "ci": {
         "conclusion": "success",
-        "url": "https://github.com/zeroclaw-labs/zeroclaw/actions/runs/42166908106"
+        "url": "https://github.com/zeroclaw-labs/zeroclaw/actions/runs/42166908306"
       }
     },
     {

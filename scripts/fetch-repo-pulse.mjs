@@ -141,11 +141,13 @@ async function main() {
     repos: results,
   };
 
-  await writeFile(OUTPUT_PATH, JSON.stringify(output, null, 2));
+  await writeFile(OUTPUT_PATH, JSON.stringify(output, null, 2) + '\n');
   console.log(`✓ Wrote ${results.length} repo(s) to ${OUTPUT_PATH}`);
 }
 
 main().catch((error) => {
-  console.error('Failed to fetch repo pulse:', error);
-  process.exit(1);
+  console.error('⚠️  Failed to fetch repo pulse:', error);
+  console.error('⚠️  Keeping last good repo-pulse.json if it exists. Build will continue.');
+  // Do not exit(1) - keep the last good JSON and let the build continue
+  // GitHub Pages builds should not fail due to API rate limits or transient errors
 });
