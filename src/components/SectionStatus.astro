@@ -24,8 +24,6 @@
     { id: 'contact', number: '06', label: 'contact' },
   ];
   
-  let currentSection: string | null = null;
-  
   function init() {
     const statusChip = document.getElementById('section-status');
     const statusText = document.getElementById('section-status-text');
@@ -38,7 +36,6 @@
       const section = sections.find(s => s.id === sectionId);
       if (section) {
         statusText.textContent = `${section.number} / ${section.label}`;
-        currentSection = sectionId;
         setActiveSection(sectionId);
         
         if (statusChip.hasAttribute('hidden')) {
@@ -62,7 +59,7 @@
         if (bestEntry) {
           const target = bestEntry.target as HTMLElement;
           const sectionId = target.id;
-          if (sectionId && currentSection !== sectionId) {
+          if (sectionId) {
             updateSectionStatus(sectionId);
           }
         }
