@@ -30,15 +30,6 @@
     
     if (!statusChip || !statusText) return;
     
-    // Track whether we're still in intro (SoftEnter) mode
-    const softEnter = document.getElementById('soft-enter');
-    let introActive = softEnter && !softEnter.hasAttribute('hidden');
-    
-    // Listen for SoftEnter dismissal
-    window.addEventListener('portfolio-shell:enter-dismiss', () => {
-      introActive = false;
-    });
-    
     function updateSectionStatus(sectionId: string) {
       if (!statusText || !statusChip) return;
       
@@ -47,8 +38,8 @@
         statusText.textContent = `${section.number} / ${section.label}`;
         setActiveSection(sectionId);
         
-        // Only show the chip if we're past the intro
-        if (!introActive && statusChip.hasAttribute('hidden')) {
+        // Show the chip when a section is active
+        if (statusChip.hasAttribute('hidden')) {
           statusChip.removeAttribute('hidden');
         }
       }
