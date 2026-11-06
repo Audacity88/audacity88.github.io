@@ -51,19 +51,85 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
     <link rel="manifest" href={`${base}site.webmanifest`} />
     <title>{title}</title>
     <style>
-      /* Critical CSS: Hide page content when SoftEnter is active to prevent FOUC */
-      body.soft-enter-active .site-header,
-      body.soft-enter-active .site-footer,
-      body.soft-enter-active main {
+      /* Critical CSS: Hide ALL page chrome when SoftEnter gate is active to prevent FOUC */
+      body.soft-enter-gate .site-header,
+      body.soft-enter-gate .site-footer,
+      body.soft-enter-gate main,
+      body.soft-enter-gate .command-palette,
+      body.soft-enter-gate .section-status,
+      body.soft-enter-gate .desktop-shell {
         visibility: hidden;
       }
-      /* Hide SoftEnter by default if prefers-reduced-motion (CSS-level guard) */
+      /* Hide SoftEnter overlay by default; gate will unhide if needed */
+      .soft-enter {
+        display: none;
+      }
+      /* Show SoftEnter only when gate is active */
+      body.soft-enter-gate .soft-enter {
+        display: flex;
+      }
+      /* Force hide if prefers-reduced-motion (CSS-level guard) */
       @media (prefers-reduced-motion: reduce) {
-        .soft-enter {
+        body.soft-enter-gate .soft-enter {
           display: none !important;
+        }
+        body.soft-enter-gate .site-header,
+        body.soft-enter-gate .site-footer,
+        body.soft-enter-gate main,
+        body.soft-enter-gate .command-palette,
+        body.soft-enter-gate .section-status,
+        body.soft-enter-gate .desktop-shell {
+          visibility: visible !important;
         }
       }
     </style>
+    <script is:inline>
+      // Blocking inline gate: decide show vs skip BEFORE first paint
+      (function() {
+        var STORAGE_KEY = 'portfolio-enter-seen';
+        
+        function shouldShowEnter() {
+          // Skip if prefers-reduced-motion
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return false;
+          }
+          
+          // Skip if query params present
+          var params = new URLSearchParams(window.location.search);
+          if (params.has('still') || params.has('skip-enter')) {
+            return false;
+          }
+          
+          // Skip on deep links (non-home routes)
+          var base = '{base}';
+          var path = window.location.pathname;
+          var normalizedPath = path.endsWith('/') ? path : path + '/';
+          var normalizedBase = base.endsWith('/') ? base : base + '/';
+          
+          if (normalizedPath !== normalizedBase) {
+            return false;
+          }
+          
+          // Skip if already seen in this session
+          try {
+            if (sessionStorage.getItem(STORAGE_KEY)) {
+              return false;
+            }
+          } catch (e) {
+            // sessionStorage unavailable, show enter anyway
+          }
+          
+          return true;
+        }
+        
+        // Set gate class if should show (happens before body paints)
+        if (shouldShowEnter()) {
+          document.documentElement.className += ' soft-enter-init';
+          document.body.className += ' soft-enter-gate';
+          document.body.style.overflow = 'hidden';
+        }
+      })();
+    </script>
     <script is:inline>
       try {
         let palette = localStorage.getItem('portfolio-palette');

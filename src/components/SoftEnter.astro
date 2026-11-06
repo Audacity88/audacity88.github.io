@@ -1,5 +1,6 @@
 ---
 // Soft enter: optional skippable boot beat on first visit
+// Show/skip decision made by blocking inline gate in Layout head
 ---
 
 <div class="soft-enter" id="soft-enter">
@@ -12,46 +13,15 @@
 </div>
 
 <script>
-  const STORAGE_KEY = 'portfolio-enter-seen';
+  // Show/skip decision already made by blocking inline gate in Layout head
+  // This script only handles dismiss logic and interaction
   
+  const STORAGE_KEY = 'portfolio-enter-seen';
   const softEnter = document.getElementById('soft-enter');
   let dismissed = false;
   
-  function shouldShowEnter(): boolean {
-    // Skip if prefers-reduced-motion
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return false;
-    }
-    
-    // Skip if query params present
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('still') || params.has('skip-enter')) {
-      return false;
-    }
-    
-    // Skip on deep links (non-home routes)
-    const base = import.meta.env.BASE_URL;
-    const path = window.location.pathname;
-    
-    // Normalize paths for comparison
-    const normalizedPath = path.endsWith('/') ? path : `${path}/`;
-    const normalizedBase = base.endsWith('/') ? base : `${base}/`;
-    
-    if (normalizedPath !== normalizedBase) {
-      return false;
-    }
-    
-    // Skip if already seen in this session
-    try {
-      if (sessionStorage.getItem(STORAGE_KEY)) {
-        return false;
-      }
-    } catch {
-      // sessionStorage unavailable, show enter anyway
-    }
-    
-    return true;
-  }
+  // Check if gate decided to show (body has soft-enter-gate class)
+  const shouldShow = document.body.classList.contains('soft-enter-gate');
   
   function dismissEnter() {
     if (dismissed || !softEnter) return;
@@ -69,12 +39,11 @@
       // sessionStorage unavailable
     }
     
-    // Remove body class to reveal content
-    document.body.classList.remove('soft-enter-active');
+    // Remove gate class to reveal content
+    document.body.classList.remove('soft-enter-gate');
     
     // Remove from DOM after animation
     setTimeout(() => {
-      softEnter.setAttribute('hidden', '');
       document.body.style.overflow = '';
     }, 400);
   }
@@ -98,12 +67,8 @@
     window.removeEventListener('touchmove', handleWheelOrTouch);
   }
   
-  // Initialize - run immediately to prevent FOUC
-  if (shouldShowEnter()) {
-    // Add body class to hide main content (ensures overlay is first paint)
-    document.body.classList.add('soft-enter-active');
-    document.body.style.overflow = 'hidden';
-    
+  // Initialize only if gate decided to show
+  if (shouldShow && softEnter) {
     // Broadcast open event for shell bus integration
     window.dispatchEvent(new CustomEvent('portfolio-shell:enter-open'));
     
@@ -112,12 +77,9 @@
     window.addEventListener('touchmove', handleWheelOrTouch, { passive: true });
     
     // Listen for user interaction to dismiss
-    const overlay = softEnter?.querySelector('.soft-enter-overlay');
+    const overlay = softEnter.querySelector('.soft-enter-overlay');
     overlay?.addEventListener('click', handleDismiss);
     document.addEventListener('keydown', handleKeydown, { once: true });
-  } else {
-    // Hide overlay immediately if shouldn't show
-    softEnter?.setAttribute('hidden', '');
   }
 </script>
 
