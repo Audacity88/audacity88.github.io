@@ -131,35 +131,6 @@ const base = import.meta.env.BASE_URL;
   function init() {
     const signalElectrons = document.getElementById('signal-electrons');
     const signalArt = document.querySelector('.signal-art');
-    const hero = document.querySelector('.hero') as HTMLElement;
-    
-    // Hero scroll-reveal logic
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let heroRevealed = false;
-    
-    if (hero && !prefersReducedMotion) {
-      // Initially hide the hero section
-      hero.style.opacity = '0';
-      hero.style.transition = 'opacity 600ms ease';
-      
-      const revealHero = () => {
-        if (!heroRevealed) {
-          heroRevealed = true;
-          hero.style.opacity = '1';
-          window.removeEventListener('scroll', revealHero);
-        }
-      };
-      
-      // Reveal on first scroll
-      window.addEventListener('scroll', revealHero, { passive: true });
-      
-      // Also reveal after a short delay if no scroll occurs (fallback)
-      setTimeout(() => {
-        if (!heroRevealed) {
-          revealHero();
-        }
-      }, 1500);
-    }
     
     onShellStateChange((changes) => {
       if (changes.motionPaused !== undefined) {

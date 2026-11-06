@@ -13,10 +13,9 @@
 
 <script>
   const STORAGE_KEY = 'portfolio-enter-seen';
-  const DISMISS_DURATION = 600; // minimum ms before auto-dismiss
   
   const softEnter = document.getElementById('soft-enter');
-  let canDismiss = false;
+  let dismissed = false;
   
   function shouldShowEnter(): boolean {
     // Skip if prefers-reduced-motion
@@ -55,7 +54,8 @@
   }
   
   function dismissEnter() {
-    if (!canDismiss || !softEnter) return;
+    if (dismissed || !softEnter) return;
+    dismissed = true;
     
     softEnter.classList.add('dismissing');
     
@@ -88,6 +88,12 @@
     handleDismiss(e);
   }
   
+  function handleScroll() {
+    // Dismiss on first scroll
+    dismissEnter();
+    window.removeEventListener('scroll', handleScroll);
+  }
+  
   // Initialize
   if (shouldShowEnter()) {
     // Show the overlay
@@ -97,14 +103,10 @@
     // Broadcast open event for shell bus integration
     window.dispatchEvent(new CustomEvent('portfolio-shell:enter-open'));
     
-    // Enable dismissal after minimum duration
-    window.setTimeout(() => {
-      canDismiss = true;
-      // Auto-dismiss after showing for the minimum duration
-      dismissEnter();
-    }, DISMISS_DURATION);
+    // Listen for scroll to dismiss
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
-    // Listen for user interaction to dismiss early
+    // Listen for user interaction to dismiss
     const overlay = softEnter?.querySelector('.soft-enter-overlay');
     overlay?.addEventListener('click', handleDismiss);
     document.addEventListener('keydown', handleKeydown, { once: true });
