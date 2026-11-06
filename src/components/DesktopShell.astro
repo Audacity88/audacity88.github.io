@@ -470,8 +470,8 @@ import DesktopWindow from './DesktopWindow.astro';
       return true;
     }
     
-    // Hash anchors (except #desktop)
-    if (url.hash && url.hash !== '#desktop') {
+    // Hash anchors (except #desktop or #desktop=<payload>)
+    if (url.hash && url.hash !== '#desktop' && !url.hash.startsWith('#desktop=')) {
       return true;
     }
     
