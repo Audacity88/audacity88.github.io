@@ -12,8 +12,8 @@ interface Props {
   noindex?: boolean;
 }
 const {
-  title = 'Dan Gilles | AI engineer',
-  description = 'Dan Gilles builds AI agents, developer tools, and full-stack software directly with the people who use it. Selected projects and open-source contributions.',
+  title = 'Dan Gilles | I set up AI agents your team can trust',
+  description = 'I set up AI agents your team can trust. Supporting proof includes ZeroClaw, an open-source Rust agent runtime, and Eyrie, a local control room for agents.',
   noindex = false,
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
@@ -39,12 +39,12 @@ const socialImage = new URL(`${base}og-card.png`, Astro.site);
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Dan Gilles. AI engineer. AI agents, developer tools, and forward-deployed engineering." />
+    <meta property="og:image:alt" content="Dan Gilles. I set up AI agents your team can trust. ZeroClaw and Eyrie." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage.toString()} />
-    <meta name="twitter:image:alt" content="Dan Gilles. AI engineer. AI agents, developer tools, and forward-deployed engineering." />
+    <meta name="twitter:image:alt" content="Dan Gilles. I set up AI agents your team can trust. ZeroClaw and Eyrie." />
     {!noindex && <link rel="canonical" href={canonical.toString()} />}
     <link rel="sitemap" type="application/xml" href={`${base}sitemap.xml`} />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />

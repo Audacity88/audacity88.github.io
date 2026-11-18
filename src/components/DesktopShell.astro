@@ -2,6 +2,7 @@
 // L4a+b: Living desktop shell — wallpaper, dock, status strip + window manager
 // Enter via :desktop command; exit via Esc, :cv, or dock CV control
 import DesktopWindow from './DesktopWindow.astro';
+const base = import.meta.env.BASE_URL;
 ---
 
 <div class="desktop-shell" id="desktop-shell" hidden data-desktop-active="false">
@@ -89,12 +90,12 @@ import DesktopWindow from './DesktopWindow.astro';
   <div class="desktop-windows" id="desktop-windows">
     <DesktopWindow id="about" title="About">
       <div class="window-about">
-        <p class="eyebrow"><span class="accent-mark" aria-hidden="true"></span>AI engineer / Dan Gilles</p>
-        <h2>I build AI agents and <span>developer tools.</span></h2>
+        <p class="eyebrow"><span class="accent-mark" aria-hidden="true"></span>Consulting / Dan Gilles</p>
+        <h2>I set up AI agents <span>your team can trust.</span></h2>
         <p class="about-pitch">From an ambiguous brief to a working pilot.</p>
-        <p class="about-description">I work directly with the people who use the software. I also build agent infrastructure and contribute as a code owner to ZeroClaw, an open-source Rust agent runtime.</p>
+        <p class="about-description">I work directly with the people who use the software. Supporting proof includes Eyrie, a local control room for agents, and ZeroClaw, an open-source Rust agent runtime where I am a code owner.</p>
         <div class="about-links">
-          <a href="mailto:dan@dangilles.dev" class="button primary">Get in touch <span aria-hidden="true">↗</span></a>
+          <a href={`${base}offers/`} class="button primary">Explore consulting <span aria-hidden="true">→</span></a>
           <a href="https://github.com/Audacity88" target="_blank" rel="noreferrer" class="button secondary">GitHub <span aria-hidden="true">↗</span></a>
         </div>
       </div>
@@ -133,9 +134,9 @@ import DesktopWindow from './DesktopWindow.astro';
           <div class="terminal-line"><span class="terminal-prompt">~</span> whoami</div>
           <div class="terminal-result">
             <div class="terminal-row"><span class="terminal-label">user</span><span>Dan Gilles</span></div>
-            <div class="terminal-row"><span class="terminal-label">role</span><span>AI engineer</span></div>
+            <div class="terminal-row"><span class="terminal-label">role</span><span>Consulting</span></div>
             <div class="terminal-row"><span class="terminal-label">building</span><span><a href="https://github.com/EyrieCommander/eyrie" target="_blank">Eyrie</a></span></div>
-            <div class="terminal-row"><span class="terminal-label">contributing</span><span><a href="https://github.com/ZeroClaw/zeroclaw" target="_blank">ZeroClaw</a></span></div>
+            <div class="terminal-row"><span class="terminal-label">contributing</span><span><a href="https://github.com/zeroclaw-labs/zeroclaw" target="_blank">ZeroClaw</a></span></div>
           </div>
           <div class="terminal-line"><span class="terminal-prompt">~</span> <span class="terminal-cursor">_</span></div>
         </div>

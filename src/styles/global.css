@@ -198,9 +198,9 @@
   .signal-art.accent-flash .signal-grid { opacity: .7; }
   .hero-note .eyebrow { margin-bottom: .75rem; }
   .hero-note > p:not(.eyebrow) { font-size: 1.15rem; line-height: 1.5; letter-spacing: -.025em; margin-bottom: 1.75rem; }
-  .focus-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: .75rem; border-top: 1px solid var(--line); }
+  .focus-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-width: 0; font-size: .75rem; border-top: 1px solid var(--line); }
   .focus-item > span { color: var(--muted); }
-  .focus-link-group { display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; }
+  .focus-link-group { display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; min-width: 0; max-width: 100%; }
   .focus-item a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; text-decoration: none; }
   .focus-item a:is(:hover, :focus-visible) { text-decoration: underline; }
   .project-card { position: relative; display: flex; flex-direction: column; min-width: 0; padding: 2rem; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
@@ -214,10 +214,10 @@
   .project-card.featured .card-topline { grid-column: 1 / -1; }
   .project-card.featured h3 { font-size: clamp(3rem, 5vw, 4.5rem); letter-spacing: -.055em; }
   .project-card.featured .project-oneliner { font-size: clamp(1.1rem, 1.6vw, 1.3rem); }
-  .card-topline { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+  .card-topline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; margin-bottom: 2rem; }
   .project-index { font-family: var(--mono); font-size: .72rem; color: var(--muted); }
   .project-card.featured .project-index::after { content: ' / FEATURED'; font-size: .6rem; letter-spacing: .04em; color: var(--accent-text); }
-  .status { display: inline-flex; align-items: center; gap: .4rem; color: var(--muted); font-family: var(--mono); font-size: .65rem; border: 1px solid var(--line); border-radius: 999px; padding: .3rem .6rem; background: var(--surface); line-height: 1.4; }
+  .status { display: inline-flex; align-items: center; gap: .4rem; max-width: 100%; color: var(--muted); font-family: var(--mono); font-size: .65rem; border: 1px solid var(--line); border-radius: 999px; padding: .3rem .6rem; background: var(--surface); line-height: 1.4; white-space: normal; overflow-wrap: anywhere; }
   .status > span { width: 5px; height: 5px; border: 1px solid currentColor; border-radius: 50%; flex-shrink: 0; }
   .status[data-status='verified'] > span { background: var(--accent); border-color: var(--accent); }
   .status[data-status='demo-down'] > span { border-radius: 1px; }
@@ -262,6 +262,7 @@
   .cache-values span[aria-hidden] { color: var(--accent-text); font-weight: 300; padding-inline: .2rem; }
   .cache-result > p:last-child { margin-top: .75rem; font-size: .8rem; color: var(--muted); }
   .text-link { display: inline-block; font-size: .82rem; padding-block: .65rem; }
+  .maintainer-note { margin-top: .35rem; color: var(--muted); font-size: .82rem; }
   .pr-list { list-style: none; padding: 0; }
   .pr-card { display: block; padding: 1.4rem .75rem; border-top: 1px solid var(--line); text-decoration: none; border-radius: 3px; }
   .pr-list li:last-child .pr-card { border-bottom: 1px solid var(--line); }
@@ -344,10 +345,11 @@
   @media (max-width: 760px) {
     .container { width: calc(100% - 2.5rem); }
     .site-header { flex-wrap: wrap; gap: .5rem 1rem; padding-block: .8rem .4rem; }
-    .site-header nav { order: 3; flex-basis: 100%; flex-wrap: wrap; margin-left: 0; justify-content: space-between; gap: .5rem; font-size: .78rem; }
+    .site-header nav { order: 3; flex-basis: 100%; flex-wrap: wrap; margin-left: 0; justify-content: flex-start; gap: .15rem 1rem; font-size: .78rem; min-width: 0; }
+    .wordmark, .hero, .hero-intro, .hero-note, .project-card, .project-card-content { min-width: 0; }
     .theme-control { margin-left: auto; }
     .hero { grid-template-columns: 1fr; padding-block: 2.5rem 2rem; gap: 2rem; }
-    .hero h1 { max-width: 620px; font-size: clamp(3.25rem, 9vw, 4.75rem); }
+    .hero h1 { max-width: 100%; font-size: clamp(2.35rem, 8vw, 4.25rem); letter-spacing: -.05em; }
     .hero .eyebrow { font-size: .65rem; }
     .hero-note { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; padding: 1rem 1.25rem .25rem; border: 1px solid var(--line); border-radius: 6px; margin: 0; background: var(--surface); }
     .hero-note .signal-art, .hero-note > p:not(.eyebrow) { display: none; }
@@ -364,7 +366,7 @@
     .project-grid { grid-template-columns: 1fr; gap: 1rem; }
     .project-card { padding: 1.5rem; }
     .project-card.featured { display: flex; align-items: stretch; gap: 0; }
-    .project-card.featured h3 { font-size: 2.75rem; }
+    .project-card.featured h3 { font-size: clamp(2rem, 7vw, 2.75rem); }
     .project-card.featured .project-card-media { margin-top: 1.5rem; }
     .card-topline { margin-bottom: 1.5rem; }
     .project-card h3 { font-size: 1.8rem; }
@@ -375,11 +377,29 @@
     .contact-section { padding-bottom: 4rem; }
     .site-footer { font-size: .7rem; gap: .5rem 1rem; }
   }
-  @media (max-width: 360px) {
-    .container { width: calc(100% - 2rem); }
+  @media (max-width: 420px) {
+    .container { width: calc(100% - 1.75rem); }
+    .site-header { gap: .35rem .6rem; }
+    .site-header nav { font-size: .74rem; gap: .1rem .4rem; }
+    .desktop-toggle-control { margin-left: auto; }
+    .hero { padding-block: 1.75rem 1.5rem; gap: 1.25rem; }
+    .hero h1, h1 { font-size: clamp(1.9rem, 8.2vw, 2.25rem); letter-spacing: -.04em; }
+    .hero .eyebrow { margin-bottom: 1rem; }
+    .hero-pitch { margin-top: 1rem; font-size: 1rem; }
+    .hero-actions .button { gap: .7rem; padding: .65rem .9rem; }
+    .hero-note { grid-template-columns: minmax(0, 1fr); }
     .project-card { padding: 1.15rem; }
-    .site-header nav { font-size: .7rem; }
-    .hero h1 { font-size: 2.9rem; }
+    .project-card.featured h3 { font-size: clamp(1.65rem, 7.5vw, 2rem); }
+    .project-card h3 { font-size: 1.45rem; }
+    .cache-values { white-space: normal; }
+    .contact-section h2 { font-size: clamp(1.85rem, 9vw, 2.35rem); }
+  }
+  @media (max-width: 360px) {
+    .container { width: calc(100% - 1.5rem); }
+    .project-card { padding: 1rem; }
+    .site-header nav { font-size: .7rem; gap: .05rem .55rem; }
+    .hero h1, h1 { font-size: 1.85rem; }
+    .project-card.featured h3 { font-size: 1.6rem; }
     .card-topline { gap: .4rem; }
     .project-card.featured .project-index::after { font-size: .5rem; }
   }
