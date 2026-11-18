@@ -2,15 +2,77 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Offers | Dan Gilles" description="Services and tools Dan Gilles can set up for you.">
+<Layout title="Offers | Dan Gilles" description="AI workflow audits, agent team setup, reliability and cost reviews, fractional AI engineering, and a $500 AI phone-line setup.">
   <main id="main" class="container" tabindex="-1">
-    <section class="section" aria-labelledby="offers-title">
+    <section class="section offers-intro" aria-labelledby="offers-title">
       <p class="eyebrow">Offers</p>
       <h1 id="offers-title">What I can set up for you.</h1>
+      <p>Most teams try an AI tool and then stall. The demo works. Then nobody connects it to the real tools, nobody decides what it may do on its own, and nobody checks its work. I do those three things.</p>
+      <p>Coding agents write much of the code. I specify the problem, review every change, test it live, and decide what ships. I tell you what was checked and what was not.</p>
     </section>
 
     <section class="section offers-list" aria-label="Available services">
-      <article class="offer-item">
+      <article class="offer-item" id="ai-workflow-audit">
+        <h2>AI workflow audit</h2>
+        <p class="offer-price">Priced per project. Ask for a quote.</p>
+        <p>For a team that wants to know where agents would actually save time, before spending money on a build.</p>
+        <p>I sit with the people who do the work, not only the founder. In two or three working sessions I map the recurring tasks, the tools, and the data. I mark which tasks an agent can do alone, which need a person to check, and which to leave alone. You also get one working automation on a real task, using your own tools, before you decide anything larger.</p>
+        <h3>What you get</h3>
+        <ul>
+          <li>A written audit: a map of the tasks, the top three candidates ranked by time saved against risk, the tools and access required, and a rough running cost per month.</li>
+          <li>That one working automation, with a short note so your team can run it.</li>
+          <li>A recommendation on whether to go ahead with an agent team setup.</li>
+        </ul>
+        <p class="offer-meta">Typical length: one to two weeks.</p>
+        <p class="offer-cta">Get in touch: <a href="mailto:dan@dangilles.dev">dan@dangilles.dev</a></p>
+      </article>
+
+      <article class="offer-item" id="agent-team-setup">
+        <h2>Agent team setup</h2>
+        <p class="offer-price">Priced per project. Ask for a quote.</p>
+        <p>For a team that has already picked two to five jobs it wants agents doing every day.</p>
+        <p>I set up named agents on the tools you already use, such as email, calendar, Slack, docs, and GitHub. Each agent has written limits: what it may do alone, what needs a person to approve, and a hard stop on sends, payments, and deletes until you say yes. Checks run before an agent starts or acts, so you are not paying for idle model calls. A status page, or a short summary, shows what the agents did.</p>
+        <h3>What you get</h3>
+        <ul>
+          <li>Two to five working agents in daily use, each with written instructions and limits.</li>
+          <li>Written steps for adding, changing, or turning an agent off.</li>
+          <li>Two weeks of tuning after the agents are in daily use.</li>
+        </ul>
+        <p class="offer-note">Your team pays its own model and tool costs.</p>
+        <p class="offer-meta">Typical length: three to six weeks.</p>
+        <p class="offer-cta">Get in touch: <a href="mailto:dan@dangilles.dev">dan@dangilles.dev</a></p>
+      </article>
+
+      <article class="offer-item" id="reliability-cost-review">
+        <h2>Agent reliability and cost review</h2>
+        <p class="offer-price">Priced per project. Ask for a quote.</p>
+        <p>For a team that ships an agent product, when the agent drops messages, loses sessions, or costs too much per task.</p>
+        <p>I reproduce the failures on a live run and trace each one to a cause in the source. I measure before and after on the same prompts, so the comparison is fair. I fix what is in scope, with tests. If you want it, I can add a check where more than one model reviews a code change before it merges.</p>
+        <h3>What you get</h3>
+        <ul>
+          <li>A findings report: each failure, its cause, and the fix or the recommended fix.</li>
+          <li>Changes merged into your codebase, with tests, or patches your team can apply.</li>
+          <li>Before-and-after numbers on your own workload.</li>
+        </ul>
+        <p class="offer-meta">Typical length: two to four weeks.</p>
+        <p class="offer-cta">Get in touch: <a href="mailto:dan@dangilles.dev">dan@dangilles.dev</a></p>
+      </article>
+
+      <article class="offer-item" id="fractional-ai-engineer">
+        <h2>Fractional AI engineer</h2>
+        <p class="offer-price">Monthly rate on request.</p>
+        <p>For a team that needs an AI engineer a few days a week, not a full-time hire.</p>
+        <p>I join your tools and standups and own one AI product or agent workstream from start to finish: requirements with the people who use it, the build, review, live testing, and the decision about what ships. I work remotely.</p>
+        <h3>What you get</h3>
+        <ul>
+          <li>The work we agree for that month.</li>
+          <li>A weekly written update on what shipped and what is blocked.</li>
+        </ul>
+        <p class="offer-note">Monthly. A three-month minimum is suggested.</p>
+        <p class="offer-cta">Get in touch: <a href="mailto:dan@dangilles.dev">dan@dangilles.dev</a></p>
+      </article>
+
+      <article class="offer-item" id="ai-phone-line">
         <h2>AI phone-line setup</h2>
         <p class="offer-price">$500 one-time</p>
         <p>Setup and handover of an AI phone assistant on a dedicated number, configured around your call-handling needs, with instructions for changing its behavior. Not a SaaS subscription.</p>
@@ -28,17 +90,11 @@ import Layout from '../layouts/Layout.astro';
         <p class="offer-cta">Get started: <a href="mailto:dan@dangilles.dev">dan@dangilles.dev</a> (or call the demo number)</p>
       </article>
 
-      <article class="offer-item">
+      <article class="offer-item" id="grok-bot-setup">
         <h2>Grok Bot assistant setup</h2>
         <p class="offer-price">Price on request</p>
         <p>One session to set up a personal AI assistant with accounts, routines, and approvals. A recent engagement was about five hours hands-on.</p>
         <p class="offer-cta">Get in touch: <a href="mailto:dan@dangilles.dev">dan@dangilles.dev</a></p>
-      </article>
-
-      <article class="offer-item coming-soon">
-        <h2>Self-building bot fleet <span class="coming-soon-badge">Coming soon</span></h2>
-        <p>A self-building bot fleet for one goal. Hebrew tutor as the first demo, with kids' and adults' versions.</p>
-        <p class="offer-note">Not for sale yet.</p>
       </article>
     </section>
 
@@ -51,6 +107,17 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
+  .offers-intro {
+    max-width: 48rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .offers-intro p {
+    max-width: 62ch;
+    margin-top: 1.15rem;
+    line-height: 1.65;
+  }
+
   .offers-list {
     max-width: 48rem;
     border-top: none;
@@ -74,10 +141,14 @@ import Layout from '../layouts/Layout.astro';
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
     letter-spacing: -0.02em;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+    line-height: 1.2;
+  }
+
+  .offer-item h3 {
+    font-size: 1rem;
+    font-weight: 550;
+    letter-spacing: 0;
+    margin: 1.25rem 0 0.35rem;
   }
 
   .offer-price {
@@ -94,12 +165,13 @@ import Layout from '../layouts/Layout.astro';
 
   .offer-item ul {
     margin: 1rem 0;
-    padding-left: 1.5rem;
+    padding-left: 1.25rem;
     line-height: 1.7;
   }
 
   .offer-item li {
     margin: 0.4rem 0;
+    padding-left: 0.15rem;
   }
 
   .offer-proof {
@@ -113,26 +185,22 @@ import Layout from '../layouts/Layout.astro';
     font-weight: 500;
   }
 
+  .offer-cta a,
+  .offer-proof a,
+  .contact-email {
+    overflow-wrap: anywhere;
+  }
+
   .offer-note {
     color: var(--muted);
     font-style: italic;
     margin-top: 1rem;
   }
 
-  .coming-soon {
-    opacity: 0.75;
-  }
-
-  .coming-soon-badge {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  .offer-meta {
     color: var(--muted);
-    padding: 0.25rem 0.6rem;
-    background: var(--subtle);
-    border-radius: 3px;
+    font-size: 0.95rem;
+    margin-top: 1rem;
   }
 
   .contact-cta {
@@ -154,6 +222,8 @@ import Layout from '../layouts/Layout.astro';
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    min-height: 44px;
+    max-width: 100%;
     font-size: 1.35rem;
     font-weight: 550;
     text-decoration: none;
@@ -166,8 +236,21 @@ import Layout from '../layouts/Layout.astro';
   }
 
   @media (max-width: 768px) {
+    .offers-intro {
+      max-width: 100%;
+      padding-bottom: 1.5rem;
+    }
+
+    .offers-intro h1 {
+      font-size: clamp(2.05rem, 8.5vw, 2.6rem);
+    }
+
     .offers-list {
       max-width: 100%;
+    }
+
+    .offer-item {
+      padding: 1.75rem 0;
     }
 
     .offer-item h2 {
@@ -176,6 +259,10 @@ import Layout from '../layouts/Layout.astro';
 
     .offer-price {
       font-size: 1rem;
+    }
+
+    .contact-cta h2 {
+      font-size: 1.5rem;
     }
 
     .contact-email {
