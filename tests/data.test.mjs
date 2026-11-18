@@ -240,6 +240,25 @@ test('open-source data uses the approved total and matching upstream PR links', 
   }
 });
 
+test('public copy drops retired GitHub URLs and the ZeroCode typo', () => {
+  const roots = [new URL('../src/', import.meta.url), new URL('../public/', import.meta.url)];
+  const chunks = [];
+  function walk(folder) {
+    for (const entry of readdirSync(folder, { withFileTypes: true })) {
+      const file = new URL(entry.name, folder);
+      if (entry.isDirectory()) walk(new URL(`${entry.name}/`, folder));
+      else if (/\.(?:astro|json|svg|css|mjs|ts|txt)$/i.test(entry.name)) chunks.push(readFileSync(file, 'utf8'));
+    }
+  }
+  for (const root of roots) walk(root);
+  const source = chunks.join('\n');
+  assert.doesNotMatch(source, /github\.com\/ZeroClaw\/zeroclaw/i);
+  assert.doesNotMatch(source, /github\.com\/community\/maintainers/i);
+  assert.doesNotMatch(source, /ZeroCode/);
+  assert.match(source, /github\.com\/zeroclaw-labs\/zeroclaw/);
+  assert.match(source, /Member of the GitHub Maintainers community\./);
+});
+
 test('Model Picker and Witness Lexington stay neutral', () => {
   const projects = read('projects');
   for (const id of ['model-picker', 'witness-lexington']) {
@@ -263,10 +282,10 @@ test('built pages retain the locked project list, evidence, attribution, and app
   const base = new URL(home.match(/<link rel="canonical" href="([^"]+)"/)[1]);
   const sitemap = readFileSync(new URL('sitemap.xml', root), 'utf8');
   const expectedIds = projects.map((project) => project.id);
-  assert.deepEqual([...home.matchAll(/data-project="([^"]+)"/g)].map((match) => match[1]), expectedIds);
+  assert.deepEqual([...home.matchAll(/<article[^>]*data-project="([^"]+)"/g)].map((match) => match[1]), expectedIds);
   assert.deepEqual(readdirSync(new URL('projects/', root)).sort(), [...expectedIds].sort());
   assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]),
-    ['', 'resume/', 'art/', ...expectedIds.map((id) => `projects/${id}/`)].map((path) => new URL(path, base).href));
+    ['', 'offers/', 'now/', 'resume/', 'art/', ...expectedIds.map((id) => `projects/${id}/`)].map((path) => new URL(path, base).href));
   const escape = (text) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
   for (const project of projects) {
     const html = readFileSync(new URL(`projects/${project.id}/index.html`, root), 'utf8');
@@ -279,9 +298,10 @@ test('built pages retain the locked project list, evidence, attribution, and app
     const links = [...html.matchAll(/<a\b[^>]*href="([^"]+)"/g)].map((match) => match[1]);
     if (project.demo) assert.ok(links.includes(escape(project.demo)));
     else assert.ok(!html.includes('View demo'), `${project.id} must hide a null demo`);
+    const main = html.slice(html.indexOf('<main'), html.indexOf('</main>'));
     if (!project.github && !project.demo) {
-      assert.ok(!html.includes('id="links-title"'), 'Do not render an empty Links section');
-      assert.ok(!html.includes('class="project-links"'), 'Do not render empty project links');
+      assert.ok(!main.includes('id="links-title"'), 'Do not render an empty Links section');
+      assert.ok(!main.includes('class="project-links"'), 'Do not render empty project links');
     }
     for (const note of [project.notes, ...project.caseStudy.sourceNotes]) {
       assert.ok(!html.includes(escape(note)), 'Internal source notes must stay out of generated pages');
@@ -297,7 +317,8 @@ test('built pages retain the locked project list, evidence, attribution, and app
       else if (/\.(?:html|xml|json|webmanifest|svg|txt|js|css)$/i.test(entry.name)) {
         const content = readFileSync(file, 'utf8');
         assert.doesNotMatch(content, new RegExp(`\\b${source.count.value}\\b`), 'Do not render the internal PR total');
-        assert.doesNotMatch(content, /\/Users\/|\[CLIENT:|needs Dan OK/i, 'No local source paths or approval placeholders');
+        assert.doesNotMatch(content, /\/Users\//, 'No local source paths');
+        assert.doesNotMatch(content, /\[CLIENT:|needs Dan OK/i, 'No approval placeholders');
         for (const match of content.matchAll(/\b[\d,]+\+?\s+merged\s+(?:pull requests|PRs)\b/gi)) {
           assert.equal(match[0], source.count.label, 'Only the approved total label may appear');
         }

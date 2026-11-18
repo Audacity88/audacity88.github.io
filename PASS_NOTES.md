@@ -713,3 +713,23 @@ No server, browser, download, or Lighthouse run was started. Print appearance an
 - Pages: 14 built successfully
 - Links: 534 checked and valid
 
+## Audit: links, sitemap, narrow layout, and consulting positioning
+
+`facts.md` is not in this workspace, so `experience.json` and the resume were left unchanged. Offer package names, prices, and the consulting-strip package paragraph were not edited.
+
+- Homepage terminal and desktop terminal now link to `https://github.com/zeroclaw-labs/zeroclaw`.
+- The private Maintainers URL is plain text: "Member of the GitHub Maintainers community."
+- The two ZeroCode blurbs now say ZeroClaw.
+- `sitemap.xml` includes `/offers/` and `/now/` after the home page.
+- Below 420px the hero and featured titles are smaller, the nav stays on one row at 360–400px, and repo-pulse pills can wrap inside their column.
+- Homepage hero, default title, meta description, Open Graph and Twitter title, description, and image alt, contact line, and the desktop About window use "I set up AI agents your team can trust." The primary CTA goes to `/offers/`. ZeroClaw and Eyrie stay as supporting proof.
+
+Validation:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` completed with astro check at 0 errors, 0 warnings, and 0 hints, 14 pages, and 552 local references. A later nav-gap rebuild used `astro build` plus `npm run check:links` (552 references).
+- `npm test` passed all 14 tests against that build, with no skips. Built-output checks now count project cards only, look for empty Model Picker links inside `<main>`, and match `/Users/` case-sensitively so the GitHub API path `/users/` is not treated as a local path.
+- Built HTML has no `ZeroCode`, `github.com/ZeroClaw/zeroclaw`, or `github.com/community/maintainers`. HEAD requests for the GitHub links in the built pages returned 200.
+- Chrome at 360, 375, 400, and 760px: homepage `scrollWidth` equaled `clientWidth`. `/offers/` at 375px matched as well. The visible primary CTA opened `/offers/`.
+- The build's pulse fetch updated `src/data/repo-pulse.json`; that file was restored so this pass does not include an unrelated refresh. CI fetches pulse during build.
+- No Lighthouse run. A local static server was used only to measure overflow and capture the requested screenshots.
+

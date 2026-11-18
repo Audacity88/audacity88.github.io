@@ -16,7 +16,7 @@
       "area": "Session recovery",
       "mergedAt": "2026-09-28",
       "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10801",
-      "summary": "When ZeroCode's notification stream overflowed, recovery cancelled running turns, including background sessions. The fix reattaches to the client's own running turns, keeps displayed output, and reloads the saved transcript again when the turn ends. Reconnect and resume paths retain their existing cancellation behavior."
+      "summary": "When ZeroClaw's notification stream overflowed, recovery cancelled running turns, including background sessions. The fix reattaches to the client's own running turns, keeps displayed output, and reloads the saved transcript again when the turn ends. Reconnect and resume paths retain their existing cancellation behavior."
     },
     {
       "number": 11725,
@@ -43,7 +43,7 @@
     },
     {
       "number": 11692,
-      "title": "Show cost threshold warnings in ZeroCode",
+      "title": "Show cost threshold warnings in ZeroClaw",
       "area": "Cost reporting",
       "mergedAt": "2026-10-18",
       "url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11692"
