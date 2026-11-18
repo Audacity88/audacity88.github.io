@@ -713,3 +713,17 @@ No server, browser, download, or Lighthouse run was started. Print appearance an
 - Pages: 14 built successfully
 - Links: 534 checked and valid
 
+## Pass: Offers page packages, 2026-11-18
+
+Updated `src/pages/offers.astro` only. `src/data/content.ts` has no offers copy, so it was not changed. `src/data/experience.json` was re-read and left as published: the approved 39-student pilot figure stays on the experience record and is not repeated on the offers page. `facts.md` at `/Users/natalie/Development/portfolio-brief/facts.md` is not on this machine.
+
+Public offers are now AI Workflow Audit, Agent Team Setup (renamed from Agent Fleet Setup; the page does not use the word fleet), Agent Reliability and Cost Review, and Fractional AI Engineer, followed by the existing $500 AI phone-line setup and Grok Bot assistant setup. Removed the coming-soon self-building fleet card. No placeholder prices. No Not offered section, Superbuilders line, product-track copy, or internal bot names on this page. Omitted the unconfirmed 39-student and 17-agent claims, and the undecided time-zone coverage note.
+
+Validation on this workspace, working directory `/agent/repos/audacity88.github.io`:
+
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed. Astro check: 0 errors, 0 warnings, 0 hints. 14 pages. `check:links` checked 535 local references. The build refreshed `src/data/repo-pulse.json`; that file was restored and is not part of this change.
+- Headless Chrome rendered `/offers/` in light mode at 375×5342 and 1280×4158. No horizontal overflow. The $500 line, demo number, and quote lines were present. Lighthouse was not run.
+- `npm test` with `dist/` present fails one pre-existing home-page check: `data-project` ids are listed twice. This pass did not change the home page. CI runs `npm test` before the build, so that dist-only check is skipped there.
+
+The portfolio build does not verify the projects. Screenshots are of the built page, not a Lighthouse or phone-device audit.
+
