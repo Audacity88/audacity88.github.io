@@ -152,6 +152,8 @@ import { sections, sectionLabel } from '../lib/section-jump';
         return;
       }
 
+      if (!inWidget) return;
+
       if (key === 'Escape') {
         event.preventDefault();
         closeMenu();
@@ -159,7 +161,7 @@ import { sections, sectionLabel } from '../lib/section-jump';
         return;
       }
 
-      if (!inWidget || (key !== 'ArrowDown' && key !== 'ArrowUp')) return;
+      if (key !== 'ArrowDown' && key !== 'ArrowUp') return;
       event.preventDefault();
       const links = menuItems();
       const index = target instanceof HTMLAnchorElement ? links.indexOf(target) : -1;

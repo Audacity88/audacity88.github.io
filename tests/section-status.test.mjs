@@ -41,7 +41,7 @@ test('section jump arrow keys move between menu items and wrap', () => {
   assert.equal(nextItemIndex(0, 6, 'ArrowUp'), 5);
   assert.equal(nextItemIndex(3, 6, 'ArrowUp'), 2);
   assert.equal(nextItemIndex(2, 6, 'Escape'), 2);
-  assert.match(component, /key === 'Escape'/);
+  assert.match(component, /if \(!inWidget\) return;[\s\S]*key === 'Escape'/);
   assert.match(component, /nextItemIndex\(/);
 });
 

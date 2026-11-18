@@ -765,3 +765,9 @@ Validation in `/agent/repos/audacity88.github.io`:
 
 The portfolio build does not verify the projects. This pass does not reverify accessibility conformance, performance, print layout, remote CI, or hosting.
 
+## Pass: Section menu Escape stays in the widget, 2026-11-18
+
+Escape now closes the section menu and returns focus to its button only when focus is already on that button or in the menu. Escape from another control, including the command palette, no longer moves focus to the chip. `aria-haspopup` stays on the button because the requested markup includes it, along with `aria-expanded` and `aria-controls`.
+
+- `npm test` passed all 19 tests before and after the rebuild, with no skips. `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed: astro check 0 errors, 0 warnings, 0 hints; 14 pages; 552 local references. The pulse refresh was restored and is not part of this change.
+
