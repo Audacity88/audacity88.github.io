@@ -1,68 +1,187 @@
 ---
-// Section status chip that tracks scroll position
+import { sections, sectionLabel } from '../lib/section-jump';
 ---
 
 <div class="section-status" id="section-status" hidden>
-  <span class="section-status-text" id="section-status-text">01 / projects</span>
+  <button
+    type="button"
+    class="section-status-toggle"
+    id="section-status-toggle"
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-controls="section-status-menu"
+  >
+    <span class="section-status-text" id="section-status-text">{sectionLabel(sections[0])}</span>
+  </button>
+  <nav id="section-status-menu" class="section-status-menu" aria-label="Sections" hidden></nav>
 </div>
 
 <script>
   import { setActiveSection } from '../lib/portfolio-shell';
-  
-  interface Section {
-    id: string;
-    number: string;
-    label: string;
-  }
-  
-  const sections: Section[] = [
-    { id: 'projects', number: '01', label: 'selected work' },
-    { id: 'open-source', number: '02', label: 'open source' },
-    { id: 'experience', number: '03', label: 'experience' },
-    { id: 'how-i-work', number: '04', label: 'workflow' },
-    { id: 'about', number: '05', label: 'about' },
-    { id: 'contact', number: '06', label: 'contact' },
-  ];
-  
+  import { nextItemIndex, scrollBehavior, sectionLabel, sections } from '../lib/section-jump';
+
   function init() {
     const statusChip = document.getElementById('section-status');
     const statusText = document.getElementById('section-status-text');
-    
-    if (!statusChip || !statusText) return;
-    
-    function updateSectionStatus(sectionId: string) {
-      if (!statusText || !statusChip) return;
-      
-      const section = sections.find(s => s.id === sectionId);
-      if (section) {
-        statusText.textContent = `${section.number} / ${section.label}`;
-        setActiveSection(sectionId);
-        
-        // Show the chip when a section is active
-        if (statusChip.hasAttribute('hidden')) {
-          statusChip.removeAttribute('hidden');
-        }
+    const toggle = document.getElementById('section-status-toggle');
+    const menu = document.getElementById('section-status-menu');
+
+    if (!(statusChip instanceof HTMLElement) || !(statusText instanceof HTMLElement) || !(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
+
+    const chip: HTMLElement = statusChip;
+    const text: HTMLElement = statusText;
+    const button: HTMLButtonElement = toggle;
+    const popup: HTMLElement = menu;
+    let activeId: string | null = null;
+
+    function menuItems(): HTMLAnchorElement[] {
+      return [...popup.querySelectorAll('a')];
+    }
+
+    function markCurrent(sectionId: string | null) {
+      for (const link of menuItems()) {
+        const id = link.getAttribute('href')?.slice(1);
+        if (sectionId && id === sectionId) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
       }
     }
-    
+
+    function renderMenu() {
+      popup.replaceChildren();
+      for (const section of sections) {
+        const link = document.createElement('a');
+        link.className = 'section-status-item';
+        link.href = `#${section.id}`;
+        link.textContent = sectionLabel(section);
+        popup.append(link);
+      }
+      markCurrent(activeId);
+    }
+
+    function isOpen() {
+      return button.getAttribute('aria-expanded') === 'true';
+    }
+
+    function openMenu() {
+      popup.removeAttribute('hidden');
+      button.setAttribute('aria-expanded', 'true');
+      markCurrent(activeId);
+    }
+
+    function closeMenu() {
+      popup.setAttribute('hidden', '');
+      button.setAttribute('aria-expanded', 'false');
+    }
+
+    function focusItem(index: number) {
+      menuItems()[index]?.focus();
+    }
+
+    function sectionHeading(sectionEl: HTMLElement): HTMLElement | null {
+      const labelledBy = sectionEl.getAttribute('aria-labelledby');
+      const labelled = labelledBy ? document.getElementById(labelledBy) : null;
+      if (labelled) return labelled;
+      const heading = sectionEl.querySelector('h2');
+      return heading instanceof HTMLElement ? heading : null;
+    }
+
+    function updateSectionStatus(sectionId: string) {
+      const section = sections.find((item) => item.id === sectionId);
+      if (!section) return;
+
+      activeId = sectionId;
+      text.textContent = sectionLabel(section);
+      markCurrent(sectionId);
+      setActiveSection(sectionId);
+
+      if (chip.hasAttribute('hidden')) chip.removeAttribute('hidden');
+    }
+
+    function chooseSection(sectionId: string) {
+      const sectionEl = document.getElementById(sectionId);
+      if (!(sectionEl instanceof HTMLElement)) return;
+      if (!sections.some((section) => section.id === sectionId)) return;
+
+      updateSectionStatus(sectionId);
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      sectionEl.scrollIntoView({ behavior: scrollBehavior(reduce), block: 'start' });
+      const heading = sectionHeading(sectionEl);
+      if (heading) {
+        if (!heading.hasAttribute('tabindex')) heading.setAttribute('tabindex', '-1');
+        heading.focus({ preventScroll: true });
+      }
+      closeMenu();
+    }
+
+    renderMenu();
+
+    button.addEventListener('click', () => {
+      if (isOpen()) closeMenu();
+      else openMenu();
+    });
+
+    popup.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const link = target.closest('a');
+      if (!link || !popup.contains(link)) return;
+      const id = link.getAttribute('href')?.slice(1);
+      if (!id) return;
+      event.preventDefault();
+      chooseSection(id);
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!isOpen()) return;
+      const target = event.target;
+      if (target instanceof Node && chip.contains(target)) return;
+      closeMenu();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      const key = event.key;
+      const target = event.target;
+      const inWidget = target instanceof Node && (target === button || popup.contains(target));
+
+      if (!isOpen()) {
+        if (target === button && (key === 'ArrowDown' || key === 'ArrowUp')) {
+          event.preventDefault();
+          openMenu();
+          focusItem(nextItemIndex(-1, menuItems().length, key));
+        }
+        return;
+      }
+
+      if (key === 'Escape') {
+        event.preventDefault();
+        closeMenu();
+        button.focus();
+        return;
+      }
+
+      if (!inWidget || (key !== 'ArrowDown' && key !== 'ArrowUp')) return;
+      event.preventDefault();
+      const links = menuItems();
+      const index = target instanceof HTMLAnchorElement ? links.indexOf(target) : -1;
+      focusItem(nextItemIndex(index, links.length, key));
+    });
+
     const observer = new IntersectionObserver(
       (entries) => {
         let bestEntry = null as IntersectionObserverEntry | null;
         let bestRatio = 0;
-        
+
         entries.forEach((entry) => {
           if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
             bestRatio = entry.intersectionRatio;
             bestEntry = entry;
           }
         });
-        
+
         if (bestEntry) {
           const target = bestEntry.target as HTMLElement;
           const sectionId = target.id;
-          if (sectionId) {
-            updateSectionStatus(sectionId);
-          }
+          if (sectionId) updateSectionStatus(sectionId);
         }
       },
       {
@@ -70,15 +189,13 @@
         rootMargin: '-20% 0px -40% 0px',
       }
     );
-    
+
     sections.forEach((section) => {
       const element = document.getElementById(section.id);
-      if (element) {
-        observer.observe(element);
-      }
+      if (element) observer.observe(element);
     });
   }
-  
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
@@ -89,25 +206,79 @@
 <style>
   .section-status {
     position: fixed;
-    bottom: 2rem;
     right: 2rem;
+    bottom: 2rem;
     z-index: 50;
+    width: max-content;
+    max-width: calc(100vw - 4rem);
+    animation: slideUp 300ms ease both;
+  }
+
+  .section-status-toggle {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
     padding: 0.55rem 1rem;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 999px;
+    box-shadow: var(--shadow);
+    color: var(--muted);
+    cursor: pointer;
     font-family: var(--mono);
     font-size: 0.7rem;
-    color: var(--muted);
-    box-shadow: var(--shadow);
-    pointer-events: none;
-    animation: slideUp 300ms ease both;
+    font-weight: 400;
+    line-height: 1.4;
   }
-  
+
+  .section-status-toggle:is(:hover, :focus-visible) {
+    background: var(--tint);
+    border-color: var(--accent);
+    color: var(--accent-text);
+  }
+
   .section-status-text {
     color: var(--accent-text);
   }
-  
+
+  .section-status-menu {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    width: max-content;
+    max-width: min(16rem, calc(100vw - 2.5rem));
+    max-height: calc(100vh - 6rem);
+    margin: 0;
+    padding: 0.35rem;
+    overflow: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+  }
+
+  .section-status-menu :global(a) {
+    display: block;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    line-height: 1.4;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .section-status-menu :global(a:is(:hover, :focus-visible)),
+  .section-status-menu :global(a[aria-current='true']) {
+    background: var(--tint);
+    color: var(--accent-text);
+  }
+
   @keyframes slideUp {
     from {
       opacity: 0;
@@ -118,16 +289,29 @@
       transform: translateY(0);
     }
   }
-  
+
   @media (max-width: 760px) {
     .section-status {
-      bottom: 1.25rem;
       right: 1.25rem;
+      bottom: 1.25rem;
+      max-width: calc(100vw - 2.5rem);
+    }
+
+    .section-status-toggle {
       padding: 0.45rem 0.85rem;
       font-size: 0.65rem;
     }
+
+    .section-status-menu {
+      max-width: calc(100vw - 2.5rem);
+    }
+
+    .section-status-menu :global(a) {
+      font-size: 0.65rem;
+      white-space: normal;
+    }
   }
-  
+
   @media (prefers-reduced-motion: reduce) {
     .section-status {
       animation: none;

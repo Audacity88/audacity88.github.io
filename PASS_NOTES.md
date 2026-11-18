@@ -747,3 +747,21 @@ Validation on this workspace, working directory `/agent/repos/audacity88.github.
 
 The portfolio build does not verify the projects. Screenshots are of the built page, not a Lighthouse or phone-device audit.
 
+## Pass: Consulting strip copy and section jump menu, 2026-11-18
+
+`facts.md` at `/Users/natalie/Development/portfolio-brief/facts.md` is not on this machine. `src/data/experience.json` was re-read and left unchanged, including approval flags and the published demo/pilot, not-production wording.
+
+- The homepage consulting strip heading is now "Where I can help." The paragraph names an AI workflow audit, agent team setup, an agent reliability and cost review, a fractional AI engineer, AI phone lines ($500 one-time), Grok Bot assistants, and handover documentation. The Explore consulting link, section id, heading id, classes, and `aria-labelledby` are unchanged. The hero, contact section, `DesktopShell.astro`, and `offers.astro` were not edited.
+- The section chip is a button with `aria-haspopup`, `aria-expanded`, and `aria-controls`. `pointer-events: none` is gone. Hover and focus-visible use the surface, tint, line, accent, and accent-text tokens, with a pointer cursor. The menu opens above the chip and lists the six tracked sections as links to `#id`, labeled with their number and name. The current section has `aria-current="true"`. Choosing an item smooth-scrolls, or jumps instantly when `prefers-reduced-motion: reduce` is set, moves focus to that section's heading, and closes the menu. Escape closes the menu and returns focus to the chip. A second click on the chip and a click outside also close it. Arrow keys move between the items and wrap. Scroll tracking still calls `setActiveSection`.
+
+Validation in `/agent/repos/audacity88.github.io`:
+
+- `npm ci` installed 274 packages.
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed. Astro check reported 0 errors, 0 warnings, and 0 hints. 14 pages. `check:links` checked 552 local references. The build refreshed `src/data/repo-pulse.json`; that file was restored and is not part of this change.
+- `npx astro check` after that build reported 0 errors, 0 warnings, and 0 hints.
+- `npm test` passed all 19 tests, with no failures and no skips. No existing test asserted the old strip sentence. New tests cover the six section labels, reduced-motion scroll behavior, arrow-key wrapping, the button attributes, and the built home-page button.
+- Headless Chrome on the built home page: `scrollWidth` equaled `clientWidth` at 375px and 1280px in light and dark, including with the menu open. At 375×812 the open menu was inside the viewport (left 207, right 355, top 573, bottom 762). Checked six `#id` links, `aria-current`, arrow wrap to the last item, Escape returning focus to the chip, outside click, a second chip click, smooth scroll onto the open-source heading, and instant scroll onto the contact heading under reduced motion. Light and dark surfaces resolved to `#fcfbf8` and `#1b1f28`.
+- Lighthouse was not run. A local static server was used only for this overflow and menu check.
+
+The portfolio build does not verify the projects. This pass does not reverify accessibility conformance, performance, print layout, remote CI, or hosting.
+
