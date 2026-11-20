@@ -285,7 +285,7 @@ test('built pages retain the locked project list, evidence, attribution, and app
   assert.deepEqual([...home.matchAll(/<article[^>]*data-project="([^"]+)"/g)].map((match) => match[1]), expectedIds);
   assert.deepEqual(readdirSync(new URL('projects/', root)).sort(), [...expectedIds].sort());
   assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]),
-    ['', 'offers/', 'now/', 'resume/', 'art/', ...expectedIds.map((id) => `projects/${id}/`)].map((path) => new URL(path, base).href));
+    ['', 'consulting/', 'now/', 'resume/', 'art/', ...expectedIds.map((id) => `projects/${id}/`)].map((path) => new URL(path, base).href));
   const escape = (text) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
   for (const project of projects) {
     const html = readFileSync(new URL(`projects/${project.id}/index.html`, root), 'utf8');
@@ -349,4 +349,29 @@ test('art page lists only sourced works with links back and stays out of the mai
   const nav = layout.slice(layout.indexOf('<nav'), layout.indexOf('</nav>'));
   assert.doesNotMatch(nav, /art\//);
   assert.match(layout.slice(layout.indexOf('<footer')), /art\//);
+});
+
+test('consulting page is /consulting/ and /offers/ only refreshes to it', () => {
+  const consulting = readFileSync(new URL('../src/pages/consulting.astro', import.meta.url), 'utf8');
+  const offers = readFileSync(new URL('../src/pages/offers.astro', import.meta.url), 'utf8');
+  const sitemap = readFileSync(new URL('../src/pages/sitemap.xml.ts', import.meta.url), 'utf8');
+  assert.match(consulting, /<Layout /);
+  assert.match(consulting, /title="Consulting \| Dan Gilles"/);
+  assert.doesNotMatch(offers, /Layout/);
+  assert.match(offers, /<meta http-equiv="refresh" content="0; url=\/consulting\/"\s*\/?>/);
+  assert.match(offers, /<link rel="canonical" href="https:\/\/dangilles\.dev\/consulting\/"\s*\/?>/);
+  assert.match(offers, /<meta name="robots" content="noindex"\s*\/?>/);
+  assert.match(offers, /<a href="\/consulting\/">/);
+  assert.match(sitemap, /\$\{base\}consulting\//);
+  assert.doesNotMatch(sitemap, /offers\//);
+  function walk(folder) {
+    for (const entry of readdirSync(folder, { withFileTypes: true })) {
+      const file = new URL(entry.name, folder);
+      if (entry.isDirectory()) walk(new URL(`${entry.name}/`, folder));
+      else if (/\.(?:astro|ts|mjs|css)$/i.test(entry.name)) {
+        assert.doesNotMatch(readFileSync(file, 'utf8'), /offers\//, `${entry.name} must not link to /offers/`);
+      }
+    }
+  }
+  walk(new URL('../src/', import.meta.url));
 });
