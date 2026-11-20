@@ -780,3 +780,18 @@ Visible "Offers" labels now read "Consulting". The `/offers/` URL, `src/pages/of
 - `npm test` passed all 19 tests, with no failures and no skips.
 - Built `/offers/` uses the title and nav label "Consulting", the eyebrow "Consulting", and the desktop dock, window title, and loaded window copy. Lighthouse was not run.
 
+## Pass: Move consulting from /offers/ to /consulting/, 2026-11-20
+
+`facts.md` at `/Users/natalie/Development/portfolio-brief/facts.md` is not on this machine. `src/data/experience.json` was re-read and left unchanged, including approval flags and the published demo/pilot, not-production wording.
+
+The consulting page is now `src/pages/consulting.astro` at `/consulting/`. `src/pages/offers.astro` is a standalone noindex page, without the main layout, that refreshes to `/consulting/`, sets the canonical URL to `https://dangilles.dev/consulting/`, and shows a fallback link. The sitemap lists `/consulting/` and leaves `/offers/` out. The nav (including its `aria-current` check), homepage hero and consulting-strip buttons, desktop About link, desktop consulting-window link, and command palette now go to `/consulting/`. The palette command is `:consulting`. Desktop mode still skips this page. `data-app="offers"`, `id="offers"`, and `loadOffersContent` are unchanged.
+
+Validation in `/agent/repos/audacity88.github.io`:
+
+- `npm ci` installed 274 packages.
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed. Astro check: 0 errors, 0 warnings, 0 hints. 15 pages. `check:links` checked 553 local references across 15 HTML pages. The build refreshed `src/data/repo-pulse.json`; that file was restored and is not part of this change.
+- `npm test` passed all 20 tests, with no failures and no skips.
+- Built `offers/index.html` is 381 bytes and contains the refresh, canonical, `noindex`, and fallback link, without the site header. Built `/consulting/` sets `aria-current="page"` on the Consulting nav link. The sitemap includes `https://audacity88.github.io/consulting/` and does not list `/offers/`. Lighthouse was not run, and no preview server was started.
+
+The portfolio build does not verify the projects.
+

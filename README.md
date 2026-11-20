@@ -105,7 +105,7 @@ For another repository subpath, set `PUBLIC_BASE_PATH` to its path with leading 
 
 Use the same environment variables for `dev`, `build`, and `preview`. For example, after the root build above, run `PUBLIC_BASE_PATH=/ npm run preview` and open the root URL printed by Astro. Internal assets and the resume link use Astro's base URL.
 
-Canonical URLs, Open Graph and Twitter image URLs, `sitemap.xml`, and `robots.txt` use these settings. The sitemap lists the home page, offers, now, resume, art, and all visible project pages. The custom `404.html` has `noindex` and links back to the portfolio.
+Canonical URLs, Open Graph and Twitter image URLs, `sitemap.xml`, and `robots.txt` use these settings. The sitemap lists the home page, consulting, now, resume, art, and all visible project pages. `/offers/` is a noindex refresh page that points at `/consulting/` and is not listed in the sitemap. The custom `404.html` has `noindex` and links back to the portfolio.
 
 Search engines read `robots.txt` at the origin root. A root build includes it there. A subpath build includes it under that path; before any approved publication, the host's root `robots.txt` must point to the subpath sitemap. The host must also serve `404.html` for missing pages with HTTP status 404.
 

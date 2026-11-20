@@ -95,7 +95,7 @@ const base = import.meta.env.BASE_URL;
         <p class="about-pitch">From an ambiguous brief to a working pilot.</p>
         <p class="about-description">I work directly with the people who use the software. Supporting proof includes Eyrie, a local control room for agents, and ZeroClaw, an open-source Rust agent runtime where I am a code owner.</p>
         <div class="about-links">
-          <a href={`${base}offers/`} class="button primary">Explore consulting <span aria-hidden="true">→</span></a>
+          <a href={`${base}consulting/`} class="button primary">Explore consulting <span aria-hidden="true">→</span></a>
           <a href="https://github.com/Audacity88" target="_blank" rel="noreferrer" class="button secondary">GitHub <span aria-hidden="true">↗</span></a>
         </div>
       </div>
@@ -462,7 +462,7 @@ const base = import.meta.env.BASE_URL;
     const pathname = url.pathname;
     
     // Deep links should never force desktop
-    if (pathname.includes('/resume') || pathname.includes('/offers') || pathname.includes('/projects/')) {
+    if (pathname.includes('/resume') || pathname.includes('/consulting') || pathname.includes('/projects/')) {
       return true;
     }
     
@@ -901,7 +901,7 @@ const base = import.meta.env.BASE_URL;
     if (!offersContent || offersContent.dataset.loaded) return;
     
     try {
-      offersContent.innerHTML = '<h3>Consulting</h3><p>See my consulting packages and availability.</p><a href="/offers/" target="_blank" class="button primary">View consulting page <span aria-hidden="true">↗</span></a>';
+      offersContent.innerHTML = '<h3>Consulting</h3><p>See my consulting packages and availability.</p><a href="/consulting/" target="_blank" class="button primary">View consulting page <span aria-hidden="true">↗</span></a>';
       offersContent.dataset.loaded = 'true';
     } catch (e) {
       offersContent.innerHTML = '<p>Could not load offers.</p>';
