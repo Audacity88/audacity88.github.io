@@ -771,3 +771,12 @@ Escape now closes the section menu and returns focus to its button only when foc
 
 - `npm test` passed all 19 tests before and after the rebuild, with no skips. `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed: astro check 0 errors, 0 warnings, 0 hints; 14 pages; 552 local references. The pulse refresh was restored and is not part of this change.
 
+## Pass: Rename visible Offers label to Consulting, 2026-11-20
+
+Visible "Offers" labels now read "Consulting". The `/offers/` URL, `src/pages/offers.astro`, `data-app="offers"`, `id="offers"`, and `loadOffersContent` are unchanged. The phone-line sentence "Offers your services the way you want them offered" is unchanged. No test asserted the old label, so the tests were not edited. `facts.md` is not on this machine. `src/data/experience.json` was not part of this label change.
+
+- `npm ci` installed 274 packages.
+- `ASTRO_TELEMETRY_DISABLED=1 npm run build` passed. Astro check: 0 errors, 0 warnings, 0 hints. 14 pages. `check:links` checked 552 local references. The build refreshed `src/data/repo-pulse.json`; that file was restored and is not part of this change.
+- `npm test` passed all 19 tests, with no failures and no skips.
+- Built `/offers/` uses the title and nav label "Consulting", the eyebrow "Consulting", and the desktop dock, window title, and loaded window copy. Lighthouse was not run.
+
